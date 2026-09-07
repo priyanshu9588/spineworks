@@ -188,6 +188,7 @@ function FeatureVisual({ active }: { active: number }) {
 export default function Home() {
   const [activeFeature, setActiveFeature] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [loaderExited, setLoaderExited] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -226,31 +227,48 @@ export default function Home() {
 
   return (
     <LayoutGroup id="site-loader">
-      <AnimatePresence initial={false}>
+      <AnimatePresence
+        initial={false}
+        onExitComplete={() => setLoaderExited(true)}
+      >
         {isLoading && (
           <motion.div
             key="loader"
-            className="fixed inset-0 z-[100] grid place-items-center overflow-hidden bg-canvas text-copy"
-            exit={{ y: "-100%" }}
-            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-x-0 top-0 z-[100] h-dvh overflow-hidden border-b border-line bg-canvas text-copy"
+            exit={{ height: "3.25rem" }}
+            transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.76, 0, 0.24, 1] }}
           >
-            <div className={`${shell} absolute inset-y-0 left-1/2 w-full -translate-x-1/2 border-line`} />
-            <motion.span
-              layoutId="spine-wordmark"
-              className="relative font-mono text-3xl font-semibold tracking-[-.07em]"
-              transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            >
-              Spine
-            </motion.span>
+            <motion.div
+              className="absolute inset-y-0 inset-x-0 border-x border-line [--loader-rail-inset:1rem] md:[--loader-rail-inset:1.5rem] lg:[--loader-rail-inset:max(2.5rem,calc((100vw-1120px)/2))]"
+              exit={{
+                left: "var(--loader-rail-inset)",
+                right: "var(--loader-rail-inset)",
+              }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.7,
+                ease: [0.76, 0, 0.24, 1],
+              }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
+      {isLoading && (
+        <div className="pointer-events-none fixed inset-0 z-[110] grid place-items-center text-copy">
+          <motion.span
+            layoutId="spine-wordmark"
+            className="font-mono text-3xl font-semibold tracking-[-.07em]"
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+          >
+            Spine
+          </motion.span>
+        </div>
+      )}
 
       <main id="content" className="overflow-x-clip bg-canvas text-copy">
-        <a href="#content" className="fixed top-2 left-2 z-50 -translate-y-16 bg-ink px-4 py-2 text-xs text-inverse focus:translate-y-0">Skip to content</a>
+        <a href="#content" className="fixed top-2 left-2 z-[130] -translate-y-16 bg-ink px-4 py-2 text-xs text-inverse focus:translate-y-0">Skip to content</a>
 
-        <header className="sticky top-0 z-40 border-b border-line bg-canvas/95 backdrop-blur-sm">
-          <div className={`${shell} h-[3.25rem] items-center border-line`}>
+        <header className={`sticky top-0 z-[120] border-b ${loaderExited ? "border-line bg-canvas/95 backdrop-blur-sm" : "border-transparent bg-transparent"}`}>
+          <div className={`${shell} h-[3.25rem] items-center ${loaderExited ? "border-line" : "border-transparent"}`}>
             <a className="col-span-2 inline-flex w-fit items-center font-mono text-base font-semibold tracking-[-.06em] md:col-span-2 lg:col-span-3" href="#top" aria-label="Spine home">
               {!isLoading && (
                 <motion.span
@@ -261,12 +279,12 @@ export default function Home() {
                 </motion.span>
               )}
             </a>
-            <nav className="hidden h-full items-center justify-center gap-8 text-xs text-muted md:col-span-4 md:flex lg:col-span-6" aria-label="Primary navigation">
+            <nav className={`${loaderExited ? "" : "invisible"} hidden h-full items-center justify-center gap-8 text-xs text-muted md:col-span-4 md:flex lg:col-span-6`} aria-label="Primary navigation">
               <a className={topbarLink} href="#how">How it works</a>
               <a className={topbarLink} href="#runtime">Runtime</a>
               <a className={topbarLink} href="#benchmarks">Benchmarks</a>
             </nav>
-            <a className={`${topbarLink} col-span-2 justify-self-end font-mono font-medium tracking-[-.02em] md:col-span-2 lg:col-span-3`} href="#contact">Contact us</a>
+            <a className={`${topbarLink} ${loaderExited ? "" : "invisible"} col-span-2 justify-self-end font-mono font-medium tracking-[-.02em] md:col-span-2 lg:col-span-3`} href="#contact">Contact us</a>
           </div>
         </header>
 
