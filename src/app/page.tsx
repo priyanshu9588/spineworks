@@ -6,8 +6,8 @@ import { AsciiArt } from "@/components/ui/n-ascii";
 import GrainCanvas from "./grain-canvas";
 
 const introLines = [
-  "Your model doesn't know what\nthe web looks like.",
-  "We give it eyes.",
+  "Your model doesn't know what the web looks like",
+  "We give it eyes",
 ] as const;
 
 const shell =
@@ -207,10 +207,10 @@ export default function Home() {
         timer = window.setTimeout(resolve, duration);
       });
 
-    const type = async (text: string, interval: number) => {
+    const type = async (text: string, interval: number, prefix = "") => {
       for (let index = 1; index <= text.length; index += 1) {
         if (cancelled) return;
-        setIntroText(text.slice(0, index));
+        setIntroText(`${prefix}${text.slice(0, index)}`);
         await wait(interval);
       }
     };
@@ -226,16 +226,14 @@ export default function Home() {
         return;
       }
 
-      await wait(250);
-      await type(introLines[0], 18);
-      await wait(1200);
-      setIntroText("");
-      await wait(180);
-      await type(introLines[1], 24);
-      await wait(1000);
+      await wait(200);
+      await type(introLines[0], 16);
+      await wait(1600);
+      await type(introLines[1], 22, `${introLines[0]}\n`);
+      await wait(1600);
       setIntroText("");
       setShowIntroWordmark(true);
-      await wait(450);
+      await wait(1000);
 
       if (!cancelled) setIsLoading(false);
     };
