@@ -215,7 +215,7 @@ export default function Home() {
 
       await wait(200);
 
-      for (let index = 0; index < introWord.length; index += 1) {
+      for (let index = 0; index < introWord.length + 2; index += 1) {
         if (cancelled) return;
         setIntroBlockIndex(index);
         await wait(80);
@@ -284,16 +284,26 @@ export default function Home() {
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
           >
             <span aria-hidden="true" className="inline-flex">
-              {Array.from(introWord).map((character, index) => (
-                <span className="relative inline-grid w-[1ch] place-items-center" key={`${character}-${index}`}>
-                  <span className={introBlockIndex === index ? "text-transparent" : ""}>
-                    {character}
+              {Array.from(introWord).map((character, index) => {
+                const trailOffset = introBlockIndex === null ? -1 : introBlockIndex - index;
+                const hasBlock = trailOffset >= 0 && trailOffset <= 2;
+                const blockColor = trailOffset === 0
+                  ? "bg-copy"
+                  : trailOffset === 1
+                    ? "bg-muted"
+                    : "bg-faint";
+
+                return (
+                  <span className="relative inline-grid w-[1ch] place-items-center" key={`${character}-${index}`}>
+                    <span className={hasBlock ? "text-transparent" : ""}>
+                      {character}
+                    </span>
+                    {hasBlock && (
+                      <span className={`absolute inset-x-[.08em] inset-y-[.08em] ${blockColor}`} />
+                    )}
                   </span>
-                  {introBlockIndex === index && (
-                    <span className="absolute inset-x-[.08em] inset-y-[.08em] bg-current" />
-                  )}
-                </span>
-              ))}
+                );
+              })}
             </span>
           </motion.span>
         </div>
