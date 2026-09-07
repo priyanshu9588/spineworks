@@ -354,6 +354,7 @@ export default function Home() {
           <h2 className="max-w-3xl font-mono text-[clamp(1.9rem,3.2vw,3.4rem)] leading-[.98] font-medium tracking-[-.06em]">Capability-specific results, <em className="text-accent not-italic">with the denominator intact</em></h2>
           <p className="mt-6 max-w-lg text-sm leading-6 text-muted">Pinned revisions and preserved receipts. These results describe the tested surfaces, not complete browser compatibility.</p>
         </div>
+        <p className="col-span-4 self-end pb-10 text-xs leading-5 text-subtle md:col-start-7 md:col-span-2 md:pb-14 lg:col-start-10 lg:col-span-3 lg:pb-16">Standard benchmark run · 26 August 2026</p>
         <div className={`${fullWidthFrame} col-span-full grid grid-cols-1 md:grid-cols-3`}>
           {benchmarks.map((benchmark, index) => (
             <article className={`min-h-64 py-8 md:py-10 ${index > 0 ? "border-t border-line md:border-t-0 md:border-l" : ""} ${index === 0 ? "md:pr-6" : ""} ${index === 1 ? "md:px-6" : ""} ${index === 2 ? "md:pl-6" : ""}`} key={benchmark.label}>
