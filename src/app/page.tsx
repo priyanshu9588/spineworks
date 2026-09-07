@@ -6,7 +6,7 @@ import { AsciiArt } from "@/components/ui/n-ascii";
 import GrainCanvas from "./grain-canvas";
 
 const introLines = [
-  "Your model doesn't know what the web looks like.",
+  "Your model doesn't know what\nthe web looks like.",
   "We give it eyes.",
 ] as const;
 
@@ -227,10 +227,12 @@ export default function Home() {
       }
 
       await wait(250);
-      await type(introLines[0], 28);
+      await type(introLines[0], 18);
+      await wait(1200);
       setIntroText("");
       await wait(180);
-      await type(introLines[1], 40);
+      await type(introLines[1], 24);
+      await wait(1000);
       setIntroText("");
       setShowIntroWordmark(true);
       await wait(450);
@@ -299,7 +301,7 @@ export default function Home() {
           ) : (
             <span
               aria-hidden="true"
-              className="w-full max-w-4xl text-center font-mono text-[clamp(1.1rem,2.1vw,1.8rem)] leading-tight font-medium tracking-[-.045em]"
+              className="w-full max-w-4xl whitespace-pre-line text-center font-mono text-[clamp(1.1rem,2.1vw,1.8rem)] leading-tight font-medium tracking-[-.045em]"
             >
               {introText}
             </span>
