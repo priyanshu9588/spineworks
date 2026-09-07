@@ -5,10 +5,7 @@ import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/r
 import { AsciiArt } from "@/components/ui/n-ascii";
 import GrainCanvas from "./grain-canvas";
 
-const introLines = [
-  "Your model doesn't know what the web looks like",
-  "We give it eyes",
-] as const;
+const introWord = "Spine";
 
 const shell =
   "site-frame mx-auto grid w-[calc(100%-2rem)] max-w-[1120px] grid-cols-4 gap-x-4 border-x px-4 md:w-[calc(100%-3rem)] md:grid-cols-8 md:gap-x-5 md:px-5 lg:w-[calc(100%-5rem)] lg:grid-cols-12 lg:gap-x-6 lg:px-6";
@@ -194,8 +191,7 @@ export default function Home() {
   const [activeFeature, setActiveFeature] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loaderExited, setLoaderExited] = useState(false);
-  const [introText, setIntroText] = useState("");
-  const [showIntroWordmark, setShowIntroWordmark] = useState(false);
+  const [introBlockIndex, setIntroBlockIndex] = useState<number | null>(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -207,33 +203,27 @@ export default function Home() {
         timer = window.setTimeout(resolve, duration);
       });
 
-    const type = async (text: string, interval: number, prefix = "") => {
-      for (let index = 1; index <= text.length; index += 1) {
-        if (cancelled) return;
-        setIntroText(`${prefix}${text.slice(0, index)}`);
-        await wait(interval);
-      }
-    };
-
     const runIntro = async () => {
       await document.fonts.ready;
       if (cancelled) return;
 
       if (reduceMotion) {
-        setShowIntroWordmark(true);
         await wait(0);
         setIsLoading(false);
         return;
       }
 
-      await wait(200);
-      await type(introLines[0], 16);
-      await wait(1600);
-      await type(introLines[1], 22, `${introLines[0]}\n`);
-      await wait(1600);
-      setIntroText("");
-      setShowIntroWordmark(true);
-      await wait(1000);
+      await wait(800);
+
+      for (let index = 0; index < introWord.length; index += 1) {
+        if (cancelled) return;
+        setIntroBlockIndex(index);
+        await wait(index === 0 ? 360 : 260);
+      }
+
+      await wait(480);
+      setIntroBlockIndex(null);
+      await wait(700);
 
       if (!cancelled) setIsLoading(false);
     };
@@ -288,23 +278,29 @@ export default function Home() {
       </AnimatePresence>
       {isLoading && (
         <div className="pointer-events-none fixed inset-0 z-[110] grid place-items-center px-6 text-copy">
-          {showIntroWordmark ? (
-            <motion.span
-              layoutId="spine-wordmark"
-              className="font-mono text-3xl font-semibold tracking-[-.07em]"
-              transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            >
-              Spine
-            </motion.span>
-          ) : (
-            <span
-              aria-hidden="true"
-              className="w-full max-w-4xl whitespace-pre-line text-center font-mono text-[clamp(1.1rem,2.1vw,1.8rem)] leading-tight font-medium tracking-[-.045em]"
-            >
-              {introText}
+          <motion.span
+            layoutId="spine-wordmark"
+            aria-label={introWord}
+            className="inline-flex font-mono text-3xl leading-none font-semibold tracking-[-.07em]"
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+          >
+            <span aria-hidden="true" className="inline-flex">
+              {Array.from(introWord).map((character, index) => (
+                <span className="relative inline-grid w-[1ch] place-items-center" key={`${character}-${index}`}>
+                  <span className={introBlockIndex === index ? "text-transparent" : ""}>
+                    {character}
+                  </span>
+                  {introBlockIndex === index && (
+                    <motion.span
+                      layoutId="intro-block"
+                      className="absolute inset-x-[.08em] inset-y-[.08em] bg-current"
+                      transition={{ duration: 0.2, ease: [0.76, 0, 0.24, 1] }}
+                    />
+                  )}
+                </span>
+              ))}
             </span>
-          )}
-          <span className="sr-only">{introLines.join(" ")}</span>
+          </motion.span>
         </div>
       )}
 
