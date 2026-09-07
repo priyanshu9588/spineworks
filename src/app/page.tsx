@@ -291,11 +291,7 @@ export default function Home() {
                     {character}
                   </span>
                   {introBlockIndex === index && (
-                    <motion.span
-                      layoutId="intro-block"
-                      className="absolute inset-x-[.08em] inset-y-[.08em] bg-current"
-                      transition={{ duration: 0.2, ease: [0.76, 0, 0.24, 1] }}
-                    />
+                    <span className="absolute inset-x-[.08em] inset-y-[.08em] bg-current" />
                   )}
                 </span>
               ))}
