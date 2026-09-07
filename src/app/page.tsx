@@ -213,17 +213,17 @@ export default function Home() {
         return;
       }
 
-      await wait(800);
+      await wait(200);
 
       for (let index = 0; index < introWord.length; index += 1) {
         if (cancelled) return;
         setIntroBlockIndex(index);
-        await wait(index === 0 ? 360 : 260);
+        await wait(80);
       }
 
-      await wait(480);
+      await wait(120);
       setIntroBlockIndex(null);
-      await wait(700);
+      await wait(200);
 
       if (!cancelled) setIsLoading(false);
     };
