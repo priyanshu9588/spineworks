@@ -221,7 +221,6 @@ export default function Home() {
         await wait(80);
       }
 
-      await wait(120);
       setIntroBlockIndex(null);
       await wait(200);
 
