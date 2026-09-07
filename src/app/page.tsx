@@ -225,7 +225,7 @@ export default function Home() {
 
       setIntroRevealed(true);
       setIntroBlockIndex(null);
-      await wait(200);
+      await wait(800);
 
       if (!cancelled) setIsLoading(false);
     };
@@ -283,7 +283,7 @@ export default function Home() {
           <motion.span
             layoutId="spine-wordmark"
             aria-label={introWord}
-            className="inline-flex font-mono text-3xl leading-none font-semibold tracking-[-.07em]"
+            className="inline-flex font-mono text-[clamp(3.5rem,8vw,6rem)] leading-none font-semibold tracking-[-.07em]"
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
           >
             <span aria-hidden="true" className="inline-flex">
