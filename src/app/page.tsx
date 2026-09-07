@@ -283,7 +283,7 @@ export default function Home() {
           <motion.span
             layoutId="spine-wordmark"
             aria-label={introWord}
-            className="inline-flex font-mono text-[clamp(3.5rem,8vw,6rem)] leading-none font-semibold tracking-[-.07em]"
+            className="inline-flex font-mono text-[clamp(2.5rem,5vw,4rem)] leading-none font-semibold tracking-[-.07em]"
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
           >
             <span aria-hidden="true" className="inline-flex">
@@ -326,9 +326,16 @@ export default function Home() {
               {!isLoading && (
                 <motion.span
                   layoutId="spine-wordmark"
+                  className="inline-flex font-mono text-base leading-none font-semibold tracking-[-.07em]"
                   transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
                 >
-                  Spine
+                  <span aria-hidden="true" className="inline-flex">
+                    {Array.from(introWord).map((character, index) => (
+                      <span className="inline-grid w-[1ch] place-items-center" key={`${character}-${index}`}>
+                        {character}
+                      </span>
+                    ))}
+                  </span>
                 </motion.span>
               )}
             </a>
