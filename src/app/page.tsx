@@ -299,7 +299,7 @@ export default function Home() {
                       {character}
                     </span>
                     {hasBlock && (
-                      <span className={`absolute inset-x-[.08em] inset-y-[.08em] ${blockColor}`} />
+                      <span className={`absolute inset-x-0 inset-y-[.08em] ${blockColor}`} />
                     )}
                   </span>
                 );
