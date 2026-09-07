@@ -237,19 +237,21 @@ export default function Home() {
             className="fixed inset-x-0 top-0 z-[100] h-dvh overflow-hidden border-b border-line bg-canvas text-copy"
             exit={{ height: "3.25rem" }}
             transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.76, 0, 0.24, 1] }}
-          >
-            <motion.div
-              className="absolute inset-y-0 inset-x-0 border-x border-line [--loader-rail-inset:1rem] md:[--loader-rail-inset:1.5rem] lg:[--loader-rail-inset:max(2.5rem,calc((100vw-1120px)/2))]"
-              exit={{
-                left: "var(--loader-rail-inset)",
-                right: "var(--loader-rail-inset)",
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.7,
-                ease: [0.76, 0, 0.24, 1],
-              }}
-            />
-          </motion.div>
+          />
+        )}
+        {isLoading && (
+          <motion.div
+            key="loader-rails"
+            className="pointer-events-none fixed inset-y-0 inset-x-0 z-[105] border-x border-line [--loader-rail-inset:1rem] md:[--loader-rail-inset:1.5rem] lg:[--loader-rail-inset:max(2.5rem,calc((100vw-1120px)/2))]"
+            exit={{
+              left: "var(--loader-rail-inset)",
+              right: "var(--loader-rail-inset)",
+            }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.7,
+              ease: [0.76, 0, 0.24, 1],
+            }}
+          />
         )}
       </AnimatePresence>
       {isLoading && (
