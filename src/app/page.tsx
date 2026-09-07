@@ -192,6 +192,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [loaderExited, setLoaderExited] = useState(false);
   const [introBlockIndex, setIntroBlockIndex] = useState<number | null>(null);
+  const [introRevealed, setIntroRevealed] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -208,6 +209,7 @@ export default function Home() {
       if (cancelled) return;
 
       if (reduceMotion) {
+        setIntroRevealed(true);
         await wait(0);
         setIsLoading(false);
         return;
@@ -221,6 +223,7 @@ export default function Home() {
         await wait(80);
       }
 
+      setIntroRevealed(true);
       setIntroBlockIndex(null);
       await wait(200);
 
@@ -287,6 +290,8 @@ export default function Home() {
               {Array.from(introWord).map((character, index) => {
                 const trailOffset = introBlockIndex === null ? -1 : introBlockIndex - index;
                 const hasBlock = trailOffset >= 0 && trailOffset <= 2;
+                const showCharacter = introRevealed
+                  || (introBlockIndex !== null && index < introBlockIndex - 2);
                 const blockColor = trailOffset === 0
                   ? "bg-copy"
                   : trailOffset === 1
@@ -295,7 +300,7 @@ export default function Home() {
 
                 return (
                   <span className="relative inline-grid w-[1ch] place-items-center" key={`${character}-${index}`}>
-                    <span className={hasBlock ? "text-transparent" : ""}>
+                    <span className={showCharacter && !hasBlock ? "" : "text-transparent"}>
                       {character}
                     </span>
                     {hasBlock && (
