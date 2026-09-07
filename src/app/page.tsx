@@ -295,10 +295,12 @@ export default function Home() {
 
       <section id="top" className="relative h-[60vh] overflow-hidden border-b border-line bg-canvas">
         <div className={`${shell} relative h-full content-center overflow-hidden border-line py-8 text-center md:py-12 lg:py-16`}>
-          <AsciiArt
-            generated="flowers"
-            className="pointer-events-none absolute inset-0 h-full w-full overflow-hidden"
-          />
+          {loaderExited && (
+            <AsciiArt
+              generated="flowers"
+              className="pointer-events-none absolute inset-0 h-full w-full overflow-hidden"
+            />
+          )}
           <h1 className="relative z-10 col-span-4 m-0 justify-self-center font-mono text-[clamp(3.1rem,7vw,7rem)] leading-[.9] font-light tracking-[-.075em] text-copy text-balance md:col-span-8 lg:col-start-2 lg:col-span-10">The web<br />made <em className="not-italic">legible</em></h1>
           <p className="relative z-10 col-span-4 mt-8 max-w-[38rem] justify-self-center text-sm leading-6 text-muted md:col-start-2 md:col-span-6 lg:col-start-4 lg:col-span-6">Spine gives your agent eyes and helps it understand and interact with the web.</p>
         </div>
