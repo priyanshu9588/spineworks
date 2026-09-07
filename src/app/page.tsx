@@ -1,9 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { AsciiArt } from "@/components/ui/n-ascii";
 import GrainCanvas from "./grain-canvas";
+
+const introLines = [
+  "Your model doesn't know what the web looks like.",
+  "We give it eyes.",
+] as const;
 
 const shell =
   "site-frame mx-auto grid w-[calc(100%-2rem)] max-w-[1120px] grid-cols-4 gap-x-4 border-x px-4 md:w-[calc(100%-3rem)] md:grid-cols-8 md:gap-x-5 md:px-5 lg:w-[calc(100%-5rem)] lg:grid-cols-12 lg:gap-x-6 lg:px-6";
@@ -189,28 +194,60 @@ export default function Home() {
   const [activeFeature, setActiveFeature] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loaderExited, setLoaderExited] = useState(false);
+  const [introText, setIntroText] = useState("");
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     let cancelled = false;
-    let delay = 0;
+    let timer = 0;
 
-    if (reduceMotion) {
-      const frame = requestAnimationFrame(() => setIsLoading(false));
-      return () => cancelAnimationFrame(frame);
-    }
+    const wait = (duration: number) =>
+      new Promise<void>((resolve) => {
+        timer = window.setTimeout(resolve, duration);
+      });
 
-    const minimumDisplay = new Promise<void>((resolve) => {
-      delay = window.setTimeout(resolve, 650);
-    });
+    const type = async (text: string, interval: number) => {
+      for (let index = 1; index <= text.length; index += 1) {
+        if (cancelled) return;
+        setIntroText(text.slice(0, index));
+        await wait(interval);
+      }
+    };
 
-    Promise.all([document.fonts.ready, minimumDisplay]).then(() => {
+    const erase = async (text: string, interval: number) => {
+      for (let index = text.length - 1; index >= 0; index -= 1) {
+        if (cancelled) return;
+        setIntroText(text.slice(0, index));
+        await wait(interval);
+      }
+    };
+
+    const runIntro = async () => {
+      await document.fonts.ready;
+      if (cancelled) return;
+
+      if (reduceMotion) {
+        setIntroText(introLines[1]);
+        setIsLoading(false);
+        return;
+      }
+
+      await wait(250);
+      await type(introLines[0], 28);
+      await wait(500);
+      await erase(introLines[0], 14);
+      await wait(120);
+      await type(introLines[1], 40);
+      await wait(550);
+
       if (!cancelled) setIsLoading(false);
-    });
+    };
+
+    runIntro();
 
     return () => {
       cancelled = true;
-      window.clearTimeout(delay);
+      window.clearTimeout(timer);
     };
   }, [reduceMotion]);
 
@@ -226,7 +263,7 @@ export default function Home() {
   }, [isLoading]);
 
   return (
-    <LayoutGroup id="site-loader">
+    <>
       <AnimatePresence
         initial={false}
         onExitComplete={() => setLoaderExited(true)}
@@ -255,14 +292,14 @@ export default function Home() {
         )}
       </AnimatePresence>
       {isLoading && (
-        <div className="pointer-events-none fixed inset-0 z-[110] grid place-items-center text-copy">
-          <motion.span
-            layoutId="spine-wordmark"
-            className="font-mono text-3xl font-semibold tracking-[-.07em]"
-            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+        <div className="pointer-events-none fixed inset-0 z-[110] grid place-items-center px-6 text-copy">
+          <span
+            aria-hidden="true"
+            className="w-full max-w-4xl text-center font-mono text-[clamp(1.1rem,2.1vw,1.8rem)] leading-tight font-medium tracking-[-.045em]"
           >
-            Spine
-          </motion.span>
+            {introText}
+          </span>
+          <span className="sr-only">{introLines.join(" ")}</span>
         </div>
       )}
 
@@ -275,14 +312,7 @@ export default function Home() {
         <header className={`sticky top-0 z-[120] border-b ${loaderExited ? "border-line bg-canvas/95 backdrop-blur-sm" : "border-transparent bg-transparent"}`}>
           <div className={`${shell} h-[3.25rem] items-center ${loaderExited ? "border-line" : "border-transparent"}`}>
             <a className="col-span-2 inline-flex w-fit items-center font-mono text-base font-semibold tracking-[-.06em] md:col-span-2 lg:col-span-3" href="#top" aria-label="Spine home">
-              {!isLoading && (
-                <motion.span
-                  layoutId="spine-wordmark"
-                  transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-                >
-                  Spine
-                </motion.span>
-              )}
+              {loaderExited && <span>Spine</span>}
             </a>
             <nav className={`${loaderExited ? "" : "invisible"} hidden h-full items-center justify-center gap-8 text-xs text-muted md:col-span-4 md:flex lg:col-span-6`} aria-label="Primary navigation">
               <a className={topbarLink} href="#how">How it works</a>
@@ -383,6 +413,6 @@ export default function Home() {
           </div>
         </footer>
       </main>
-    </LayoutGroup>
+    </>
   );
 }
