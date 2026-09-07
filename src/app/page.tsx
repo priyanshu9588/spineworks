@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { AsciiArt } from "@/components/ui/n-ascii";
 import GrainCanvas from "./grain-canvas";
 
@@ -195,6 +195,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [loaderExited, setLoaderExited] = useState(false);
   const [introText, setIntroText] = useState("");
+  const [showIntroWordmark, setShowIntroWordmark] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -214,31 +215,25 @@ export default function Home() {
       }
     };
 
-    const erase = async (text: string, interval: number) => {
-      for (let index = text.length - 1; index >= 0; index -= 1) {
-        if (cancelled) return;
-        setIntroText(text.slice(0, index));
-        await wait(interval);
-      }
-    };
-
     const runIntro = async () => {
       await document.fonts.ready;
       if (cancelled) return;
 
       if (reduceMotion) {
-        setIntroText(introLines[1]);
+        setShowIntroWordmark(true);
+        await wait(0);
         setIsLoading(false);
         return;
       }
 
       await wait(250);
       await type(introLines[0], 28);
-      await wait(500);
-      await erase(introLines[0], 14);
-      await wait(120);
+      setIntroText("");
+      await wait(180);
       await type(introLines[1], 40);
-      await wait(550);
+      setIntroText("");
+      setShowIntroWordmark(true);
+      await wait(450);
 
       if (!cancelled) setIsLoading(false);
     };
@@ -263,7 +258,7 @@ export default function Home() {
   }, [isLoading]);
 
   return (
-    <>
+    <LayoutGroup id="site-loader">
       <AnimatePresence
         initial={false}
         onExitComplete={() => setLoaderExited(true)}
@@ -293,12 +288,22 @@ export default function Home() {
       </AnimatePresence>
       {isLoading && (
         <div className="pointer-events-none fixed inset-0 z-[110] grid place-items-center px-6 text-copy">
-          <span
-            aria-hidden="true"
-            className="w-full max-w-4xl text-center font-mono text-[clamp(1.1rem,2.1vw,1.8rem)] leading-tight font-medium tracking-[-.045em]"
-          >
-            {introText}
-          </span>
+          {showIntroWordmark ? (
+            <motion.span
+              layoutId="spine-wordmark"
+              className="font-mono text-3xl font-semibold tracking-[-.07em]"
+              transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+            >
+              Spine
+            </motion.span>
+          ) : (
+            <span
+              aria-hidden="true"
+              className="w-full max-w-4xl text-center font-mono text-[clamp(1.1rem,2.1vw,1.8rem)] leading-tight font-medium tracking-[-.045em]"
+            >
+              {introText}
+            </span>
+          )}
           <span className="sr-only">{introLines.join(" ")}</span>
         </div>
       )}
@@ -312,7 +317,14 @@ export default function Home() {
         <header className={`sticky top-0 z-[120] border-b ${loaderExited ? "border-line bg-canvas/95 backdrop-blur-sm" : "border-transparent bg-transparent"}`}>
           <div className={`${shell} h-[3.25rem] items-center ${loaderExited ? "border-line" : "border-transparent"}`}>
             <a className="col-span-2 inline-flex w-fit items-center font-mono text-base font-semibold tracking-[-.06em] md:col-span-2 lg:col-span-3" href="#top" aria-label="Spine home">
-              {loaderExited && <span>Spine</span>}
+              {!isLoading && (
+                <motion.span
+                  layoutId="spine-wordmark"
+                  transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+                >
+                  Spine
+                </motion.span>
+              )}
             </a>
             <nav className={`${loaderExited ? "" : "invisible"} hidden h-full items-center justify-center gap-8 text-xs text-muted md:col-span-4 md:flex lg:col-span-6`} aria-label="Primary navigation">
               <a className={topbarLink} href="#how">How it works</a>
@@ -413,6 +425,6 @@ export default function Home() {
           </div>
         </footer>
       </main>
-    </>
+    </LayoutGroup>
   );
 }
