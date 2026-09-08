@@ -6,7 +6,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: var(--study-paper);
+  background: radial-gradient(ellipse at 48% 42%, #f6f7ee 0%, var(--study-paper) 72%);
   color: var(--study-ink);
 }
 
@@ -39,6 +39,7 @@
 }
 
 .study-notation-bottom {
+  flex-wrap: wrap;
   min-height: 48px;
   padding-top: 0;
   padding-bottom: 4px;
@@ -124,13 +125,21 @@
   animation: study-reveal 0.9s ease-out both;
 }
 
+.study-unfold {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: study-unfold 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .runtime-study[data-paused="true"] .study-trace,
-.runtime-study[data-paused="true"] .study-reveal {
+.runtime-study[data-paused="true"] .study-reveal,
+.runtime-study[data-paused="true"] .study-unfold {
   animation-play-state: paused;
 }
 
 .runtime-study[data-still="true"] .study-trace,
-.runtime-study[data-still="true"] .study-reveal {
+.runtime-study[data-still="true"] .study-reveal,
+.runtime-study[data-still="true"] .study-unfold {
   animation: none;
   stroke-dashoffset: 0;
 }
@@ -142,6 +151,11 @@
 @keyframes study-reveal {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes study-unfold {
+  from { opacity: 0; transform: translateY(6px) rotate(-2deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0deg); }
 }
 
 @media (max-width: 639px) {
@@ -160,7 +174,8 @@
   .study-flow { display: none; }
   .study-control { transition: none; }
   .study-trace,
-  .study-reveal {
+  .study-reveal,
+  .study-unfold {
     animation: none;
     stroke-dashoffset: 0;
   }

@@ -1,125 +1,91 @@
-const documentLeaf =
-  "M158 99C210 64 287 74 342 97C405 122 457 123 492 164C527 205 508 261 475 297C439 337 365 345 302 328C242 312 174 322 144 277C113 230 124 157 158 99Z";
+const previousDocument =
+  "M117 119C195 86 270 111 359 103C356 173 372 238 397 307C316 332 235 318 151 346C157 266 143 190 117 119Z";
 
-const quietBranches =
-  "M218 315C229 272 247 233 265 205C284 176 294 143 292 107M265 205C235 188 216 161 210 130M241 248C203 246 178 229 161 207M278 182C316 182 342 161 364 144M229 280C266 280 288 291 312 308";
+const currentDocument =
+  "M164 88C249 65 338 92 432 84C418 161 438 248 460 323C371 343 282 324 189 346C209 257 200 167 164 88Z";
 
-const expandedBranch =
-  "M254 226C294 238 330 233 373 217C402 206 428 186 446 161M373 217C412 221 454 216 490 206M373 217C407 236 432 253 454 271";
+const liftedRegion =
+  "M283 225C315 211 322 169 365 145C408 121 458 143 497 121C484 166 505 220 523 258C479 266 440 286 396 281C346 276 318 240 283 225Z";
 
-const changedPatch =
-  "M285 225C329 210 347 164 397 145C448 126 500 139 521 178C543 218 514 263 470 283C419 307 366 271 335 251C317 240 298 237 285 225Z";
+export const deltaThread =
+  "M225 313C236 280 250 250 277 226C310 205 337 219 366 217C404 215 429 186 451 169";
 
 export function DeltaStudy({ prefix }: { prefix: string }) {
   return (
     <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-      <path
-        d="M131 268C189 327 280 351 378 343C441 338 491 312 527 282C492 332 434 359 350 364C253 368 165 329 131 268Z"
-        fill={`url(#${prefix}-fine)`}
-        opacity=".4"
-      />
-      <g transform="translate(-17 10)" opacity=".32">
-        <path d={documentLeaf} fill={`url(#${prefix}-glyphs)`} opacity=".4" />
-        <path d={documentLeaf} stroke="var(--study-muted)" strokeWidth="1" />
-        <path d={quietBranches} stroke="var(--study-muted)" strokeWidth="1.2" />
-      </g>
+      <defs>
+        <clipPath id={`${prefix}-delta-page`}><path d={currentDocument} /></clipPath>
+        <clipPath id={`${prefix}-delta-insert`}><path d={liftedRegion} /></clipPath>
+      </defs>
+
+      <path d="M147 317C234 337 401 333 525 279C487 332 393 354 302 361C239 366 185 349 147 317Z" fill={`url(#${prefix}-fine)`} opacity=".48" />
 
       <g className="study-reveal">
-        <path d={documentLeaf} fill="var(--study-paper)" />
-        <path d={documentLeaf} fill={`url(#${prefix}-wash)`} />
-        <path d={documentLeaf} fill={`url(#${prefix}-glyphs)`} opacity=".5" />
-        <path d={documentLeaf} stroke="var(--study-ink)" strokeWidth="1.1" opacity=".55" />
-        <path
-          d="M158 99C129 171 134 233 157 266C185 305 245 303 302 328C242 312 174 322 144 277C113 230 124 157 158 99Z"
-          fill={`url(#${prefix}-hatch)`}
-          opacity=".35"
-        />
-        <path
-          d="M167 101C146 146 137 204 153 249M178 95C154 147 146 192 156 226M189 91C170 129 160 165 160 193"
-          stroke="var(--study-muted)"
-          strokeWidth=".6"
-          opacity=".3"
-        />
-        <path
-          d={quietBranches}
-          transform="translate(-8 6)"
-          stroke="var(--study-muted)"
-          strokeWidth="1"
-          opacity=".16"
-        />
-        <path d={quietBranches} stroke="var(--study-ink)" strokeWidth="1.6" opacity=".38" />
-        <g fill="var(--study-paper)" stroke="var(--study-muted)" strokeWidth="1" opacity=".8">
-          <ellipse cx="210" cy="130" rx="9" ry="4" transform="rotate(52 210 130)" />
-          <ellipse cx="161" cy="207" rx="9" ry="4" transform="rotate(24 161 207)" />
-          <ellipse cx="292" cy="107" rx="9" ry="4" transform="rotate(93 292 107)" />
-          <ellipse cx="364" cy="144" rx="9" ry="4" transform="rotate(-31 364 144)" />
-          <ellipse cx="312" cy="308" rx="9" ry="4" transform="rotate(31 312 308)" />
+        <path d={previousDocument} fill="var(--study-paper)" fillOpacity=".45" stroke="var(--study-muted)" strokeWidth=".8" opacity=".6" />
+        <path d={previousDocument} fill={`url(#${prefix}-glyphs)`} opacity=".22" />
+        <path d="M135 124C161 191 174 263 159 332M143 126C171 200 181 266 169 325M153 130C180 205 189 267 181 318" stroke="var(--study-muted)" strokeWidth=".6" opacity=".3" />
+        <path d="M154 149l44-8m-40 19 25-5M167 206l33-6m-29 17 23-5M183 287l20-4" stroke="var(--study-muted)" strokeWidth=".8" opacity=".5" />
+        <path d={currentDocument} transform="translate(5 5)" fill={`url(#${prefix}-hatch)`} opacity=".4" />
+        <path d={currentDocument} fill={`url(#${prefix}-wash)`} />
+        <path d={currentDocument} fill={`url(#${prefix}-glyphs)`} opacity=".22" />
+        <path d="M164 88C200 167 209 257 189 346C217 317 229 267 218 208C208 150 186 107 164 88Z" fill={`url(#${prefix}-hatch)`} opacity=".65" />
+        <path d="M164 88C200 167 209 257 189 346" stroke="var(--study-ink)" strokeWidth="1.1" />
+        <path d="M174 90C202 151 217 234 203 300M181 92C209 156 224 238 211 293" stroke="var(--study-ink)" strokeWidth=".65" opacity=".24" />
+        <path d={currentDocument} stroke="var(--study-ink)" strokeWidth="1" />
+        <path d={currentDocument} transform="translate(0 -3)" clipPath={`url(#${prefix}-delta-page)`} stroke="var(--study-paper)" strokeWidth="1.2" opacity=".9" />
+
+        <text x="227" y="125" className="study-label">document</text>
+        <path d="M229 140C274 134 316 141 353 139M231 151C265 147 293 151 318 151" stroke="var(--study-muted)" strokeWidth="1" opacity=".65" />
+        <path d="M225 313C236 280 250 250 277 226C267 203 258 181 254 166M258 249C235 242 221 226 216 205M242 280C271 274 290 288 311 304" stroke="var(--study-ink)" strokeWidth="1.4" opacity=".42" />
+        <path d="M277 226C294 233 309 240 331 242" stroke="var(--study-muted)" strokeWidth="1" strokeDasharray="2 4" opacity=".7" />
+        <g fill="var(--study-paper)" stroke="var(--study-muted)" strokeWidth="1">
+          <circle cx="254" cy="166" r="3.5" />
+          <circle cx="216" cy="205" r="3.5" />
+          <circle cx="311" cy="304" r="3.5" />
+          <circle cx="331" cy="242" r="4" strokeDasharray="2 3" />
         </g>
-        <path
-          d="M245 233C283 247 317 242 347 231"
-          stroke="var(--study-muted)"
-          strokeWidth="1.1"
-          strokeDasharray="2 4"
-          opacity=".45"
-        />
-        <circle cx="347" cy="231" r="5" stroke="var(--study-muted)" strokeWidth="1" opacity=".4" />
+        <path d="M268 167h31M221 205h29M318 303h43M318 312h28" stroke="var(--study-muted)" strokeWidth=".85" opacity=".55" />
+        <text x="339" y="248" className="study-micro">closed</text>
       </g>
 
-      <g className="study-reveal" style={{ animationDelay: "160ms" }}>
-        <path d={changedPatch} fill="var(--study-paper)" fillOpacity=".78" />
-        <path d={changedPatch} fill={`url(#${prefix}-fine)`} opacity=".55" />
-        <path d={changedPatch} stroke="var(--study-accent)" strokeWidth=".8" opacity=".42" />
-        <path
-          d="M326 225C352 190 377 173 405 161M341 232C367 185 398 164 425 155M354 239C379 195 412 171 445 159M369 249C393 222 442 184 467 173M386 258C415 234 467 203 490 196M406 269C435 249 474 228 503 221"
-          stroke="var(--study-accent)"
-          strokeWidth=".65"
-          opacity=".22"
-        />
-        <path d={expandedBranch} stroke="var(--study-accent)" strokeWidth=".9" opacity=".2" />
-        <path
-          d={expandedBranch}
-          className="study-trace"
-          pathLength="1"
-          stroke="var(--study-accent)"
-          strokeWidth="2.1"
-        />
-        <g fill="var(--study-paper)" stroke="var(--study-accent)" strokeWidth="1.3">
-          <ellipse cx="446" cy="161" rx="12" ry="5" transform="rotate(-54 446 161)" />
-          <ellipse cx="490" cy="206" rx="12" ry="5" transform="rotate(-9 490 206)" />
-          <ellipse cx="454" cy="271" rx="12" ry="5" transform="rotate(37 454 271)" />
-          <circle cx="373" cy="217" r="5" />
+      <g className="study-unfold" style={{ animationDelay: "160ms" }}>
+        <path d={liftedRegion} transform="translate(4 10)" fill="var(--study-ink)" opacity=".07" />
+        <path d={liftedRegion} transform="translate(4 10)" fill={`url(#${prefix}-hatch)`} opacity=".65" />
+        <path d={liftedRegion} fill="var(--study-paper)" />
+        <path d={liftedRegion} fill={`url(#${prefix}-wash)`} />
+        <path d={liftedRegion} fill={`url(#${prefix}-fine)`} opacity=".4" />
+        <path d="M283 225C318 240 346 276 396 281C440 286 479 266 523 258C473 254 444 276 398 270C348 264 322 230 283 225Z" fill={`url(#${prefix}-hatch)`} />
+        <path d="M283 225C318 240 346 276 396 281C440 286 479 266 523 258" stroke="var(--study-ink)" strokeWidth="1.2" />
+        <path d={liftedRegion} stroke="var(--study-accent)" strokeWidth="1" />
+        <path d="M497 121C489 136 483 145 471 150C484 151 494 146 500 137Z" fill={`url(#${prefix}-hatch)`} stroke="var(--study-ink)" strokeWidth=".65" />
+        <path d="M329 189C349 149 398 134 445 140M338 195C364 158 397 144 432 147M344 202C371 173 391 162 410 158" stroke="var(--study-ink)" strokeWidth=".65" opacity=".27" />
+        <path d={liftedRegion} transform="translate(0 -3)" clipPath={`url(#${prefix}-delta-insert)`} stroke="var(--study-paper)" strokeWidth="1.4" />
+
+        <path d="M366 217C400 222 446 224 483 218M366 217C401 237 429 253 455 260" stroke="var(--study-accent)" strokeWidth="1.5" className="study-trace" pathLength="1" style={{ animationDelay: "220ms" }} />
+        <path d={deltaThread} stroke="var(--study-paper)" strokeWidth="4.5" />
+        <path d={deltaThread} stroke="var(--study-accent)" strokeWidth="1.85" className="study-trace" pathLength="1" style={{ animationDelay: "100ms" }} />
+
+        <g fill="var(--study-paper)" stroke="var(--study-accent)" strokeWidth="1.2">
+          <circle cx="277" cy="226" r="4" />
+          <circle cx="366" cy="217" r="5" />
+          <circle cx="451" cy="169" r="3.5" />
+          <circle cx="483" cy="218" r="3.5" />
+          <circle cx="455" cy="260" r="3.5" />
         </g>
-        <path
-          d="M440 169L452 153M479 208L501 204M445 264L463 278"
-          stroke="var(--study-accent)"
-          strokeWidth=".85"
-        />
-        <circle cx="373" cy="217" r="1.8" fill="var(--study-accent)" />
-        <path d="M493 266L524 305H566" stroke="var(--study-accent)" strokeWidth=".8" />
-        <text
-          x="560"
-          y="332"
-          textAnchor="end"
-          className="study-label"
-          fill="var(--study-ink)"
-        >
-          expanded: true
-        </text>
+        <circle cx="366" cy="217" r="1.7" fill="var(--study-accent)" />
+        <g stroke="var(--study-accent)" strokeWidth="1" opacity=".72">
+          <path d="M413 158h44m-44-7h25M433 206h48m-48-7h29M418 246h48m-48-7h29" />
+          <path d="M400 150v8m-4-4h8M420 198v8m-4-4h8M405 238v8m-4-4h8" />
+        </g>
       </g>
 
-      <g stroke="var(--study-muted)" strokeWidth=".7">
-        <path d="M123 276L93 322V338" opacity=".5" />
-        <path d="M209 303L215 337" />
+      <g className="study-reveal" style={{ animationDelay: "430ms" }}>
+        <path d="M149 328L116 346H84M213 334l7 12M492 275l30 67h44" stroke="var(--study-muted)" strokeWidth=".75" />
+        <text x="62" y="370" className="study-label study-label-muted">before</text>
+        <text x="188" y="370" className="study-label">current</text>
+        <text x="562" y="370" textAnchor="end" className="study-label">expanded: true</text>
+        <text x="562" y="390" textAnchor="end" className="study-micro">new content, same document</text>
       </g>
-      <text x="67" y="363" className="study-label study-label-muted">
-        before
-      </text>
-      <text x="184" y="363" className="study-label" fill="var(--study-ink)">
-        current
-      </text>
-      <text x="349" y="362" className="study-micro" fill="var(--study-muted)">
-        return only what changed
-      </text>
     </g>
   );
 }

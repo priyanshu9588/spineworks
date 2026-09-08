@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { AsciiArt } from "@/components/ui/n-ascii";
 import { RuntimeShowcase } from "@/components/runtime-showcase";
 import { BenchmarkShowcase } from "@/components/benchmark-showcase";
+import hero from "./hero.module.css";
 
 const introWord = "Spine";
 const repositoryUrl = "https://github.com/priyanshu9588/spineworks";
@@ -13,7 +14,7 @@ const clientSnapshot = () => true;
 const serverSnapshot = () => false;
 
 const shell =
-  "site-frame mx-auto grid w-[calc(100%-2rem)] max-w-[1120px] grid-cols-4 gap-x-4 border-x px-4 md:w-[calc(100%-3rem)] md:grid-cols-8 md:gap-x-5 md:px-5 lg:w-[calc(100%-5rem)] lg:grid-cols-12 lg:gap-x-6 lg:px-6";
+  "site-frame mx-auto grid w-[calc(100%-2rem)] max-w-[1280px] grid-cols-4 gap-x-4 border-x px-4 md:w-[calc(100%-3rem)] md:grid-cols-8 md:gap-x-5 md:px-5 lg:w-[calc(100%-5rem)] lg:grid-cols-12 lg:gap-x-6 lg:px-6";
 
 const topbarLink =
   "inline-flex h-fit items-center rounded-md px-3 py-1.5 text-xs text-muted hover:bg-accent-soft hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
@@ -29,12 +30,14 @@ export default function Home() {
   const [introRevealed, setIntroRevealed] = useState(false);
   const reduceMotion = useReducedMotion();
   const showIntro = hydrated && isLoading;
+  const introActive = hydrated && !loaderExited;
   const pageReady = !hydrated || loaderExited;
 
   useEffect(() => {
     if (!hydrated) return;
     let cancelled = false;
     let timer = 0;
+    let fontTimer = 0;
 
     const wait = (duration: number) =>
       new Promise<void>((resolve) => {
@@ -42,7 +45,13 @@ export default function Home() {
       });
 
     const runIntro = async () => {
-      await document.fonts.ready;
+      await Promise.race([
+        document.fonts.ready,
+        new Promise<void>((resolve) => {
+          fontTimer = window.setTimeout(resolve, 1000);
+        }),
+      ]);
+      window.clearTimeout(fontTimer);
       if (cancelled) return;
 
       if (reduceMotion) {
@@ -72,11 +81,12 @@ export default function Home() {
     return () => {
       cancelled = true;
       window.clearTimeout(timer);
+      window.clearTimeout(fontTimer);
     };
   }, [hydrated, reduceMotion]);
 
   useEffect(() => {
-    if (!showIntro) return;
+    if (!introActive) return;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -84,10 +94,10 @@ export default function Home() {
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [showIntro]);
+  }, [introActive]);
 
   return (
-    <LayoutGroup id="site-loader">
+    <>
       <AnimatePresence
         initial={false}
         onExitComplete={() => setLoaderExited(true)}
@@ -103,7 +113,7 @@ export default function Home() {
         {showIntro && (
           <motion.div
             key="loader-rails"
-            className="pointer-events-none fixed inset-y-0 inset-x-0 z-[105] border-x border-line [--loader-rail-inset:1rem] md:[--loader-rail-inset:1.5rem] lg:[--loader-rail-inset:max(2.5rem,calc((100vw-1120px)/2))]"
+            className="pointer-events-none fixed inset-y-0 inset-x-0 z-[105] border-x border-line [--loader-rail-inset:1rem] md:[--loader-rail-inset:1.5rem] lg:[--loader-rail-inset:max(2.5rem,calc((100vw-1280px)/2))]"
             exit={{
               left: "var(--loader-rail-inset)",
               right: "var(--loader-rail-inset)",
@@ -114,14 +124,15 @@ export default function Home() {
             }}
           />
         )}
-      </AnimatePresence>
       {showIntro && (
-        <div className="pointer-events-none fixed inset-0 z-[110] grid place-items-center px-6 text-copy">
-          <motion.span
-            layoutId="spine-wordmark"
+        <motion.div
+          key="loader-wordmark"
+          exit="dissolved"
+          className="pointer-events-none fixed inset-0 z-[110] grid place-items-center px-6 text-copy"
+        >
+          <span
             aria-label={introWord}
             className="inline-flex font-mono text-[clamp(2.5rem,5vw,4rem)] leading-none font-semibold tracking-[-.07em]"
-            transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.76, 0, 0.24, 1] }}
           >
             <span aria-hidden="true" className="inline-flex">
               {Array.from(introWord).map((character, index) => {
@@ -136,20 +147,36 @@ export default function Home() {
                     : "bg-faint";
 
                 return (
-                  <span className="relative inline-grid w-[1ch] place-items-center" key={`${character}-${index}`}>
+                  <motion.span
+                    className="relative inline-grid w-[1ch] place-items-center"
+                    key={`${character}-${index}`}
+                    initial={{ opacity: 1, filter: "blur(0px)" }}
+                    variants={{
+                      dissolved: {
+                        opacity: 0,
+                        filter: reduceMotion ? "blur(0px)" : "blur(3px)",
+                        transition: {
+                          duration: reduceMotion ? 0 : 0.36,
+                          delay: reduceMotion ? 0 : index * 0.025,
+                          ease: "easeOut",
+                        },
+                      },
+                    }}
+                  >
                     <span className={showCharacter && !hasBlock ? "" : "text-transparent"}>
                       {character}
                     </span>
                     {hasBlock && (
                       <span className={`absolute inset-x-0 inset-y-[.08em] ${blockColor}`} />
                     )}
-                  </span>
+                  </motion.span>
                 );
               })}
             </span>
-          </motion.span>
-        </div>
+          </span>
+        </motion.div>
       )}
+      </AnimatePresence>
 
         <a href="#content" className="fixed top-2 left-2 z-[130] -translate-y-16 bg-ink px-4 py-2 text-xs text-inverse focus:translate-y-0">Skip to content</a>
 
@@ -159,9 +186,10 @@ export default function Home() {
               {!hydrated && <span>Spine</span>}
               {hydrated && !isLoading && (
                 <motion.span
-                  layoutId="spine-wordmark"
                   className="inline-flex font-mono text-base leading-none font-semibold tracking-[-.07em]"
-                  transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.76, 0, 0.24, 1] }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.3, delay: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
                 >
                   <span aria-hidden="true" className="inline-flex">
                     {Array.from(introWord).map((character, index) => (
@@ -186,16 +214,18 @@ export default function Home() {
         tabIndex={-1}
         className={`scroll-mt-13 overflow-x-clip bg-canvas text-copy ${pageReady ? "" : "[&_.site-frame]:border-x-transparent"}`}
       >
-      <section id="top" className="relative h-[60vh] scroll-mt-13 overflow-hidden border-b border-line bg-canvas">
-        <div className={`${shell} relative h-full content-center overflow-hidden border-line py-8 text-center md:py-12 lg:py-16`}>
+      <section id="top" aria-labelledby="hero-title" className="relative scroll-mt-13 border-b border-line bg-canvas">
+        <div className={`${shell} ${hero.frame} border-line`}>
           {loaderExited && (
             <AsciiArt
               generated="flowers"
-              className="pointer-events-none absolute inset-0 h-full w-full overflow-hidden"
+              className={`${hero.art} pointer-events-none absolute inset-0 h-full w-full overflow-hidden`}
             />
           )}
-          <h1 className="relative z-10 col-span-4 m-0 justify-self-center font-mono text-[clamp(3.1rem,7vw,7rem)] leading-[.9] font-light tracking-[-.075em] text-copy text-balance md:col-span-8 lg:col-start-2 lg:col-span-10">The web<br />made <em className="not-italic">legible</em></h1>
-          <p className="relative z-10 col-span-4 mt-8 max-w-[38rem] justify-self-center text-sm leading-6 text-muted md:col-start-2 md:col-span-6 lg:col-start-4 lg:col-span-6">Spine gives your agent eyes and helps it understand and interact with the web.</p>
+          <div className={`${hero.copy} col-span-full justify-self-center`}>
+            <h1 id="hero-title" className={`${hero.title} font-mono font-light text-copy`}>The web<br />made <em className="not-italic">legible</em></h1>
+            <p className={`${hero.description} text-muted`}>Spine gives your agent eyes and helps it understand and interact with the web.</p>
+          </div>
         </div>
       </section>
 
@@ -211,8 +241,8 @@ export default function Home() {
         <footer id="contact" aria-labelledby="contact-heading" className="scroll-mt-13 overflow-x-clip bg-contrast text-inverse">
           <div className={`${shell} border-inverse/15`}>
             <div className="col-span-full grid gap-y-10 py-12 md:grid-cols-8 md:gap-x-5 md:py-16 lg:grid-cols-12 lg:gap-x-6">
-              <h2 id="contact-heading" className="max-w-3xl font-mono text-[clamp(2rem,4vw,4rem)] leading-[1.04] font-medium tracking-[-.065em] text-balance md:col-span-5 lg:col-span-8">Bring reliable web execution into <span className="text-accent-light">your agent stack</span></h2>
-              <div className="md:col-span-3 lg:col-start-10 lg:col-span-3">
+              <h2 id="contact-heading" className="min-w-0 max-w-3xl font-mono text-[clamp(2rem,4vw,4rem)] leading-[1.04] font-medium tracking-[-.065em] text-balance [overflow-wrap:anywhere] md:col-span-5 lg:col-span-8">Bring reliable web execution into <span className="text-accent-light">your agent stack</span></h2>
+              <div className="min-w-0 [overflow-wrap:anywhere] md:col-span-3 lg:col-start-10 lg:col-span-3">
                 <a href="#top" aria-label="Spine home" className="inline-flex min-h-11 items-center font-mono text-xl font-semibold tracking-[-.06em] text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Spine</a>
                 <p className="mt-3 max-w-xs text-sm leading-6 text-inverse/75">A semantic web runtime for agents</p>
                 <nav aria-label="Footer navigation" className="mt-4 flex flex-wrap gap-x-5">
@@ -228,6 +258,6 @@ export default function Home() {
             </div>
           </div>
         </footer>
-    </LayoutGroup>
+    </>
   );
 }

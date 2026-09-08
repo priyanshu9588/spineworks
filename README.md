@@ -1,6 +1,6 @@
 # Spine
 
-A semantic web runtime for agents. This is the Spine landing page, with interactive runtime illustrations and scoped benchmark results.
+A semantic web runtime for agents. This is the Spine landing page, with a scroll-led runtime narrative, native ink-and-paper illustrations, and scoped benchmark results.
 
 - Website: https://spineworks.vercel.app
 - Repository: https://github.com/priyanshu9588/spineworks
@@ -24,7 +24,9 @@ npm run build
 npm run start
 ```
 
-The page includes keyboard-accessible runtime tabs, illustration pause/replay controls, reduced-motion support, native benchmark disclosures, and a readable page before JavaScript loads.
+The page includes five runtime chapters with a shared illustration that advances on scroll. Numbered anchors support keyboard navigation; phones and short windows show an illustration with each chapter. The intro wordmark dissolves in place while its backdrop lifts away.
+
+Illustrations include pause/replay controls, follow live reduced-motion preferences, and stop animating offscreen or in hidden tabs. Content, illustrations, and native benchmark disclosures remain readable without JavaScript. A bounded font wait prevents stalled font requests from holding the intro open.
 
 See [release checks](docs/release-checks.md) for the launch test matrix and measured results.
 

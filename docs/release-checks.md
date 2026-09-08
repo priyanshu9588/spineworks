@@ -1,27 +1,27 @@
-# Launch checks — 9 September 2026
+# Release checks — 9 September 2026
 
 Production: https://spineworks.vercel.app
 
-The release was checked across 12 areas. Failures found during testing were fixed and the affected checks were repeated on the rebuilt site. Local browser tests used the optimized production server; the public Vercel deployment was checked separately.
+The current revision replaces runtime tabs with five scroll-led chapters, refines the native SVG artwork, dissolves the intro wordmark in place, and improves the hero's proportions. Local checks used the optimized production server. Issues discovered during review were corrected and their affected checks repeated.
 
 | # | Area | Checks and results |
 | --- | --- | --- |
-| 1 | Production build | Next.js build, TypeScript, ESLint, and diff checks passed. Vercel also completed a fresh `npm ci` and production build. Full dependency audit: zero reported vulnerabilities. |
-| 2 | Responsive layout | 320, 375, 768, 1024, 1440, and 1920px viewports passed without horizontal overflow. Benchmarks stack beneath their introduction on phones and remain in the right column on desktop. |
-| 3 | Enlarged text | All six widths were repeated at 200% text sizing, with every benchmark scope expanded. No benchmark text clipping or overflow. |
-| 4 | Keyboard navigation | Arrow Up/Down, Home/End, wrapping, roving tab focus, visible focus indicators, and Enter/Space disclosures passed. The skip link moves focus to main content. |
-| 5 | Accessible presentation | All five illustrations resolve their accessible titles/descriptions. Tab/panel labels match. Small-label contrast was improved; the deployed Lighthouse accessibility audit reports 100. |
-| 6 | Intro and hydration | Fresh normal and reduced-motion loads completed without hydration/page errors. The normal intro restores scrolling; reduced motion removes the wordmark flight. Content and navigation remain readable before JavaScript runs. |
-| 7 | Motion controls | Pause, Play, Replay, pointer tilt/reset, pause persistence across scenes, offscreen suspension, live reduced-motion changes, and fourteen rapid tab changes passed. Both runtime and ASCII hero stop when reduced motion is enabled. |
-| 8 | Browser engines | Chromium and WebKit 26.6 passed desktop, reduced-motion, and 375px touch scenarios. Firefox 155 could not launch because the host could not access its temporary profile; Firefox remains unverified. |
-| 9 | Failure fallbacks | Disabled JavaScript, blocked script requests, and failed web-font requests were tested. The page remains readable and scrollable, the wordmark/navigation remain visible, and native benchmark disclosures still work. |
-| 10 | Benchmark accuracy | Verified 98.81% (58,566/59,271), 95.16% (1,829/1,922), and 40/40. Scale proportions use raw counts. Scope, run date, denominator context, and compatibility caveat remain intact. |
-| 11 | Public routes and sharing | Homepage, favicon, Open Graph image, robots, and sitemap return HTTP 200 with appropriate types; an unknown route returns 404. Canonical/share URLs point to the production domain. GitHub links point to the separate public repository. |
-| 12 | Deployed smoke and performance | Public desktop, 375px normal-motion, 320px reduced-motion, and no-JavaScript checks passed, with no page errors or failed asset requests in normal operation. All scopes and artwork controls worked. Mobile Lighthouse results below. |
+| 1 | Build | Next.js production build, TypeScript, ESLint, and diff checks pass. No dependencies were added. |
+| 2 | Responsive layout | 320×640, 375×812, 768×1024, 1024×768, 1440×900, and 2406×1347 render without horizontal overflow. Hero copy stays inside its frame. |
+| 3 | Short windows and zoom | 844×390 and 1440×700 show inline artwork. Wide inline layouts pair each chapter with its own figure. Sticky mode begins at 1024px wide and 768px tall; it fits normal and 200% root text, with a worst measured bottom edge of 747.2px. Zoom-equivalent 720×450 and 1203×450 also unpin correctly. |
+| 4 | Enlarged text | 320px and 375px were checked with all HTML text doubled and all three benchmark scopes expanded. A clipped footer heading at 320px was fixed by constraining its grid item and allowing long words to wrap; the rebuilt heading fits at 64px. Illustration captions wrap beside their controls. |
+| 5 | Intro | Centered letters move 0px during the fade/blur dissolve; the header wordmark has no transform. The backdrop still lifts. Scrolling remains locked until the exit finishes, then restores. Sample completion times: 2.50s normal, 0.13s reduced motion, 3.50s with four deliberately stalled font requests. |
+| 6 | Scroll narrative | All five scenes select correctly forward and backward. Fifteen rapid chapter jumps settle on the right scene. Resizing changes between one sticky figure and five inline figures. The sticky stage releases before benchmarks. Scroll updates never move keyboard focus. |
+| 7 | Motion controls | Pause persists across desktop scenes. Play and Replay resume correctly. Cold and live reduced-motion preferences stop traces, paper reveals, and flow markers; changing the preference back restores controls. Mobile touch controls and offscreen suspension pass. |
+| 8 | Keyboard and accessible content | Skip to content becomes visible and focuses main. All five numbered anchors focus their matching article with visible outlines. Enter/Space toggle benchmark disclosures. The five SVGs expose matching titles and meaningful descriptions. |
+| 9 | Failure fallbacks | JavaScript disabled, all six script requests blocked, four font requests blocked, and fonts deliberately stalled were checked. The first two modes paint five real illustrations, retain visible navigation/copy, and keep native disclosures usable. |
+| 10 | Benchmark accuracy | 98.81% (58,566/59,271), 95.16% (1,829/1,922), and 40/40 remain intact. Scales use raw counts. Scope, 26 August 2026 run date, denominator context, and compatibility caveat are preserved. |
+| 11 | Browser engines | Chromium and WebKit 26.6 pass the relevant desktop, touch, scroll, and reduced-motion cases without JavaScript errors. Firefox could not launch on this host in the earlier review and remains unverified. |
+| 12 | Local performance and network | Chrome's unthrottled local trace measured LCP 2.44s and CLS 0.02. The retained intro contributes to render delay; the animated rails account for most measured shift. All script, font, and stylesheet requests succeed. These local figures are not mobile or field measurements. |
 
-## Measured mobile audit
+## Previous public mobile audit
 
-Lighthouse 13.4.1, navigation audit of the public HTTPS deployment using its default simulated mobile settings:
+The following Lighthouse 13.4.1 results describe the earlier public release (`9e5dc30`), before the current scroll/hero revision. They are retained as a baseline, not measurements of the current revision.
 
 | Metric | Result |
 | --- | --- |
@@ -34,8 +34,6 @@ Lighthouse 13.4.1, navigation audit of the public HTTPS deployment using its def
 | Total blocking time | 50 milliseconds |
 | Cumulative layout shift | 0 |
 
-These are synthetic launch measurements, not field data or a guarantee for every device. The preserved intro and animated ASCII field contribute to the largest-contentful-paint timing. No Firefox compatibility claim is made.
-
 ## Deployment operation
 
-The `main` branch is pushed to the separate `priyanshu9588/spineworks` repository. Vercel production was published with the authenticated CLI and assigned to `spineworks.vercel.app`. Automatic Git-triggered deployments require adding a GitHub login connection in the Vercel account; direct CLI deployments work.
+The separate public repository is `priyanshu9588/spineworks`. Vercel production is published with the authenticated CLI and assigned to `spineworks.vercel.app`. Automatic Git-triggered deployments require a GitHub login connection in the Vercel account; direct CLI deployments work. Reference screenshots and local test artifacts are excluded from Git and deployment.

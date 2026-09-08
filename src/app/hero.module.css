@@ -1,0 +1,53 @@
+.frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(23rem, 54svh, 38rem);
+  align-content: center;
+  padding-block: clamp(4rem, 6vw, 6.5rem);
+  text-align: center;
+}
+
+.art {
+  opacity: 0.86;
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: min(100%, 46rem);
+  min-width: 0;
+}
+
+/* Keep the glyph field outside the copy, with an edge that disappears into it. */
+.copy::before {
+  position: absolute;
+  z-index: -1;
+  inset: -3rem -4rem;
+  background: var(--color-canvas);
+  mask-image:
+    linear-gradient(to right, transparent, #000 4rem, #000 calc(100% - 4rem), transparent),
+    linear-gradient(to bottom, transparent, #000 3rem, #000 calc(100% - 3rem), transparent);
+  mask-composite: intersect;
+  pointer-events: none;
+  content: "";
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.65rem, 7.25vw, 6.75rem);
+  letter-spacing: -0.075em;
+  line-height: 0.97;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 36rem;
+  margin: clamp(1.5rem, 2.4vw, 2rem) auto 0;
+  font-size: clamp(0.875rem, 1vw, 1rem);
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}

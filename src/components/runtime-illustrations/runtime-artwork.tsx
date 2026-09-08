@@ -4,20 +4,20 @@ import { type PointerEvent, useId, useRef, useState, useSyncExternalStore } from
 import { AnimatePresence, motion, useInView, useSpring } from "motion/react";
 import { runtimeFeatures } from "@/content/runtime-features";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
-import { SemanticStudy } from "./semantic-study";
+import { SemanticStudy, semanticThread } from "./semantic-study";
 import { ActionStudy, actionThread } from "./action-study";
 import { SessionStudy, identityThread } from "./session-study";
-import { CapabilityStudy } from "./capability-study";
-import { DeltaStudy } from "./delta-study";
+import { CapabilityStudy, capabilityThread } from "./capability-study";
+import { DeltaStudy, deltaThread } from "./delta-study";
 import "./runtime-artwork.css";
 
 const studies = [SemanticStudy, ActionStudy, SessionStudy, CapabilityStudy, DeltaStudy];
 const flowPaths = [
-  "M97 180C179 174 185 233 267 239C306 240 320 162 361 132C375 121 391 112 407 108",
+  semanticThread,
   actionThread,
   identityThread,
-  "M178 358C172 330 190 303 216 284C245 261 266 226 276 194L278 185C324 161 381 157 417 96",
-  "M254 226C294 238 330 233 373 217C402 206 428 186 446 161",
+  capabilityThread,
+  deltaThread,
 ];
 
 function subscribeVisibility(update: () => void) {
