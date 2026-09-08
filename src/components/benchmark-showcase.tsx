@@ -128,19 +128,19 @@ export function BenchmarkShowcase() {
           <p className="benchmark-intro-copy">Three tested surfaces.<br />The full denominator, every time.</p>
           <p className="benchmark-caveat">These results describe the tested surfaces, not complete browser compatibility.</p>
         </div>
-
-        <div className="benchmark-record">
-          <p className="benchmark-record-title">Pinned revisions.<br />Preserved receipts.</p>
-          <dl>
-            <div><dt>Run</dt><dd><time dateTime="2026-08-26">26 August 2026</time></dd></div>
-            <div><dt>Denominators</dt><dd>Frozen</dd></div>
-            <div><dt>Evidence</dt><dd>Local receipts retained</dd></div>
-          </dl>
-        </div>
       </div>
 
       <div className="benchmark-results">
         {results.map((result, index) => <BenchmarkResult key={result.id} result={result} index={index} />)}
+      </div>
+
+      <div className="benchmark-record">
+        <p className="benchmark-record-title">Pinned revisions.<br />Preserved receipts.</p>
+        <dl>
+          <div><dt>Run</dt><dd><time dateTime="2026-08-26">26 August 2026</time></dd></div>
+          <div><dt>Denominators</dt><dd>Frozen</dd></div>
+          <div><dt>Evidence</dt><dd>Local receipts retained</dd></div>
+        </dl>
       </div>
     </div>
   );

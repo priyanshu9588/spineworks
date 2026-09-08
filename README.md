@@ -29,6 +29,7 @@ The page includes five runtime chapters with a shared illustration that advances
 Illustrations include pause/replay controls, follow live reduced-motion preferences, and stop animating offscreen or in hidden tabs. Content, illustrations, and native benchmark disclosures remain readable without JavaScript. A bounded font wait prevents stalled font requests from holding the intro open.
 
 See [release checks](docs/release-checks.md) for the launch test matrix and measured results.
+The [spacing audit](docs/spacing-audit.md) documents the layout findings, before/after measurements, and refinements.
 
 ## Deployment
 

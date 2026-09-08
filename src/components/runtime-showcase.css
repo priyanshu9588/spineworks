@@ -7,7 +7,7 @@
 .runtime-narrative { min-width: 0; }
 
 .runtime-story-intro {
-  padding: 32px 16px;
+  padding: 24px 16px;
   border-bottom: 1px solid var(--color-line);
 }
 
@@ -36,7 +36,7 @@
 }
 
 .runtime-scroll-cue {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 16px;
   margin-top: 30px;
@@ -159,16 +159,26 @@
 
 .runtime-story[data-pinned="true"] .runtime-narrative { border-right: 1px solid var(--color-line); }
 .runtime-story[data-pinned="true"] .runtime-story-intro { padding-block: 32px; }
+.runtime-story[data-pinned="true"] .runtime-scroll-cue { display: flex; }
 
 .runtime-story[data-pinned="true"] .runtime-chapter {
   display: flex;
-  min-height: clamp(20rem, 52svh, 36rem);
+  min-height: clamp(18rem, 36svh, 22rem);
   align-items: flex-start;
 }
 
+.runtime-story[data-pinned="true"] .runtime-chapters > li:last-child .runtime-chapter {
+  min-height: max(clamp(18rem, 36svh, 22rem), calc(var(--runtime-figure-height, 34rem) + 16px));
+}
+
+.runtime-story[data-pinned="true"] .runtime-chapter-description {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
 @media (min-width: 768px) {
-  .runtime-story-intro,
-  .runtime-chapter-copy { padding: 40px 20px; }
+  .runtime-story-intro { padding: 28px 20px; }
+  .runtime-chapter-copy { padding: 32px 20px; }
 }
 
 @media (min-width: 1024px) {

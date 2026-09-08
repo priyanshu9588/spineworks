@@ -240,9 +240,9 @@ export default function Home() {
 
         <footer id="contact" aria-labelledby="contact-heading" className="scroll-mt-13 overflow-x-clip bg-contrast text-inverse">
           <div className={`${shell} border-inverse/15`}>
-            <div className="col-span-full grid gap-y-10 py-12 md:grid-cols-8 md:gap-x-5 md:py-16 lg:grid-cols-12 lg:gap-x-6">
+            <div className="col-span-full grid gap-y-6 py-10 md:grid-cols-8 md:gap-x-5 md:py-12 lg:grid-cols-12 lg:gap-x-6">
               <h2 id="contact-heading" className="min-w-0 max-w-3xl font-mono text-[clamp(2rem,4vw,4rem)] leading-[1.04] font-medium tracking-[-.065em] text-balance [overflow-wrap:anywhere] md:col-span-5 lg:col-span-8">Bring reliable web execution into <span className="text-accent-light">your agent stack</span></h2>
-              <div className="min-w-0 [overflow-wrap:anywhere] md:col-span-3 lg:col-start-10 lg:col-span-3">
+              <div className="min-w-0 [overflow-wrap:anywhere] md:col-span-3 lg:col-start-9 lg:col-span-4">
                 <a href="#top" aria-label="Spine home" className="inline-flex min-h-11 items-center font-mono text-xl font-semibold tracking-[-.06em] text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Spine</a>
                 <p className="mt-3 max-w-xs text-sm leading-6 text-inverse/75">A semantic web runtime for agents</p>
                 <nav aria-label="Footer navigation" className="mt-4 flex flex-wrap gap-x-5">

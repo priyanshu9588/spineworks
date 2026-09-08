@@ -1,0 +1,30 @@
+# Spacing audit — 9 September 2026
+
+The main issue was fixed-height space around short text, compounded by benchmark metadata appearing before results on mobile. Adding decoration would not improve the reading flow. This revision uses a denser shared grid, content-aware minimum heights, and earlier access to evidence.
+
+Measurements below compare the first scroll-led release (`2549d9f`) with the spacing refinement. Both were measured after hydration with reduced motion enabled so animation timing did not affect the comparison.
+
+| Area | Before | After |
+| --- | --- | --- |
+| Hero, 1440×900 | 487px | 433px |
+| Hero, 2406×1347 | 609px | 545px |
+| Hero, 375×812 | 439px | 391px |
+| Ordinary runtime chapter, 1440×900 | 468px | 324px |
+| Ordinary runtime chapter, 2406×1347 | 576px | 352px |
+| Entire runtime, 1440×900 | 2645px | 2261px, 15% shorter |
+| Entire runtime, 2406×1347 | 3185px | 2373px, 26% shorter |
+| Desktop benchmark section | 805px | 736px |
+| First benchmark result, 375px | 518px into the section | 282px into the section |
+| Footer, 1440×900 | 376px | 344px |
+
+## Approaches applied
+
+1. **Size reading steps around their content.** Ordinary desktop chapters use a bounded 36svh minimum instead of 52svh. Description text increases from 14px to 16px. All sections can grow when text is enlarged.
+2. **Keep the illustration aligned with reading.** The activation line derives from the sticky figure's height. A ResizeObserver measures that figure, and the last chapter reserves its height plus 16px, allowing the final illustration to remain fully visible when reached by an anchor.
+3. **Use one consistent grid.** Runtime and Benchmarks share a 5/7 desktop split. The footer uses all twelve columns instead of leaving column nine unused. The 1280px maximum width remains appropriate for readable typography and a fully visible illustration.
+4. **Bring proof forward.** On mobile, benchmark results come before the run record. On larger screens, the record follows its introduction directly in the left column. Metric rows use tighter spacing while disclosure controls retain their 44px minimum height.
+5. **Remove repeated instructions and oversized padding.** Inline layouts do not need a separate scroll cue. The mobile runtime introduction, hero, and footer have smaller vertical spacing.
+
+## Checks
+
+The refined hero and footer fit 320, 375, 1440, and 2406px widths, including doubled HTML text on narrow screens. Runtime progression, anchors, final-scene visibility, resizing, and enlarged descriptions pass at 1024×768, 1440×900, and 2406×1347. Height measurements stabilize without ResizeObserver errors. WebKit checks confirm the new benchmark order and flexible metadata columns at 320/375px with both 200% root text and doubled HTML text/line heights, with all scopes expanded. See [release checks](release-checks.md) for browser, fallback, accessibility, and deployment validation.

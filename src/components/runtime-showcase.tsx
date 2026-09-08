@@ -20,6 +20,7 @@ export function RuntimeShowcase() {
   const [active, setActive] = useState(0);
   const pinned = useSyncExternalStore(subscribeLayout, readLayout, serverLayout);
   const story = useRef<HTMLDivElement>(null);
+  const figure = useRef<HTMLElement>(null);
   const chapters = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
@@ -27,7 +28,18 @@ export function RuntimeShowcase() {
 
     const update = () => {
       frame = 0;
-      const readingLine = Math.min(window.innerHeight * 0.36, 320);
+      const plate = figure.current;
+      const plateHeight = plate?.getBoundingClientRect().height;
+      const readingLine = plate && plateHeight
+        ? Number.parseFloat(window.getComputedStyle(plate).top) + plateHeight * 0.35
+        : Math.min(window.innerHeight * 0.36, 320);
+
+      if (plateHeight && story.current) {
+        const height = `${Math.ceil(plateHeight)}px`;
+        if (story.current.style.getPropertyValue("--runtime-figure-height") !== height) {
+          story.current.style.setProperty("--runtime-figure-height", height);
+        }
+      }
       let current = 0;
 
       for (let index = 0; index < chapters.current.length; index += 1) {
@@ -44,6 +56,7 @@ export function RuntimeShowcase() {
 
     const observer = new ResizeObserver(schedule);
     if (story.current) observer.observe(story.current);
+    if (figure.current) observer.observe(figure.current);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     update();
@@ -90,7 +103,7 @@ export function RuntimeShowcase() {
       </div>
 
       {pinned && (
-        <aside className="runtime-sticky-figure" aria-label="Runtime illustrations">
+        <aside ref={figure} className="runtime-sticky-figure" aria-label="Runtime illustrations">
           <RuntimeArtwork active={active} />
           <nav className="runtime-step-navigation" aria-label="Runtime steps">
             {runtimeFeatures.map((feature, index) => (
