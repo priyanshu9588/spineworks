@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local review screenshots
+/.playwright-mcp/
+/a1.jpeg
+/a2.jpeg
+/Pasted*.tiff

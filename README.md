@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spine
 
-## Getting Started
+A semantic web runtime for agents. This is the Spine landing page, with interactive runtime illustrations and scoped benchmark results.
 
-First, run the development server:
+- Website: https://spineworks.vercel.app
+- Repository: https://github.com/priyanshu9588/spineworks
 
-```bash
+## Development
+
+Requires Node.js 24 and npm.
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. The site uses Next.js 16, React 19, Tailwind CSS 4, Motion, and locally served Commit Mono fonts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Validation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+npm run lint
+npm run build
+npm run start
+```
 
-## Learn More
+The page includes keyboard-accessible runtime tabs, illustration pause/replay controls, reduced-motion support, native benchmark disclosures, and a readable page before JavaScript loads.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The `spineworks` Vercel project serves the production site. Deploy the current `main` branch with `vercel --prod`. Automatic Git deployments require a GitHub login connection in the Vercel account. Local reference screenshots are excluded from version control and deployment.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The original landing-page history is retained from https://github.com/ronishrohan/spine-site.

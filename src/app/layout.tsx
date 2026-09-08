@@ -32,9 +32,28 @@ const commitMono = localFont({
   adjustFontFallback: false,
 });
 
+const title = "Spine — The web made legible";
+const description = "A semantic web runtime for agents: compact page state, verified actions, and explicit outcomes.";
+
 export const metadata: Metadata = {
-  title: "Spine",
-  description: "A semantic web runtime for agents: compact page state, verified actions, and explicit outcomes.",
+  metadataBase: new URL("https://spineworks.vercel.app"),
+  title,
+  description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "Spine",
+    title,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [{ url: "/opengraph-image", alt: "Spine — The web made legible. A semantic web runtime for agents." }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -43,7 +62,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${commitMono.variable} overscroll-none scroll-smooth`}
     >
-      <body className="min-w-80 overscroll-none bg-canvas font-mono tracking-[-.015em] antialiased">
+      <body className="min-w-0 overscroll-none bg-canvas font-mono tracking-[-.015em] antialiased">
         {children}
       </body>
     </html>

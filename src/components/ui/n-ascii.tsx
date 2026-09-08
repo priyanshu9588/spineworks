@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 
 const DEFAULT_CHARACTERS = " .:-=+*#%@";
 const CELL_WIDTH = 9;
@@ -133,6 +134,7 @@ export function AsciiArt({
 }: AsciiArtProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const outputRef = useRef<HTMLPreElement>(null);
+  const prefersReducedMotion = useMotionPreference();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -150,9 +152,6 @@ export function AsciiArt({
     let lastAnimationTime = 0;
     let isVisible = true;
     const frameInterval = 1000 / 12;
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
     const animationStartedAt = performance.now();
     const shouldAnimate = generated === "flowers" && !prefersReducedMotion;
     const canvas = document.createElement("canvas");
@@ -301,7 +300,7 @@ export function AsciiArt({
       intersectionObserver.disconnect();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [characters, generated, invert, src]);
+  }, [characters, generated, invert, prefersReducedMotion, src]);
 
   return (
     <div
