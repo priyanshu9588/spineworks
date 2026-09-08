@@ -19,20 +19,32 @@ The current revision replaces runtime tabs with five scroll-led chapters, refine
 | 11 | Browser engines | Chromium and WebKit 26.6 pass the relevant desktop, touch, scroll, and reduced-motion cases without JavaScript errors. Firefox could not launch on this host in the earlier review and remains unverified. |
 | 12 | Local performance and network | Before the spacing refinement, Chrome's unthrottled local trace measured LCP 2.44s and CLS 0.02. The retained intro contributes to render delay; the animated rails account for most measured shift. All script, font, and stylesheet requests succeed. These local figures are not mobile or field measurements. |
 
-## Previous public mobile audit
+## Current public mobile audit
 
-The following Lighthouse 13.4.1 results describe the earlier public release (`9e5dc30`), before the current scroll/hero revision. They are retained as a baseline, not measurements of the current revision.
+Lighthouse 13.4.1 tested the public HTTPS deployment of `8bf772e` with default simulated mobile settings. No run warnings were reported.
 
 | Metric | Result |
 | --- | --- |
-| Performance | 93 |
+| Performance | 91 |
 | Accessibility | 100 |
 | Best practices | 100 |
 | SEO | 100 |
-| First contentful paint | 1.6 seconds |
-| Largest contentful paint | 3.0 seconds |
-| Total blocking time | 50 milliseconds |
-| Cumulative layout shift | 0 |
+| First contentful paint | 2.0 seconds |
+| Largest contentful paint | 3.1 seconds |
+| Total blocking time | 20 milliseconds |
+| Cumulative layout shift | 0.013 |
+| Speed index | 3.8 seconds |
+
+These are synthetic measurements, not field data or a guarantee for every device. The intentional intro contributes to render delay, and its animated rails contribute a small layout-shift score. The earlier `9e5dc30` release scored 93/100/100/100 with 3.0s LCP, 50ms blocking time, and zero measured CLS; it is not used as the current result.
+
+## Public deployment verification
+
+The final deployment is `dpl_9h1hbJirGrtoqnYH6L8hZ8LbfRae`, assigned to `spineworks.vercel.app`. Vercel completed a fresh installation and production build with zero reported dependency vulnerabilities.
+
+- Desktop 1440×900, mobile 375×812 with normal motion, and 320×640 with reduced motion pass without page errors, failed asset requests, or horizontal overflow.
+- All five desktop scenes advance correctly; mobile shows five inline illustrations. All three benchmark disclosures open. The run record follows the results in document order.
+- The no-JavaScript public page paints five illustrations and keeps native disclosures usable.
+- Homepage, icon, Open Graph image, robots, and sitemap return HTTP 200 with their expected content types; an unknown route returns 404.
 
 ## Deployment operation
 
