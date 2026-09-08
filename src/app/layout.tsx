@@ -60,7 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${commitMono.variable} overscroll-none scroll-smooth`}
+      className={`${commitMono.variable} overscroll-none scroll-smooth motion-reduce:scroll-auto`}
     >
       <body className="min-w-0 overscroll-none bg-canvas font-mono tracking-[-.015em] antialiased">
         {children}

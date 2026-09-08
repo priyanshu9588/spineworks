@@ -26,6 +26,8 @@ npm run start
 
 The page includes keyboard-accessible runtime tabs, illustration pause/replay controls, reduced-motion support, native benchmark disclosures, and a readable page before JavaScript loads.
 
+See [release checks](docs/release-checks.md) for the launch test matrix and measured results.
+
 ## Deployment
 
 The `spineworks` Vercel project serves the production site. Deploy the current `main` branch with `vercel --prod`. Automatic Git deployments require a GitHub login connection in the Vercel account. Local reference screenshots are excluded from version control and deployment.
