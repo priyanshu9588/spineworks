@@ -12,6 +12,8 @@ Chromium production checks independently pass actual touch swipes through every 
 
 Local evidence: `/private/tmp/spine-browser-qa/architecture-mobile-pin-webkit-report.json`. The earlier wide-stage checks below remain unchanged.
 
+Published with the desktop fix as `dpl_5x4kRhUZAFixpsL5Y1xqeX4fTQ5B`, assigned to `spineworks.vercel.app` (release commit `5826777`). Vercel's fresh install, TypeScript check, and production build pass; the dependency audit reports zero vulnerabilities. Public Chromium touch swipes at 375×667 and WebKit scrolling at 390×844 visit every scene forward and backward with a centered 332px stage. Chromium desktop first/last anchors retain the full 53–1000px stage at 1440×1000. Both engines report no browser errors, failed assets, horizontal overflow, or GitHub links. Public mobile and desktop captures were visually reviewed, and the shared browser preview was refreshed to the live phone layout.
+
 ## Runtime stage follow-up
 
 App `86da3ae` fills the pinned runtime column from the measured header to the bottom of the viewport. The artwork keeps its natural proportions and sits in the center; the caption and navigation stay at the bottom. The first native chapter anchor now aligns the stage with the header, and enlarged content still falls back to normal flow.
