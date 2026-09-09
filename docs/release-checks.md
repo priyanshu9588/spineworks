@@ -14,6 +14,8 @@ The follow-up keeps complete benchmark values visible throughout their animation
 - Seventeen focused footer scenarios across Chromium and WebKit verify whole-link wrapping at narrow, tablet, and desktop widths, both text-enlargement modes, and a deliberately constrained 150px navigation column. Labels and arrows stay together, focus styles remain visible, and hit areas stay at least 44px tall.
 - Actual production-build screenshots were reviewed at desktop and mobile sizes. A Chromium element screenshot taller than the viewport included displaced fixed navigation; the normal viewport screenshot was checked separately and renders correctly.
 
+The follow-up app commit is `505d5d0`, published as `dpl_BF1Entf5gYmpjhZbvAXr2JBBQyGa` and assigned to `spineworks.vercel.app`. Vercel's fresh installation, TypeScript check, and production build pass; dependency audit reports zero vulnerabilities. Public checks at 1440×900 and 375×812 with normal motion confirm the new numeral markup, 538px desktop section, whole footer links, working disclosures, and no overflow or page errors. At 320×640 with JavaScript disabled, all complete values and native disclosures remain usable; the expected blocked script preload was excluded from asset-failure checks. Public desktop and mobile screenshots were inspected, and the live benchmark section was opened for review.
+
 The table below records the earlier broader audit. Those checks were not all rerun for this bounded follow-up; its verification is listed above.
 
 | # | Area | Checks and results |
