@@ -2,6 +2,12 @@
 
 Production: https://spineworks.vercel.app
 
+## Product CTA follow-up
+
+App `1278150` removes both public GitHub links and replaces the header CTA with **Explore**, linking to the runtime section. Production build, TypeScript, lint, and four focused Chromium cases pass: desktop, 320px and 768px with 200% text, and 320px without JavaScript. The CTA works from the keyboard; header links do not overlap, and no GitHub links or copy remain in the rendered page.
+
+Published as `dpl_DrSvnX5wa9EKBoPKGVzhb5X5WRkf` at `spineworks.vercel.app`. Public desktop and mobile checks confirm the new CTA, its destination, zero GitHub links, and no page errors or horizontal overflow. The browser preview was refreshed. The checks below record the preceding illustration release.
+
 The current release gives the architectural SVG illustration a concrete subject: a Contact page, its Continue button, and the Delivery step that follows. The exposed spine connects the visible control or field to named facts. Inline layouts show the complete object once, followed by four compact details; narrow screens place the first scene's name, role, and state in readable HTML below the artwork. The green palette, intro dissolve, stationary ASCII hero, and scoped benchmark evidence remain.
 
 ## Current Contact / Continue illustrations
