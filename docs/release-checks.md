@@ -2,6 +2,14 @@
 
 Production: https://spineworks.vercel.app
 
+## Hero background motion restoration
+
+The hero flower field again blooms after the loader and slowly rotates at up to 12 rendered frames per second. It pauses offscreen and in hidden tabs, resumes from its elapsed position, and shows a fully grown static frame for reduced motion. Resize redraws retain the animation position. Runtime artwork keeps its static scenes and scroll-driven selection.
+
+Production build, TypeScript, and lint pass. Focused Chromium checks at 320×667 confirm post-loader growth, visible rotation, 13 updates over 1.2 seconds, offscreen pause/resume, live reduced-motion changes, and animation after resizing to 667×320. The phone runtime's native action link still selects a pinned static scene. Both phone animation frames were visually reviewed; there are no browser errors, failed assets, or horizontal overflow. Headless Chromium keeps tabs visible when switching pages, so a real hidden-tab transition was not exercised. A separate lifecycle review finds no issues with frame cleanup, observer cleanup, or timing continuity.
+
+All four focused WebKit scenarios pass at 390×844 and 1440×1000 with normal and reduced motion. First nonempty output appears after loader unlock. Normal motion produces 11–12 changing outputs per 1.1 seconds, pauses offscreen, and resumes on return. Initial and live reduced-motion settings keep the field static; restoring motion restarts updates. Resizing to 320×640 and 1024×768 preserves containment and correct ASCII grid dimensions. Mobile and desktop captures were reviewed; no browser errors or failed assets occur. Local evidence: `/private/tmp/spine-browser-qa/hero-motion-final-webkit-report.json`.
+
 ## Compact mobile runtime follow-up
 
 App `c77b72f` keeps one compact illustration above the real chapter copy on eligible phone layouts, with native step links. The first scene's hidden footprint preserves a constant stage height through later details. Short windows and enlarged text return the illustrations to normal document flow when the reading space would be insufficient.

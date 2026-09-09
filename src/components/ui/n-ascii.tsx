@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 
 const DEFAULT_CHARACTERS = " .:-=+*#%@";
 const CELL_WIDTH = 9;
 const CELL_HEIGHT = 15;
 const FLOWER_SNAPSHOT_TIME = 10;
+const FLOWER_FRAME_INTERVAL = 1000 / 12;
 
 interface AsciiArtProps {
   src?: string;
@@ -134,6 +136,7 @@ export function AsciiArt({
 }: AsciiArtProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const outputRef = useRef<HTMLPreElement>(null);
+  const prefersReducedMotion = useMotionPreference();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -147,12 +150,18 @@ export function AsciiArt({
 
     let disposed = false;
     let resizeFrame = 0;
+    let animationFrame = 0;
+    let lastRenderTime = -FLOWER_FRAME_INTERVAL;
+    let previousFrameTime: number | null = null;
+    let elapsedAnimationTime = 0;
+    let isVisible = true;
+    const shouldAnimate = generated === "flowers" && !prefersReducedMotion;
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d", { willReadFrequently: true });
     const sourceCanvas = document.createElement("canvas");
     const sourceContext = sourceCanvas.getContext("2d");
 
-    const render = () => {
+    const render = (time: number) => {
       if (
         disposed ||
         !context ||
@@ -180,7 +189,7 @@ export function AsciiArt({
           sourceContext,
           sourceCanvas.width,
           sourceCanvas.height,
-          FLOWER_SNAPSHOT_TIME,
+          time,
         );
         context.drawImage(sourceCanvas, 0, 0, columns, rows);
       } else if (image) {
@@ -222,30 +231,85 @@ export function AsciiArt({
         lines.push(line);
       }
 
-      if (outputRef.current) outputRef.current.textContent = lines.join("\n");
+      const output = lines.join("\n");
+      if (outputRef.current && outputRef.current.textContent !== output) {
+        outputRef.current.textContent = output;
+      }
     };
 
     const scheduleRender = () => {
       if (disposed || resizeFrame) return;
       resizeFrame = requestAnimationFrame(() => {
         resizeFrame = 0;
-        render();
+        render(prefersReducedMotion ? FLOWER_SNAPSHOT_TIME : elapsedAnimationTime / 1000);
       });
+    };
+
+    const animate = (timestamp: number) => {
+      animationFrame = 0;
+      if (disposed || !isVisible || document.hidden) return;
+
+      // Only advance while visible, so returning to the hero never jumps ahead.
+      if (previousFrameTime !== null) elapsedAnimationTime += timestamp - previousFrameTime;
+      previousFrameTime = timestamp;
+
+      if (timestamp - lastRenderTime >= FLOWER_FRAME_INTERVAL) {
+        render(elapsedAnimationTime / 1000);
+        lastRenderTime = timestamp;
+      }
+
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    const startAnimation = () => {
+      if (!disposed && shouldAnimate && isVisible && !document.hidden && !animationFrame) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    const stopAnimation = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      previousFrameTime = null;
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAnimation();
+      } else {
+        scheduleRender();
+        startAnimation();
+      }
     };
 
     image?.addEventListener("load", scheduleRender);
     const resizeObserver = new ResizeObserver(scheduleRender);
     resizeObserver.observe(container);
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) {
+        scheduleRender();
+        startAnimation();
+      } else {
+        stopAnimation();
+      }
+    });
+    intersectionObserver.observe(container);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     if (generated || image?.complete) scheduleRender();
+    startAnimation();
 
     return () => {
       disposed = true;
       cancelAnimationFrame(resizeFrame);
+      stopAnimation();
       image?.removeEventListener("load", scheduleRender);
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [characters, generated, invert, src]);
+  }, [characters, generated, invert, prefersReducedMotion, src]);
 
   return (
     <div
