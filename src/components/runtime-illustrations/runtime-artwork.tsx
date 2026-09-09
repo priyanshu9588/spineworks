@@ -214,13 +214,11 @@ export function RuntimeArtwork({ active }: { active: number }) {
       <div className="runtime-art-object" role="img" aria-label={feature.illustration}>
         <PageCutaway active={index} prefix={prefix} />
         {index > 0 && <RuntimeDetail active={index} />}
-        {index === 0 && (
-          <dl className="runtime-readable-facts" aria-hidden="true">
-            {sceneFacts[0].map(([label, value]) => (
-              <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
-            ))}
-          </dl>
-        )}
+        <dl className="runtime-readable-facts" aria-hidden="true">
+          {sceneFacts[0].map(([label, value]) => (
+            <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+          ))}
+        </dl>
       </div>
       <div className="runtime-art-caption" aria-hidden="true">
         <span>{caption[0]}</span>
