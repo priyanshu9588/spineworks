@@ -7,3 +7,4 @@ a1.jpeg
 a2.jpeg
 .env*
 *.tsbuildinfo
+output/
