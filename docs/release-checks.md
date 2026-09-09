@@ -14,6 +14,8 @@ The current revision replaces the decorative paper drawings with static HTML pro
 - Chromium keyboard checks activate all five native step links with visible focus outlines and a fully visible figure. At 1024×768, increasing root text to 200% switches from one pinned view to five inline views; restoring text size switches back without errors. Secondary text contrast is at least 4.5:1 on the backgrounds where it appears.
 - [Artwork prompts](artwork-prompts.md) contain one optional ChatGPT generation prompt and a refinement prompt for the same supporting image. No raster assets were generated or inserted during this revision.
 
+App commit `071b71c` is published as `dpl_CRkc6cVgHobTWe39MkX974dxyQxg`, assigned to `spineworks.vercel.app`. Vercel's installation, TypeScript check, and production build pass; dependency audit reports zero vulnerabilities. Public checks at 1360×545 and 375×812 with normal motion, plus 1440×900 without JavaScript, confirm the static product views, stationary hero when JavaScript is enabled, unchanged benchmark figures, correct descriptions, no old drawings or playback controls, and no page errors, unexpected asset failures, or horizontal overflow. Public desktop and mobile screenshots were visually reviewed. The existing browser preview was reloaded to show the new release.
+
 The sections below record earlier revisions and their verification. They are historical results, including checks for animation controls that the static revision removes.
 
 ## Runtime whitespace follow-up
