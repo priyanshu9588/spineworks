@@ -2,6 +2,24 @@
 
 Production: https://spineworks.vercel.app
 
+## Compact mobile runtime follow-up
+
+App `c77b72f` keeps one compact illustration above the real chapter copy on eligible phone layouts, with native step links. The first scene's hidden footprint preserves a constant stage height through later details. Short windows and enlarged text return the illustrations to normal document flow when the reading space would be insufficient.
+
+Production build, TypeScript, and lint pass. Focused WebKit checks pass all five native taps at 390×844, 375×667, and 320×640. Forward and reverse incremental scrolling selects every scene at the first two sizes. The stage/reading line remain constant at 332/386px for 390px and 375px widths, and 308.4/362.4px at 320px; the smallest links measure 46×44px. At 390px wide, reducing height to 600px and 590px or enlarging root text to 200% restores inline flow; returning to 844px and normal text restores pinning without oscillation. Each change produces at most one pin-state transition. A 1440×1000 regression check passes all five keyboard anchors, preserving the 53–1000px stage and desktop column placement after the DOM reorder. Mobile and desktop captures were visually reviewed. No browser errors, failed assets, or horizontal overflow occur.
+
+Chromium production checks independently pass actual touch swipes through every scene forward and backward at 390×844 and 375×667, including a swipe beginning on the illustration. Stage height stays at 332px, manual scrolling preserves keyboard focus, and no page errors or overflow occur. Native taps pass at 390×844, 375×667, and 320×667; height changes, 200% text fallback/restoration, and landscape fallback also pass. A 320px no-JavaScript check retains all five real chapters and illustrations without overflow or GitHub links. Desktop first/last anchors preserve the full-height stage and column placement.
+
+Local evidence: `/private/tmp/spine-browser-qa/architecture-mobile-pin-webkit-report.json`. The earlier wide-stage checks below remain unchanged.
+
+## Runtime stage follow-up
+
+App `86da3ae` fills the pinned runtime column from the measured header to the bottom of the viewport. The artwork keeps its natural proportions and sits in the center; the caption and navigation stay at the bottom. The first native chapter anchor now aligns the stage with the header, and enlarged content still falls back to normal flow.
+
+Production build, TypeScript, and lint pass. Focused WebKit checks cover all five native anchors at 1440×1000 and 1024×768: the complete stage spans 53–1000px and 53–768px, with less than 0.3px first-anchor rounding. Artwork stays centered and uncropped, navigation focus outlines fit, and the stage releases flush before benchmarks. Live resizing through short and mobile layouts, then 200% text fallback and restoration, stabilizes without oscillation; each change produces at most one pin-state transition. Chromium independently passes ten forward/backward keyboard selections at each desktop size and the same release/fallback checks. No browser errors, asset failures, or horizontal overflow occur. The subject matrix was not repeated for this layout change.
+
+Local evidence: `/private/tmp/spine-browser-qa/architecture-stage-final-webkit-report.json`. The first-anchor correction was rechecked separately; completed checks for unchanged behavior were retained.
+
 ## Product CTA follow-up
 
 App `1278150` removes both public GitHub links and replaces the header CTA with **Explore**, linking to the runtime section. Production build, TypeScript, lint, and four focused Chromium cases pass: desktop, 320px and 768px with 200% text, and 320px without JavaScript. The CTA works from the keyboard; header links do not overlap, and no GitHub links or copy remain in the rendered page.
