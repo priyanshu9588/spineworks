@@ -1,6 +1,6 @@
 # Spine
 
-A semantic web runtime for agents. This is the Spine landing page, with a scroll-led runtime narrative, native ink-and-paper illustrations, and scoped benchmark results.
+A semantic web runtime for agents. This is the Spine landing page, with a scroll-led runtime narrative, static product examples, and scoped benchmark results.
 
 - Website: https://spineworks.vercel.app
 - Repository: https://github.com/priyanshu9588/spineworks
@@ -24,9 +24,11 @@ npm run build
 npm run start
 ```
 
-The page includes five runtime chapters with a shared illustration that advances on scroll. Numbered anchors support keyboard navigation; phones and short windows show an illustration with each chapter. The intro wordmark dissolves in place while its backdrop lifts away.
+The page includes five runtime chapters following one illustrative workspace through semantic reading, verified actions, session continuity, capabilities, and changed state. A static browser and inspector advance with the desktop scroll sequence. Numbered anchors support keyboard navigation; small or short windows keep examples in the document flow. The intro wordmark dissolves in place while its backdrop lifts away.
 
-Illustrations include pause/replay controls, follow live reduced-motion preferences, and stop animating offscreen or in hidden tabs. Content, illustrations, and native benchmark disclosures remain readable without JavaScript. A bounded font wait prevents stalled font requests from holding the intro open.
+Runtime examples and the hero's ASCII field are static. Mock controls are part of a described image, not interactive form elements. The inspector reserves its natural content height across states, and pinning falls back to inline when the complete frame cannot fit below the header. Content, product views, and native benchmark disclosures remain readable without JavaScript. A bounded font wait prevents stalled font requests from holding the intro open.
+
+The [artwork prompts](docs/artwork-prompts.md) provide one optional ChatGPT image prompt and a refinement prompt. No generated asset is required to render the current site.
 
 See [release checks](docs/release-checks.md) for the launch test matrix and measured results.
 The [spacing audit](docs/spacing-audit.md) documents the layout findings, before/after measurements, and refinements.

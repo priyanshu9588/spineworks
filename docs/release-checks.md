@@ -2,7 +2,19 @@
 
 Production: https://spineworks.vercel.app
 
-The current revision replaces runtime tabs with five scroll-led chapters, refines the native SVG artwork, dissolves the intro wordmark in place, and improves the hero's proportions. A further [spacing audit](spacing-audit.md) reduces unused chapter space and brings benchmark results forward. Local checks used the optimized production server. Issues discovered during review were corrected and their affected checks repeated.
+The current revision replaces the decorative paper drawings with static HTML product views. One illustrative Atlas workspace connects semantic reading, verified actions, session continuity, capability state, and deltas. The green palette, scroll-led chapters, intro dissolve, and scoped benchmark evidence remain. Local checks use the optimized production server.
+
+## Static product views
+
+- Runtime figures have no animation, perspective tilt, moving traces, playback controls, or focusable mock form controls. The hero's ASCII field is static and redraws only on resize.
+- All five inspector panels reserve a common natural height. The active state changes instantly on scroll. Pinning also checks the actual figure and header dimensions, so enlarged content falls back to normal flow when it cannot fit.
+- Wide inline rows are 443px tall at 1360×545, with centered copy. The pinned figure stays 443px tall across all five states at 1024×768 and 1440×900. On phones, the full browser appears once; later chapters show the compact records from the same example.
+- Production build, TypeScript, ESLint, and diff checks pass. Chromium verifies all five states forward and backward at those three desktop sizes, including exact example descriptions, a single visible inspector, constant frame height, no old artwork, no artwork animations or mock controls in the tab order, and an unchanged hero field after a timed observation. Benchmark values remain intact. No page errors or horizontal overflow occur.
+- All 12 WebKit cases pass across narrow and desktop layouts, reduced motion, five text-enlargement cases, and JavaScript disabled. A field label overlapping its value at 200% text was fixed and the six affected narrow cases repeated. Mobile examples now measure 685/343/370/376/376px; later states no longer reserve unused height. Every scene has the correct state and description, no artwork animation or focusable mock control, and no painted text clipping or page overflow.
+- Chromium keyboard checks activate all five native step links with visible focus outlines and a fully visible figure. At 1024×768, increasing root text to 200% switches from one pinned view to five inline views; restoring text size switches back without errors. Secondary text contrast is at least 4.5:1 on the backgrounds where it appears.
+- [Artwork prompts](artwork-prompts.md) contain one optional ChatGPT generation prompt and a refinement prompt for the same supporting image. No raster assets were generated or inserted during this revision.
+
+The sections below record earlier revisions and their verification. They are historical results, including checks for animation controls that the static revision removes.
 
 ## Runtime whitespace follow-up
 

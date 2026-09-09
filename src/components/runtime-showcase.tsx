@@ -6,6 +6,9 @@ import { RuntimeArtwork } from "./runtime-illustrations/runtime-artwork";
 import "./runtime-showcase.css";
 
 const stickyQuery = "(min-width: 1024px) and (min-height: 768px)";
+const navigationHeight = 54;
+const figureClearance = 16;
+const pinReentryBuffer = 16;
 
 function subscribeLayout(update: () => void) {
   const query = window.matchMedia(stickyQuery);
@@ -18,21 +21,36 @@ const serverLayout = () => false;
 
 export function RuntimeShowcase() {
   const [active, setActive] = useState(0);
-  const pinned = useSyncExternalStore(subscribeLayout, readLayout, serverLayout);
+  const desktop = useSyncExternalStore(subscribeLayout, readLayout, serverLayout);
+  const [fits, setFits] = useState(true);
+  const pinned = desktop && fits;
   const story = useRef<HTMLDivElement>(null);
   const figure = useRef<HTMLElement>(null);
   const chapters = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
     let frame = 0;
+    const header = document.querySelector<HTMLElement>("header");
+    const study = figure.current?.querySelector<HTMLElement>(".runtime-study")
+      ?? chapters.current[0]?.querySelector<HTMLElement>(".runtime-study");
 
     const update = () => {
       frame = 0;
       const plate = figure.current;
       const plateHeight = plate?.getBoundingClientRect().height;
-      const readingLine = plate && plateHeight
-        ? Number.parseFloat(window.getComputedStyle(plate).top) + plateHeight * 0.35
-        : Math.min(window.innerHeight * 0.36, 320);
+      const headerHeight = header?.getBoundingClientRect().height ?? 52;
+      const readingLine = headerHeight + Math.min(window.innerHeight * 0.27, 220);
+      const studyHeight = study?.getBoundingClientRect().height;
+
+      if (desktop && studyHeight) {
+        const stepsHeight = plate?.querySelector<HTMLElement>(".runtime-step-navigation")
+          ?.getBoundingClientRect().height ?? navigationHeight;
+        const requiredHeight = studyHeight + Math.max(navigationHeight, stepsHeight)
+          + headerHeight + figureClearance;
+
+        // Extra room on reentry prevents small layout differences from toggling modes.
+        setFits((previous) => requiredHeight + (previous ? 0 : pinReentryBuffer) <= window.innerHeight);
+      }
 
       if (plateHeight && story.current) {
         const height = `${Math.ceil(plateHeight)}px`;
@@ -57,6 +75,8 @@ export function RuntimeShowcase() {
     const observer = new ResizeObserver(schedule);
     if (story.current) observer.observe(story.current);
     if (figure.current) observer.observe(figure.current);
+    if (study) observer.observe(study);
+    if (header) observer.observe(header);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     update();
@@ -67,7 +87,7 @@ export function RuntimeShowcase() {
       window.removeEventListener("resize", schedule);
       observer.disconnect();
     };
-  }, [pinned]);
+  }, [desktop, pinned]);
 
   return (
     <div ref={story} className="runtime-story col-span-full -mx-4 md:-mx-5 lg:-mx-6" data-pinned={pinned}>

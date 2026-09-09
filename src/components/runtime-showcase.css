@@ -62,7 +62,6 @@
   background: var(--color-accent);
   content: "";
   opacity: 0;
-  transition: opacity 200ms ease;
   pointer-events: none;
 }
 
@@ -207,12 +206,4 @@
     border-top: 0;
     border-left: 1px solid var(--color-line);
   }
-
-  .runtime-story[data-pinned="false"] .study-drawing {
-    max-height: clamp(20rem, calc(100svh - 10rem), 22.5rem);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .runtime-chapter::before { transition: none; }
 }

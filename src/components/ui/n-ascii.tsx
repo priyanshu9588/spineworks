@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useMotionPreference } from "@/hooks/use-motion-preference";
 
 const DEFAULT_CHARACTERS = " .:-=+*#%@";
 const CELL_WIDTH = 9;
 const CELL_HEIGHT = 15;
+const FLOWER_SNAPSHOT_TIME = 10;
 
 interface AsciiArtProps {
   src?: string;
@@ -134,7 +134,6 @@ export function AsciiArt({
 }: AsciiArtProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const outputRef = useRef<HTMLPreElement>(null);
-  const prefersReducedMotion = useMotionPreference();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -148,18 +147,12 @@ export function AsciiArt({
 
     let disposed = false;
     let resizeFrame = 0;
-    let animationFrame = 0;
-    let lastAnimationTime = 0;
-    let isVisible = true;
-    const frameInterval = 1000 / 12;
-    const animationStartedAt = performance.now();
-    const shouldAnimate = generated === "flowers" && !prefersReducedMotion;
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d", { willReadFrequently: true });
     const sourceCanvas = document.createElement("canvas");
     const sourceContext = sourceCanvas.getContext("2d");
 
-    const render = (time = 0) => {
+    const render = () => {
       if (
         disposed ||
         !context ||
@@ -187,7 +180,7 @@ export function AsciiArt({
           sourceContext,
           sourceCanvas.width,
           sourceCanvas.height,
-          time,
+          FLOWER_SNAPSHOT_TIME,
         );
         context.drawImage(sourceCanvas, 0, 0, columns, rows);
       } else if (image) {
@@ -233,74 +226,26 @@ export function AsciiArt({
     };
 
     const scheduleRender = () => {
-      cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame((timestamp) =>
-        render(
-          prefersReducedMotion
-            ? 10
-            : (timestamp - animationStartedAt) / 1000,
-        ),
-      );
-    };
-
-    const animate = (timestamp: number) => {
-      animationFrame = 0;
-      if (disposed || !isVisible || document.hidden) return;
-
-      if (timestamp - lastAnimationTime >= frameInterval) {
-        render((timestamp - animationStartedAt) / 1000);
-        lastAnimationTime = timestamp;
-      }
-
-      animationFrame = requestAnimationFrame(animate);
-    };
-
-    const startAnimation = () => {
-      if (shouldAnimate && isVisible && !document.hidden && !animationFrame) {
-        animationFrame = requestAnimationFrame(animate);
-      }
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = 0;
-        return;
-      }
-
-      scheduleRender();
-      startAnimation();
+      if (disposed || resizeFrame) return;
+      resizeFrame = requestAnimationFrame(() => {
+        resizeFrame = 0;
+        render();
+      });
     };
 
     image?.addEventListener("load", scheduleRender);
     const resizeObserver = new ResizeObserver(scheduleRender);
     resizeObserver.observe(container);
-    const intersectionObserver = new IntersectionObserver(([entry]) => {
-      isVisible = entry.isIntersecting;
-      if (isVisible) {
-        scheduleRender();
-        startAnimation();
-      } else {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = 0;
-      }
-    });
-    intersectionObserver.observe(container);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     if (generated || image?.complete) scheduleRender();
-    startAnimation();
 
     return () => {
       disposed = true;
       cancelAnimationFrame(resizeFrame);
-      cancelAnimationFrame(animationFrame);
       image?.removeEventListener("load", scheduleRender);
       resizeObserver.disconnect();
-      intersectionObserver.disconnect();
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [characters, generated, invert, prefersReducedMotion, src]);
+  }, [characters, generated, invert, src]);
 
   return (
     <div

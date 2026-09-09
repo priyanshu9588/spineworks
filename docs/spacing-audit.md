@@ -56,3 +56,9 @@ Wide inline chapters now center their copy beside the artwork. The SVG retains i
 | Semantic chapter, 1440×700 | 589px | 460px |
 
 Measurements use loaded fonts on the optimized Chromium build. At 1360×545 the anchored chapter occupies y=76–536px, keeping the entire illustration and its controls visible below the header. At very short 1280×390, rows reduce to 420px and remain in normal scroll flow. All five chapters select correctly and Pause, Play, and Replay work at these three viewport sizes, with 44px control targets and no page errors or horizontal overflow.
+
+## Final static product treatment
+
+The later art-direction revision replaces those paper drawings and their animation controls with a single consistent workspace example. At 1360×545, the resulting inline row measures 443px; the text remains centered. At 1440×900, the full runtime measures 2114px and its shared figure holds the same 443px height across all five states. Inspector panels reserve their natural height on desktop, avoiding shifts when scrolling between chapters. Below a 440px figure content width, inactive panels collapse and later chapters show only their compact record instead of repeating the full browser. Text-enlargement checks caught and fixed a narrow field label overlapping its value column.
+
+These measurements supersede the earlier paper-illustration dimensions above. The hero's glyph field is also static; no repeated drawing loop remains.
