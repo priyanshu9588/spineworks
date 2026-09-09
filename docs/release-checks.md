@@ -2,9 +2,72 @@
 
 Production: https://spineworks.vercel.app
 
-The current revision replaces the decorative paper drawings with static HTML product views. One illustrative Atlas workspace connects semantic reading, verified actions, session continuity, capability state, and deltas. The green palette, scroll-led chapters, intro dissolve, and scoped benchmark evidence remain. Local checks use the optimized production server.
+The current working revision gives the architectural SVG illustration a concrete subject: a Contact page, its Continue button, and the Delivery step that follows. The exposed spine connects the visible control or field to named facts. Inline layouts show the complete object once, followed by four compact details; narrow screens place the first scene's name, role, and state in readable HTML below the artwork. The green palette, intro dissolve, stationary ASCII hero, and scoped benchmark evidence remain.
 
-## Static product views
+## Current Contact / Continue illustrations
+
+The current app revision is `06c8d28`. Its Contact / Continue subject passed seven targeted WebKit 26.6 scenarios against the optimized local production server at `http://127.0.0.1:3000`; the subsequent header adjustment passed the focused checks below. The production build, TypeScript, and lint also pass. The earlier 12-case matrix below was not repeated for these bounded changes.
+
+| # | Viewport | Scenario and result |
+| --- | --- | --- |
+| 1 | 1440×900 | All five full scenes, native keyboard links, forward/reverse scroll selection, and the complete final figure pass. Resizing to 375px and back restores the appropriate layouts. At 1440×768, 200% root text switches to inline figures and restoring text restores pinning. |
+| 2 | 1024×768 | All five full scenes, native keyboard links, forward/reverse selection, and complete final-figure visibility pass. |
+| 3 | 320×812 | The full semantic illustration and four new detail SVGs remain contained. All five native anchors pass; the first scene's name, role, and state values are readable at 13px. |
+| 4 | 375×812 | All five native anchors and compact illustrations pass. The first figure is 377.2px high; each later detail is 231.6px high. |
+| 5 | 320×812, 200% root text | Semantic fact values grow to 26px and wrap into a vertical list. All five anchors, artwork bounds, captions, and chapter text pass. A viewport capture shows the complete first figure between 113.8px and 794.5px, below the 105px header. |
+| 6 | 320×812, JavaScript disabled | All five illustrations, the readable semantic facts, and native anchors render correctly. |
+| 7 | 1440×900, JavaScript disabled | One full illustration followed by four compact details renders in normal flow; all five native anchors pass. |
+
+- Each scene was checked against its actual source and facts: Contact has an enabled Continue button; the action retains that source and reports observed Delivery; the session retains `alex@example.com`; an empty address makes Continue unavailable; filling `12 Cedar Lane` changes Continue from disabled to enabled. Visible compact details and accessible descriptions match this sequence.
+- Every full SVG has seven independent definitions. All gradient, pattern, and mask references resolve within their own SVG, including hidden full illustrations. No duplicate IDs, missing references, or cross-figure references occurred. Visible SVG text, HTML facts, and captions remain contained; there is no horizontal page overflow, fake focusable control, SMIL animation, or running artwork animation.
+- WebKit reports no page errors, console errors, or unexpected asset failures. The full final figure, including navigation, spans 53.0–724.9px at 1440×900 and 53.0–588.8px at 1024×768. All five desktop scenes, all four mobile details, the mobile semantic facts, and the enlarged-text viewport were visually reviewed.
+- Chromium production checks independently pass ten forward/backward native keyboard selections at each desktop size, with matching scenes, a complete final figure, and no artwork animation, errors, or overflow. Additional checks at 390×844, 320×812 with 200% root text, and 1360×545 confirm readable mobile facts and contained SVG text. All five full scenes and the mobile semantic illustration were visually reviewed in Chromium.
+
+The enlarged-text viewport capture also exposed a header wordmark/GitHub collision. The header now grows with its contents and wraps complete links. Five focused WebKit checks pass: 320px with 200% root text both with and without JavaScript, 768px and 1024px with 200% root text, and normal 1440px. Rendered links and painted text stay within the header without intersecting, and the page has no horizontal overflow or browser errors. The enlarged mobile header is 105px high with JavaScript and 109px without it; the enlarged tablet/desktop header is 113px high. At 1024×768 with 200% root text, the last native anchor focuses its article and places the complete figure at 113.0–690.0px, directly below the header. Normal 1440×900 retains 53.0–724.9px. Chromium independently passes the corresponding enlarged header checks and normal 390px/1440px checks. Enlarged mobile and tablet/desktop header captures were visually reviewed.
+
+Local reports: `/private/tmp/spine-browser-qa/architecture-meaning-webkit-report.json` and `/private/tmp/spine-browser-qa/architecture-header-webkit-report.json`. Screenshots use the `architecture-meaning-` and `architecture-header-` prefixes in the same directory. These local artifacts are excluded from the repository and deployment.
+
+## Historical: carved architectural subject (`d6ea4f2`)
+
+This earlier local revision used an abstract carved page structure. Its functional results below precede the concrete Contact / Continue refinement.
+
+Validation used the optimized local production server at `http://127.0.0.1:3000`. All 12 WebKit 26.6 functional scenarios passed. The carved-subject replacement and native-link scrolling adjustment then passed five targeted production rechecks; the broad matrix was not repeated for those bounded changes.
+
+| # | Viewport | Scenario and result |
+| --- | --- | --- |
+| 1 | 1440×900 | Pinned scenes track all five chapters forward and backward. Native keyboard links and the final anchored figure pass. |
+| 2 | 1024×768 | Pinned layout, forward/reverse selection, keyboard links, and complete final-figure visibility pass. |
+| 3 | 1360×545 | Five inline scenes use one full SVG followed by four detail SVGs; all native anchors pass. |
+| 4 | 1440×768 | Root text at 200% changes one pinned figure to five inline figures. Restoring text size restores pinning and complete final-figure visibility. |
+| 5 | 320×812 | Narrow layout, all five native anchors, visible SVGs, and wrapping captions pass. |
+| 6 | 375×812 | The first illustration measures 322.4px high; each later detail measures 201.6px. All chapter anchors pass. |
+| 7 | 768×1024 | Tablet layout remains inline, with the full object followed by four details and working native anchors. |
+| 8 | 320×812 | Root font size at 200% preserves readable, contained text and all five visible illustrations. |
+| 9 | 375×812 | Every HTML font size and line height doubled from its computed value remains contained. All five anchors pass. |
+| 10 | 1440×900 | Doubled HTML text fits the pinned layout; forward/reverse selection and the full final figure pass. |
+| 11 | 320×812 | JavaScript disabled still renders all five inline illustrations, unique SVG definitions, and native anchors. |
+| 12 | 1440×900 | JavaScript disabled uses the full illustration plus four inline details. All native chapter anchors pass. |
+
+The final pinned chapter uses the reading-line offset rather than reserving an additional full figure height. Native last-anchor measurements, including the navigation beneath the artwork, were:
+
+| Viewport | Figure top–bottom | Last chapter height |
+| --- | --- | --- |
+| 1440×900 | 53.0–724.9px | 468.0px |
+| 1024×768 | 53.0–588.8px | 344.6px |
+| 1440×900, doubled HTML text | 105.0–812.1px | 665.0px |
+
+These figure bounds remained unchanged after reverse scrolling and another native last-anchor activation. The sticky top follows the actual header height; the last chapter's scroll margin is the measured reading line minus 1px.
+
+- Every visible SVG and its painted text remain within their frames. Hidden full illustrations are excluded from painted-containment checks, but their definitions and references are still validated. The carved full SVG has eight unique definitions; every gradient, pattern, and mask reference resolves within its own SVG. No duplicate IDs, missing references, or cross-figure references were found.
+- Runtime artwork has zero element animations, SMIL animations, playback controls, or focusable mock controls. The hero ASCII text remained identical after a two-second observation. No horizontal page overflow, painted text clipping, hydration errors, JavaScript errors, console errors, or failed asset requests occurred in the functional matrix.
+- After replacing the `Aa` surface with the carved structure, targeted checks passed at 1440×900 and 1024×768 across all five full views, 375×812, 320×812 with 200% root text, and 1440×900 without JavaScript. The old subject is absent, the new mask resolves correctly, and the carved artwork was visually reviewed at desktop and narrow sizes.
+- The keyboard adjustment also passed on both desktop sizes in WebKit: focused runtime links use immediate scrolling, while focusing header navigation restores `scroll-behavior: smooth`. Chromium production checks separately passed 12 rapid focus-and-Enter chapter jumps at each desktop size, with matching focus, scene selection, and complete figure visibility. Its stationary-hero, benchmark-value, and native benchmark-disclosure checks also passed.
+
+Local reports: `/private/tmp/spine-browser-qa/architecture-production-webkit-report.json` and `/private/tmp/spine-browser-qa/architecture-subject-webkit-report.json`. Screenshots use the `architecture-production-` and `architecture-subject-` prefixes in the same directory. These local artifacts are excluded from the repository and deployment.
+
+## Historical: static product views (`071b71c`)
+
+This earlier revision replaced decorative paper drawings with static HTML product views. One illustrative Atlas workspace connected semantic reading, verified actions, session continuity, capability state, and deltas. The results and deployment below describe that previous revision.
 
 - Runtime figures have no animation, perspective tilt, moving traces, playback controls, or focusable mock form controls. The hero's ASCII field is static and redraws only on resize.
 - All five inspector panels reserve a common natural height. The active state changes instantly on scroll. Pinning also checks the actual figure and header dimensions, so enlarged content falls back to normal flow when it cannot fit.
