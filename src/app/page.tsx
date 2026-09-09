@@ -181,7 +181,7 @@ export default function Home() {
         <a href="#content" className="fixed top-2 left-2 z-[130] -translate-y-16 bg-ink px-4 py-2 text-xs text-inverse focus:translate-y-0">Skip to content</a>
 
         <header className={`sticky top-0 z-[120] border-b text-copy ${pageReady ? "border-line bg-canvas/95 backdrop-blur-sm" : "border-transparent bg-transparent"}`}>
-          <div className={`${shell} h-[3.25rem] items-center ${pageReady ? "border-line" : "border-transparent"}`}>
+          <div className={`${shell} site-topbar min-h-[3.25rem] items-center ${pageReady ? "border-line" : "border-transparent"}`}>
             <a className="col-span-2 inline-flex w-fit items-center font-mono text-base font-semibold tracking-[-.06em] md:col-span-2 lg:col-span-3" href="#top" aria-label="Spine home">
               {!hydrated && <span>Spine</span>}
               {hydrated && !isLoading && (
@@ -201,7 +201,7 @@ export default function Home() {
                 </motion.span>
               )}
             </a>
-            <nav className={`${pageReady ? "" : "invisible"} hidden h-full items-center justify-center gap-8 text-xs text-muted md:col-span-4 md:flex lg:col-span-6`} aria-label="Primary navigation">
+            <nav className={`${pageReady ? "" : "invisible"} hidden h-full flex-wrap items-center justify-center gap-x-8 text-xs text-muted md:col-span-4 md:flex lg:col-span-6`} aria-label="Primary navigation">
               <a className={topbarLink} href="#runtime">Runtime</a>
               <a className={topbarLink} href="#benchmarks">Benchmarks</a>
             </nav>

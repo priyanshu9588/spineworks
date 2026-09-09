@@ -5,14 +5,20 @@ import { runtimeFeatures } from "@/content/runtime-features";
 import "./runtime-artwork.css";
 
 const captions = [
-  ["The page", "Its meaning"],
-  ["An intention", "An observed effect"],
-  ["Many steps", "One continuous session"],
-  ["A control", "Its possibilities"],
-  ["A new state", "Only what changed"],
+  ["What you see", "What Spine reads"],
+  ["Continue clicked", "Delivery observed"],
+  ["One session", "Contact remembered"],
+  ["Address empty", "Continue unavailable"],
+  ["Address filled", "Continue enabled"],
 ] as const;
 
-const documentChannels = "M86 54V330 M86 124H310 M156 124V58H240 M242 124V89H289 M86 206H310 M146 206V166H209 M222 206V245H278 M86 295H310 M140 295V330H203 M238 295V268H293";
+const sceneFacts = [
+  [["name", "Continue"], ["role", "button"], ["state", "enabled"]],
+  [["target", "Continue"], ["observed page", "Delivery"], ["result", "navigation complete"]],
+  [["session", "01"], ["remembered", "alex@example.com"], ["current page", "Delivery"]],
+  [["control", "Continue"], ["available", "no"], ["reason", "address required"]],
+  [["changed field", "Street address"], ["before", "Continue disabled"], ["after", "Continue enabled"]],
+] as const;
 
 function StructuralLine({ d, width = 5 }: { d: string; width?: number }) {
   return (
@@ -38,47 +44,50 @@ function RuntimeDetail({ active }: { active: number }) {
     <svg className="runtime-cutaway-detail" viewBox="0 0 360 190" fill="none" aria-hidden="true" focusable="false">
       {active === 1 && (
         <g>
-          <StructuralLine d="M103 93H241" width={4} />
-          <circle cx="71" cy="99" r="34" stroke="#317e5e" strokeWidth="5" />
-          <circle cx="67" cy="93" r="34" stroke="#d0eabb" strokeWidth="4" />
-          <circle cx="67" cy="93" r="20" stroke="#d0eabb" strokeWidth="1.5" />
-          <StructuralNode x={67} y={93} radius={5} />
-          <path d="m222 86 9 7-9 7" stroke="#d0eabb" strokeWidth="2" />
-          <StructuralNode x={279} y={93} radius={36} />
-          <path d="m261 93 12 13 26-28" stroke="#1e6049" strokeWidth="4" />
+          <text x="25" y="59" className="detail-label">Contact</text>
+          <path d="M29 82h143v57H29Z" fill="#508367" />
+          <path d="M24 76h143v57H24Z" fill="#eef2d6" stroke="#fbffe9" />
+          <text x="38" y="112" className="detail-value" fill="#225d42">Continue</text>
+          <StructuralLine d="M178 104h23" width={2} />
+          <path d="m195 98 6 6-6 6" stroke="#d0eabb" strokeWidth="2" />
+          <text x="217" y="84" className="detail-label">Observed page</text>
+          <text x="217" y="116" className="detail-value" fill="#eef2d6">Delivery</text>
         </g>
       )}
       {active === 2 && (
         <g>
-          <StructuralLine d="M39 93H315" width={5} />
-          {[65, 177, 289].map((x, i) => (
-            <g key={x}>
-              <StructuralNode x={x} y={93} radius={24} />
-              <text className="cutaway-index" x={x} y="101" textAnchor="middle">{i + 1}</text>
-            </g>
-          ))}
-          <path d="M65 132v14h224v-14" stroke="#8cb49a" strokeWidth="1" />
+          <text x="28" y="59" className="detail-value" fill="#c5ddbd">Contact</text>
+          <text x="217" y="59" className="detail-value" fill="#eef2d6">Delivery</text>
+          <StructuralLine d="M34 79H323" width={3} />
+          <StructuralNode x={34} y={79} radius={5} />
+          <StructuralNode x={323} y={79} radius={5} />
+          <path d="m169 73 7 6-7 6" stroke="#eff7d9" strokeWidth="2" />
+          <text x="28" y="119" className="detail-label">Same session · contact retained</text>
+          <text x="28" y="151" className="detail-value" fill="#eef2d6">alex@example.com</text>
         </g>
       )}
       {active === 3 && (
         <g>
-          <StructuralLine d="M83 93h77V35h90M160 93h90M160 93v59" width={4} />
-          <path d="M160 152h90" stroke="#a2bfa3" strokeWidth="2" strokeDasharray="3 5" />
-          <StructuralNode x={71} y={93} radius={17} />
-          <StructuralNode x={271} y={35} radius={22} />
-          <StructuralNode x={271} y={93} radius={22} />
-          <path d="M266 27v16m10-16v16m-10-8h10" stroke="#1e6049" strokeWidth="2" />
-          <path d="m263 90 8 8 8-8" stroke="#1e6049" strokeWidth="2" />
-          <circle cx="271" cy="152" r="22" stroke="#a2bfa3" strokeWidth="1.5" strokeDasharray="2 4" />
-          <path d="m265 146 12 12m0-12-12 12" stroke="#a2bfa3" strokeWidth="1.5" />
+          <path d="M24 30H330v52H24Z" fill="#e5edd2" />
+          <path d="M24 82H330v5H24Z" fill="#77a17d" />
+          <text x="38" y="65" className="detail-value" fill="#225d42">Street address</text>
+          <text x="26" y="110" className="detail-label">Fill available</text>
+          <path d="M24 129H330" stroke="#8eb391" strokeWidth="1" />
+          <text x="25" y="160" className="detail-value" fill="#b0c8ae">Continue</text>
+          <text x="180" y="155" className="detail-label">Click unavailable</text>
+          <text x="180" y="173" className="detail-label">Address required</text>
         </g>
       )}
       {active === 4 && (
         <g>
-          <path d="M55 42h236M55 57h201M55 138h236M55 153h172" stroke="#8aaf91" strokeWidth="2" />
-          <path d="M50 81h260v36H50Z" fill="#60916e" />
-          <path d="M46 75h260v36H46Z" fill="#d0eabb" />
-          <path d="M64 93h177m35-9v18m-9-9h18" stroke="#1e6049" strokeWidth="3" />
+          <text x="27" y="48" className="detail-label">Street address filled</text>
+          <text x="27" y="81" className="detail-value" fill="#eef2d6">Continue</text>
+          <text x="27" y="133" className="detail-value" fill="#b0c8ae">disabled</text>
+          <StructuralLine d="M145 125h42" width={2} />
+          <path d="m181 119 6 6-6 6" stroke="#d0eabb" strokeWidth="2" />
+          <path d="M208 103h129v52H208Z" fill="#508367" />
+          <path d="M203 97h129v52H203Z" fill="#d0eabb" stroke="#e8f5d1" />
+          <text x="218" y="133" className="detail-value" fill="#225d42">enabled</text>
         </g>
       )}
     </svg>
@@ -88,6 +97,9 @@ function RuntimeDetail({ active }: { active: number }) {
 /** A single cutaway, seen through five lenses. All geometry is deliberately static. */
 function PageCutaway({ active, prefix }: { active: number; prefix: string }) {
   const paint = (name: string) => `url(#${prefix}-${name})`;
+  const delivery = active > 1;
+  const enabled = active < 2 || active === 4;
+  const inputValue = !delivery ? "alex@example.com" : active === 4 ? "12 Cedar Lane" : "Enter address";
 
   return (
     <svg className="runtime-cutaway" viewBox="0 0 720 500" fill="none" aria-hidden="true" focusable="false">
@@ -118,9 +130,6 @@ function PageCutaway({ active, prefix }: { active: number; prefix: string }) {
         <mask id={`${prefix}-texture`}>
           <rect width="340" height="370" fill={paint("fade")} />
         </mask>
-        <mask id={`${prefix}-channels`}>
-          <path d={documentChannels} stroke="white" strokeWidth="21" />
-        </mask>
       </defs>
 
       <ellipse cx="353" cy="405" rx="284" ry="67" fill={paint("shadow")} transform="rotate(10 353 405)" />
@@ -135,90 +144,56 @@ function PageCutaway({ active, prefix }: { active: number; prefix: string }) {
         </g>
       ))}
 
-      {/* The document hierarchy is cut into one continuous architectural surface. */}
+      {/* One recognizable web control gives the cutaway a concrete subject. */}
       <g transform="matrix(.94 .22 -.38 .82 205 37)">
         <path d="m0 370 8 8h340l-8-8Zm340-370 8 8v370l-8-8Z" fill={paint("edge")} stroke="#4b7059" strokeWidth=".6" />
         <path d="M0 0H340V370H0Z" fill={paint("paper")} stroke="#eef5d8" strokeWidth="1.2" />
         <path d="M0 0H340V370H0Z" fill={paint("grain")} mask={paint("texture")} />
-        <path d={documentChannels} transform="translate(-1 -1)" stroke="#faffea" strokeWidth="24" />
-        <path d={documentChannels} stroke="#164733" strokeWidth="21" />
-        <g mask={paint("channels")}>
-          <path d={documentChannels} transform="translate(4 6)" stroke="#789b76" strokeWidth="20" />
-          <path d={documentChannels} transform="translate(4 6)" stroke={paint("grain")} strokeWidth="20" />
-        </g>
-        {(active === 1 || active === 3) && <path d="M238 298H308" stroke="#c5e4ad" strokeWidth="9" />}
-        {active === 4 && <path d="M190 209H308" stroke="#c5e4ad" strokeWidth="9" />}
+        <text x="28" y="85" fill="#164d3a" fontSize="40" letterSpacing="-2">{delivery ? "Delivery" : "Contact"}</text>
+        <text x="28" y="114" fill="#5a785e" fontSize="12">{delivery ? "Contact: alex@example.com" : active === 1 ? "Continue clicked. Next: Delivery." : "Your details, one step at a time."}</text>
+        <text x="28" y="158" fill="#3f694e" fontSize="14">{delivery ? "Street address" : "Email"}</text>
+        <path d="M28 176H312V227H28Z" fill="#799b7c" />
+        <path d="M32 181H312V227H32Z" fill={active === 4 ? "#d9edc4" : "#e4e9d2"} />
+        <path d="M28 228H313" stroke="#faffed" strokeWidth="1.5" />
+        <text x="44" y="208" fill={delivery && active !== 4 ? "#708569" : "#23563f"} fontSize="17" letterSpacing="-.5">{inputValue}</text>
+        <path d="M29 274H318V344H29Z" fill={enabled ? "#113f2d" : "#849a79"} />
+        <path d="M24 266H313V336H24Z" fill={enabled ? "#1e6049" : "#bbccb0"} stroke={enabled ? "#6ba884" : "#cfe0c1"} strokeWidth="1" />
+        <path d="M24 267H313" stroke={enabled ? "#90c79e" : "#edf6dc"} strokeWidth="1" />
+        <text x="44" y="312" fill={enabled ? "#f0f5d9" : "#56764f"} fontSize="31" fontWeight="500" letterSpacing="-1.5">Continue</text>
+        <path d="M260 301h27m-10-10 10 10-10 10" stroke={enabled ? "#d0eabb" : "#7a9670"} strokeWidth="2" />
+        {active === 4 && <path d="M28 172H312V231H28Z" stroke="#7eb48a" strokeWidth="2" />}
       </g>
 
-      {/* Exposed ribs join the surface directly to its underlying structure. */}
-      <g>
-        <path d="M449 213 466 217 484 209M418 280 438 284 455 272M384 353 408 358 425 336" stroke="#174c38" strokeWidth="9" />
-        <path d="M449 207 466 211 484 203M418 274 438 278 455 266M384 347 408 352 425 330" stroke="#a8cda0" strokeWidth="4" />
+      {/* The exposed spine connects the subject of each reading to its observed facts. */}
+      <g className="cutaway-connection">
+        {active === 2 ? (
+          <>
+            <path d="M453 204 475 209 487 192" stroke="#174c38" strokeWidth="10" />
+            <path d="M453 198 475 203 487 186" stroke="#d0eabb" strokeWidth="5" />
+          </>
+        ) : active === 4 ? (
+          <>
+            <path d="M420 277 443 283 455 267" stroke="#174c38" strokeWidth="10" />
+            <path d="M420 271 443 277 455 261" stroke="#d0eabb" strokeWidth="5" />
+          </>
+        ) : <>
+        <path d="M385 356 407 362 425 336" stroke="#174c38" strokeWidth="10" />
+        <path d="M385 350 407 356 425 330" stroke="#d0eabb" strokeWidth="5" />
+        </>}
       </g>
 
-      {/* A free-standing spine replaces the familiar floating inspector card. */}
       <g transform="matrix(.94 .22 -.38 .82 467 149)">
-
-        {active === 0 && (
-          <g>
-            <StructuralLine d="M40 30V235" width={13} />
-            <StructuralLine d="M40 55H87M40 132H87M40 210H87" width={7} />
-            {[55, 132, 210].map((y) => <StructuralNode key={y} x={87} y={y} radius={13} />)}
-            <text x="116" y="63" className="cutaway-role">structure</text>
-            <text x="116" y="140" className="cutaway-role">state</text>
-            <text x="116" y="218" className="cutaway-role">action</text>
-          </g>
-        )}
-        {active === 1 && (
-          <g>
-            <StructuralLine d="M40 30V235M40 60H67M40 205H152" width={7} />
-            <StructuralLine d="M115 60h60v103" width={4} />
-            <circle cx="96" cy="66" r="34" stroke="#388264" strokeWidth="7" />
-            <circle cx="92" cy="60" r="34" stroke="#d0eabb" strokeWidth="5" />
-            <circle cx="92" cy="60" r="21" stroke="#d0eabb" strokeWidth="1.5" />
-            <StructuralNode x={92} y={60} radius={5} />
-            <StructuralNode x={175} y={205} radius={42} />
-            <path d="m152 205 15 15 29-32" stroke="#1b5a43" strokeWidth="5" />
-          </g>
-        )}
-        {active === 2 && (
-          <g>
-            <StructuralLine d="M40 30V235" width={9} />
-            <StructuralLine d="M40 55H153V132H83V210H178" width={5} />
-            {[ [83, 55], [153, 132], [83, 210] ].map(([x, y], i) => (
-              <g key={y}>
-                <StructuralNode x={x} y={y} radius={22} />
-                <text x={x} y={y + 7} className="cutaway-index" textAnchor="middle">{i + 1}</text>
-              </g>
-            ))}
-            <path d="m169 201 9 9-9 9" stroke="#d0eabb" strokeWidth="3" />
-          </g>
-        )}
-        {active === 3 && (
-          <g>
-            <StructuralLine d="M40 30V235" width={11} />
-            <StructuralLine d="M40 55H146M40 132H146" width={6} />
-            <path d="M40 210H146" stroke="#9ebca3" strokeWidth="3" strokeDasharray="3 6" />
-            <StructuralNode x={174} y={55} radius={30} />
-            <path d="M168 44v22m12-22v22m-12-11h12m-15-11h6m-6 22h6m6-22h6m-6 22h6" stroke="#1c5740" strokeWidth="2" />
-            <StructuralNode x={174} y={132} radius={30} />
-            <path d="m163 128 11 11 11-11" stroke="#1c5740" strokeWidth="3" />
-            <circle cx="174" cy="210" r="30" stroke="#a3c29a" strokeWidth="1.5" strokeDasharray="2 4" />
-            <path d="m165 201 18 18m0-18-18 18" stroke="#a3c29a" strokeWidth="2" />
-          </g>
-        )}
-        {active === 4 && (
-          <g>
-            <StructuralLine d="M40 30V235" width={11} />
-            <path d="M40 55h149M40 210h149" stroke="#8eb59b" strokeWidth="2" strokeDasharray="3 6" />
-            <StructuralLine d="M40 132h47" width={6} />
-            <path d="M87 108h134v55H87Z" fill="#649c73" />
-            <path d="M83 102h134v55H83Z" fill="#d3edb4" />
-            <path d="M83 157h134v6H83Z" fill={paint("hatch")} />
-            <path d="M103 129h65m25-9v18m-9-9h18" stroke="#1d5b40" strokeWidth="3" />
-          </g>
-        )}
+        <StructuralLine d="M40 30V235" width={13} />
+        <StructuralLine d="M40 55H87M40 132H87M40 210H87" width={7} />
+        {[55, 132, 210].map((y) => <StructuralNode key={y} x={87} y={y} radius={13} />)}
       </g>
+      {/* Upright values stay readable and can be matched directly to the page. */}
+      {sceneFacts[active].map(([label, value], index) => (
+        <g className="cutaway-fact" key={label} transform={`translate(${551 - index * 29} ${203 + index * 64})`}>
+          <text className="cutaway-fact-label">{label}</text>
+          <text y="26" className="cutaway-fact-value" data-long={value.length > 12}>{value}</text>
+        </g>
+      ))}
 
     </svg>
   );
@@ -233,12 +208,19 @@ export function RuntimeArtwork({ active }: { active: number }) {
   return (
     <div className="runtime-study" data-scene={feature.id}>
       <div className="runtime-art-header" aria-hidden="true">
-        <span>Inside the runtime</span>
+        <span>One page, understood</span>
         <span>{feature.number} / 05</span>
       </div>
       <div className="runtime-art-object" role="img" aria-label={feature.illustration}>
         <PageCutaway active={index} prefix={prefix} />
         {index > 0 && <RuntimeDetail active={index} />}
+        {index === 0 && (
+          <dl className="runtime-readable-facts" aria-hidden="true">
+            {sceneFacts[0].map(([label, value]) => (
+              <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+            ))}
+          </dl>
+        )}
       </div>
       <div className="runtime-art-caption" aria-hidden="true">
         <span>{caption[0]}</span>

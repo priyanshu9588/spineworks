@@ -31,3 +31,18 @@
 @theme inline {
   --font-mono: var(--font-commit-mono);
 }
+
+/* Let enlarged navigation text determine its height and wrap as complete links. */
+.site-topbar > a { white-space: nowrap; }
+
+@media (max-width: 767px) {
+  .site-topbar {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 16px;
+    row-gap: 4px;
+  }
+
+  .site-topbar > a { flex-shrink: 0; }
+  .site-topbar > a:last-child { margin-left: auto; }
+}

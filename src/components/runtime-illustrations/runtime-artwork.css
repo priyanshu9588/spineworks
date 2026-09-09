@@ -24,8 +24,12 @@
 .runtime-art-object { width: 100%; min-width: 0; }
 .runtime-cutaway { display: block; width: 100%; height: auto; }
 .runtime-cutaway-detail { display: none; }
-.cutaway-role { fill: #e0edbd; font-size: 24px; letter-spacing: -.04em; }
-.cutaway-index { fill: #225d42; font-size: 23px; letter-spacing: -.04em; }
+.cutaway-fact-label { fill: #accbaa; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; }
+.cutaway-fact-value { fill: #eef2d6; font-size: 24px; letter-spacing: -.04em; }
+.cutaway-fact-value[data-long="true"] { font-size: 17px; }
+.detail-label { fill: #b7cfaf; font-size: 13px; letter-spacing: -.025em; }
+.detail-value { font-size: 22px; letter-spacing: -.055em; }
+.runtime-readable-facts { display: none; }
 
 .runtime-art-caption {
   display: flex;
@@ -49,10 +53,22 @@
 .runtime-story[data-pinned="false"] .runtime-cutaway-detail {
   display: block;
   width: 100%;
-  height: clamp(150px, 24vw, 200px);
+  height: clamp(180px, 24vw, 220px);
 }
 
 @media (max-width: 767px) {
   .runtime-art-header { padding: 18px 20px 0; }
   .runtime-art-caption { margin-inline: 20px; padding: 14px 0 18px; font-size: .6875rem; gap: 12px; }
+  .runtime-study[data-scene="semantic"] .cutaway-fact { visibility: hidden; }
+  .runtime-readable-facts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 20px;
+    margin: -6px 20px 20px;
+    font-size: .8125rem;
+    line-height: 1.7;
+  }
+  .runtime-readable-facts dt { color: #b7cfaf; font-size: .6875rem; text-transform: capitalize; }
+  .runtime-readable-facts dd { color: #eef2d6; }
 }

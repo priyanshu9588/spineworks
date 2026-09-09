@@ -8,7 +8,7 @@ export const runtimeFeatures = [
       "Read the page as names, roles, and state. Give your agent the context it needs to choose its next move.",
     notation: "page → meaning",
     illustration:
-      "A document tree is carved into an ivory architectural surface. Its branching channels join an exposed mint spine identifying structure, state, and action. The drawing illustrates how Spine reads a complex page as usable meaning.",
+      "Illustrative Contact page with email alex@example.com and a raised Continue button. An exposed mint spine connects that button to the meaning Spine reads: name Continue, role button, state enabled.",
   },
   {
     id: "action",
@@ -19,7 +19,7 @@ export const runtimeFeatures = [
       "Act on a resolved target, let the page settle, and receive a record of what actually changed.",
     notation: "intent → evidence",
     illustration:
-      "A resolved target connects to a check mark, illustrating an action followed by evidence of its observed effect.",
+      "Clicking Continue on the example Contact page leads to an observed page headed Delivery. The action record identifies the target and the completed navigation.",
   },
   {
     id: "session",
@@ -30,7 +30,7 @@ export const runtimeFeatures = [
       "Keep navigation, cookies, and form state together as your agent moves from one step to the next.",
     notation: "one session, many steps",
     illustration:
-      "Three numbered steps share one unbroken connection, illustrating a session that carries its state from one step to the next.",
+      "The example moves from Contact to Delivery in one session. The contact email alex@example.com is retained and remains visible on the Delivery page.",
   },
   {
     id: "capability",
@@ -41,7 +41,7 @@ export const runtimeFeatures = [
       "See which actions each control supports. Surface unavailable actions and reject targets that have gone stale.",
     notation: "control → possibility",
     illustration:
-      "A spine branches into fill, select, and an unavailable action. Solid nodes indicate supported operations; an outlined, crossed node indicates an unavailable operation.",
+      "On the example Delivery page, the empty Street address field can be filled. Clicking Continue is unavailable because an address is required.",
   },
   {
     id: "delta",
@@ -52,6 +52,6 @@ export const runtimeFeatures = [
       "Receive the changed state after each action, so the next step starts with a current understanding of the page.",
     notation: "state → what changed",
     illustration:
-      "One line is highlighted and pulled forward while the surrounding lines remain muted, illustrating a semantic delta that isolates changed state from the rest of the page.",
+      "Filling the example Street address field with 12 Cedar Lane changes the Continue button from disabled to enabled. The semantic delta isolates this change in state.",
   },
 ] as const;
