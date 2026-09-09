@@ -4,7 +4,15 @@ Production: https://spineworks.vercel.app
 
 The current revision replaces runtime tabs with five scroll-led chapters, refines the native SVG artwork, dissolves the intro wordmark in place, and improves the hero's proportions. A further [spacing audit](spacing-audit.md) reduces unused chapter space and brings benchmark results forward. Local checks used the optimized production server. Issues discovered during review were corrected and their affected checks repeated.
 
-## Screenshot follow-up validation
+## Runtime whitespace follow-up
+
+A later screenshot exposed excessive blank space in the wide, short-window layout. Inline chapter copy now centers beside a bounded, uncropped illustration; the paper column stretches with enlarged text. At 1360×545 and 1440×700, each normal row is 460px instead of 583–589px. See the [spacing audit](spacing-audit.md) for measurements and the cause.
+
+Production build, TypeScript, ESLint, and diff checks pass. Chromium verifies all five chapter anchors and Pause/Play/Replay controls at 1360×545, 1440×700, and 1280×390. The first two sizes show the complete artwork and its controls together; the very short window retains normal document scrolling. No horizontal overflow or page errors occur.
+
+All 12 focused WebKit scenarios pass: short-wide layouts at 1360×545, 1440×700, and 1024×767; the 1024×768 pinned layout and live switching in both directions; 320/375px mobile; 200% root sizing and doubled HTML text; and two no-JavaScript cases. All five native chapter anchors work, drawings remain uncropped, text and artwork stay within their panels, and normal-motion controls remain usable. Enlarged wide text grows rows naturally to 558–566px. No painted clipping, overflow, or browser errors occur. Actual wide and mobile screenshots were visually reviewed.
+
+## Benchmark screenshot follow-up validation
 
 The follow-up keeps complete benchmark values visible throughout their animation, compacts desktop metric rows, and prevents footer labels from breaking within a word. Desktop benchmarks measure 538px instead of 736px; space beneath the run record is 25px instead of 222px.
 

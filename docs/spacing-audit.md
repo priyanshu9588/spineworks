@@ -42,3 +42,17 @@ The next screenshot review identified excess space under “Pinned revisions. Pr
 These rounded measurements use the optimized Chromium build with reduced motion, loaded fonts, and closed disclosures. Opening the disclosures intentionally grows the section.
 
 The cut numeral edges had two causes: staggered digits remained partly hidden when the animation paused offscreen, and tight tracking extended glyph ink past the mask even after the animation finished. Each complete value and suffix now moves together through a small, unmasked lift at full opacity. Footer navigation uses nonwrapping links inside its wrapping flex row, keeping “GitHub” and its arrow together.
+
+## Wide, short viewport follow-up
+
+The next screenshot reproduced at 1360×545. Below 768px viewport height, the runtime uses five inline illustrations. Its desktop columns still gave each SVG the full right-column width, creating a 583px row beside 200px of top-aligned copy.
+
+Wide inline chapters now center their copy beside the artwork. The SVG retains its complete viewBox and aspect ratio within a viewport-aware display-height cap; its paper background and column border still fill the row. Descriptions use 16px type, matching the pinned layout. Enlarged text can grow the row naturally. Mobile stacking and the existing pinned sequence are unchanged.
+
+| Measurement | Before | After |
+| --- | --- | --- |
+| Semantic chapter, 1360×545 | 583px | 460px |
+| Space below its description, 1360×545 | 415px | 159px |
+| Semantic chapter, 1440×700 | 589px | 460px |
+
+Measurements use loaded fonts on the optimized Chromium build. At 1360×545 the anchored chapter occupies y=76–536px, keeping the entire illustration and its controls visible below the header. At very short 1280×390, rows reduce to 420px and remain in normal scroll flow. All five chapters select correctly and Pause, Play, and Replay work at these three viewport sizes, with 44px control targets and no page errors or horizontal overflow.
