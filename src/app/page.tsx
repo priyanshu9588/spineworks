@@ -8,7 +8,6 @@ import { BenchmarkShowcase } from "@/components/benchmark-showcase";
 import hero from "./hero.module.css";
 
 const introWord = "Spine";
-const repositoryUrl = "https://github.com/priyanshu9588/spineworks";
 const subscribeHydration = () => () => {};
 const clientSnapshot = () => true;
 const serverSnapshot = () => false;
@@ -205,7 +204,7 @@ export default function Home() {
               <a className={topbarLink} href="#runtime">Runtime</a>
               <a className={topbarLink} href="#benchmarks">Benchmarks</a>
             </nav>
-            <a className={`${topbarLink} ${pageReady ? "" : "invisible"} col-span-2 justify-self-end gap-2 font-mono font-medium tracking-[-.02em] md:col-span-2 lg:col-span-3`} href={repositoryUrl}>GitHub <span aria-hidden="true">↗</span></a>
+            <a className={`${topbarLink} ${pageReady ? "" : "invisible"} col-span-2 justify-self-end gap-2 font-mono font-medium tracking-[-.02em] md:col-span-2 lg:col-span-3`} href="#runtime" aria-label="Explore Spine">Explore <span aria-hidden="true">↓</span></a>
           </div>
         </header>
 
@@ -248,7 +247,6 @@ export default function Home() {
                 <nav aria-label="Footer navigation" className="mt-4 flex flex-wrap gap-x-5">
                   <a href="#runtime" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Runtime</a>
                   <a href="#benchmarks" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Benchmarks</a>
-                  <a href={repositoryUrl} className="inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">GitHub <span aria-hidden="true">↗</span></a>
                 </nav>
               </div>
             </div>
