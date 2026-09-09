@@ -69,18 +69,10 @@ function BenchmarkResult({ result, index }: { result: (typeof results)[number]; 
       <div className="benchmark-result-reading">
         <strong className="benchmark-value">
           <span className="benchmark-sr-only">{result.value}</span>
-          <span className="benchmark-value-mask" aria-hidden="true">
-            {Array.from(result.numeral).map((character, characterIndex) => (
-              <span
-                key={`${characterIndex}-${character}`}
-                className="benchmark-digit"
-                style={{ animationDelay: `${index * 65 + characterIndex * 35}ms` }}
-              >
-                {character}
-              </span>
-            ))}
+          <span className="benchmark-value-display" aria-hidden="true" style={{ animationDelay: `${index * 65}ms` }}>
+            <span>{result.numeral}</span>
+            <span className="benchmark-value-suffix">{result.suffix}</span>
           </span>
-          <span className="benchmark-value-suffix" aria-hidden="true">{result.suffix}</span>
         </strong>
         <p className="benchmark-count">
           <span>{result.count}</span>

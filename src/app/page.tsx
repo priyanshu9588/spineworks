@@ -246,9 +246,9 @@ export default function Home() {
                 <a href="#top" aria-label="Spine home" className="inline-flex min-h-11 items-center font-mono text-xl font-semibold tracking-[-.06em] text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Spine</a>
                 <p className="mt-3 max-w-xs text-sm leading-6 text-inverse/75">A semantic web runtime for agents</p>
                 <nav aria-label="Footer navigation" className="mt-4 flex flex-wrap gap-x-5">
-                  <a href="#runtime" className="inline-flex min-h-11 items-center text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Runtime</a>
-                  <a href="#benchmarks" className="inline-flex min-h-11 items-center text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Benchmarks</a>
-                  <a href={repositoryUrl} className="inline-flex min-h-11 items-center gap-2 text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">GitHub <span aria-hidden="true">↗</span></a>
+                  <a href="#runtime" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Runtime</a>
+                  <a href="#benchmarks" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">Benchmarks</a>
+                  <a href={repositoryUrl} className="inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap text-xs text-inverse/75 hover:text-accent-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light">GitHub <span aria-hidden="true">↗</span></a>
                 </nav>
               </div>
             </div>

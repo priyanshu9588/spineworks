@@ -28,3 +28,17 @@ Measurements below compare the first scroll-led release (`2549d9f`) with the spa
 ## Checks
 
 The refined hero and footer fit 320, 375, 1440, and 2406px widths, including doubled HTML text on narrow screens. Runtime progression, anchors, final-scene visibility, resizing, and enlarged descriptions pass at 1024×768, 1440×900, and 2406×1347. Height measurements stabilize without ResizeObserver errors. WebKit checks confirm the new benchmark order and flexible metadata columns at 320/375px with both 200% root text and doubled HTML text/line heights, with all scopes expanded. See [release checks](release-checks.md) for browser, fallback, accessibility, and deployment validation.
+
+## Screenshot follow-up
+
+The next screenshot review identified excess space under “Pinned revisions. Preserved receipts.” The right-hand results determined the grid's total height, so reducing only the left column's padding could not resolve it. This follow-up reduces metric type, row padding, and scale height from 768px upward. Mobile results retain their larger reading size. Disclosure controls still have a 44px minimum height, and rows can expand with their content.
+
+| Area | Previous release (`8bf772e`) | Follow-up |
+| --- | --- | --- |
+| Benchmark section, 1440px and 2406px | 736px | 538px, 27% shorter |
+| Space below the final run-record line, 1440px and 2406px | 222px | 25px |
+| Benchmark section, 768px | 666px | 514px |
+
+These rounded measurements use the optimized Chromium build with reduced motion, loaded fonts, and closed disclosures. Opening the disclosures intentionally grows the section.
+
+The cut numeral edges had two causes: staggered digits remained partly hidden when the animation paused offscreen, and tight tracking extended glyph ink past the mask even after the animation finished. Each complete value and suffix now moves together through a small, unmasked lift at full opacity. Footer navigation uses nonwrapping links inside its wrapping flex row, keeping “GitHub” and its arrow together.

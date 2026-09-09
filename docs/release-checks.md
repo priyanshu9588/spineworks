@@ -4,6 +4,18 @@ Production: https://spineworks.vercel.app
 
 The current revision replaces runtime tabs with five scroll-led chapters, refines the native SVG artwork, dissolves the intro wordmark in place, and improves the hero's proportions. A further [spacing audit](spacing-audit.md) reduces unused chapter space and brings benchmark results forward. Local checks used the optimized production server. Issues discovered during review were corrected and their affected checks repeated.
 
+## Screenshot follow-up validation
+
+The follow-up keeps complete benchmark values visible throughout their animation, compacts desktop metric rows, and prevents footer labels from breaking within a word. Desktop benchmarks measure 538px instead of 736px; space beneath the run record is 25px instead of 222px.
+
+- Production build, TypeScript, ESLint, and diff checks pass.
+- Chromium checks at 320, 375, 768, 1024, and 1440px confirm that every complete value stays readable during entry, an offscreen pause, immediate reentry, and the settled state. No clipping, horizontal overflow, or page errors occurred.
+- Ten WebKit scenarios cover desktop widths of 768/1024/1440/2406, 320/375px with 200% root sizing and doubled HTML text, and JavaScript disabled at 320/1440px. Values and expanded scopes remain contained; normal and reduced motion both render correctly. Native keyboard disclosures retain their 44px minimum targets. Benchmark figures, denominators, date, and caveat remain unchanged.
+- Seventeen focused footer scenarios across Chromium and WebKit verify whole-link wrapping at narrow, tablet, and desktop widths, both text-enlargement modes, and a deliberately constrained 150px navigation column. Labels and arrows stay together, focus styles remain visible, and hit areas stay at least 44px tall.
+- Actual production-build screenshots were reviewed at desktop and mobile sizes. A Chromium element screenshot taller than the viewport included displaced fixed navigation; the normal viewport screenshot was checked separately and renders correctly.
+
+The table below records the earlier broader audit. Those checks were not all rerun for this bounded follow-up; its verification is listed above.
+
 | # | Area | Checks and results |
 | --- | --- | --- |
 | 1 | Build | Next.js production build, TypeScript, ESLint, and diff checks pass. Transitive dependency updates resolve the reported js-yaml and sharp advisories; the full audit and production-only audit report zero vulnerabilities. |
@@ -19,7 +31,7 @@ The current revision replaces runtime tabs with five scroll-led chapters, refine
 | 11 | Browser engines | Chromium and WebKit 26.6 pass the relevant desktop, touch, scroll, and reduced-motion cases without JavaScript errors. Firefox could not launch on this host in the earlier review and remains unverified. |
 | 12 | Local performance and network | Before the spacing refinement, Chrome's unthrottled local trace measured LCP 2.44s and CLS 0.02. The retained intro contributes to render delay; the animated rails account for most measured shift. All script, font, and stylesheet requests succeed. These local figures are not mobile or field measurements. |
 
-## Current public mobile audit
+## Previous public mobile audit (`8bf772e`)
 
 Lighthouse 13.4.1 tested the public HTTPS deployment of `8bf772e` with default simulated mobile settings. No run warnings were reported.
 
@@ -35,11 +47,11 @@ Lighthouse 13.4.1 tested the public HTTPS deployment of `8bf772e` with default s
 | Cumulative layout shift | 0.013 |
 | Speed index | 3.8 seconds |
 
-These are synthetic measurements, not field data or a guarantee for every device. The intentional intro contributes to render delay, and its animated rails contribute a small layout-shift score. The earlier `9e5dc30` release scored 93/100/100/100 with 3.0s LCP, 50ms blocking time, and zero measured CLS; it is not used as the current result.
+These are synthetic measurements of the release before the screenshot follow-up, not field data or a guarantee for every device. The intentional intro contributes to render delay, and its animated rails contribute a small layout-shift score. The earlier `9e5dc30` release scored 93/100/100/100 with 3.0s LCP, 50ms blocking time, and zero measured CLS. Lighthouse was not repeated for the bounded benchmark and footer layout changes.
 
-## Public deployment verification
+## Previous public deployment verification (`8bf772e`)
 
-The final deployment is `dpl_9h1hbJirGrtoqnYH6L8hZ8LbfRae`, assigned to `spineworks.vercel.app`. Vercel completed a fresh installation and production build with zero reported dependency vulnerabilities.
+That release used deployment `dpl_9h1hbJirGrtoqnYH6L8hZ8LbfRae`, assigned to `spineworks.vercel.app`. Vercel completed a fresh installation and production build with zero reported dependency vulnerabilities.
 
 - Desktop 1440×900, mobile 375×812 with normal motion, and 320×640 with reduced motion pass without page errors, failed asset requests, or horizontal overflow.
 - All five desktop scenes advance correctly; mobile shows five inline illustrations. All three benchmark disclosures open. The run record follows the results in document order.
