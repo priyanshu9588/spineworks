@@ -8,7 +8,7 @@ export const runtimeFeatures = [
       "Read the page as names, roles, and state. Give your agent the context it needs to choose its next move.",
     notation: "page → meaning",
     illustration:
-      "An illustrative workspace settings page named Atlas, with Region set to Europe and Save changes enabled. Beside it, the semantic view identifies the heading, textbox, combobox, and button by their names, roles, and current states.",
+      "A document tree is carved into an ivory architectural surface. Its branching channels join an exposed mint spine identifying structure, state, and action. The drawing illustrates how Spine reads a complex page as usable meaning.",
   },
   {
     id: "action",
@@ -19,7 +19,7 @@ export const runtimeFeatures = [
       "Act on a resolved target, let the page settle, and receive a record of what actually changed.",
     notation: "intent → evidence",
     illustration:
-      "The same Atlas settings page after Save changes completes. The page shows Saved and its save button is disabled. An action record identifies the target and these observed changes.",
+      "A resolved target connects to a check mark, illustrating an action followed by evidence of its observed effect.",
   },
   {
     id: "session",
@@ -30,7 +30,7 @@ export const runtimeFeatures = [
       "Keep navigation, cookies, and form state together as your agent moves from one step to the next.",
     notation: "one session, many steps",
     illustration:
-      "Session 01 continues from Settings to Overview and back to Settings. The illustrative Atlas workspace, Europe region, and saved state are retained across the navigation.",
+      "Three numbered steps share one unbroken connection, illustrating a session that carries its state from one step to the next.",
   },
   {
     id: "capability",
@@ -41,7 +41,7 @@ export const runtimeFeatures = [
       "See which actions each control supports. Surface unavailable actions and reject targets that have gone stale.",
     notation: "control → possibility",
     illustration:
-      "The saved Atlas settings page exposes fill for Workspace name and select for Region. Save changes is unavailable while the page has no unsaved changes.",
+      "A spine branches into fill, select, and an unavailable action. Solid nodes indicate supported operations; an outlined, crossed node indicates an unavailable operation.",
   },
   {
     id: "delta",
@@ -52,6 +52,6 @@ export const runtimeFeatures = [
       "Receive the changed state after each action, so the next step starts with a current understanding of the page.",
     notation: "state → what changed",
     illustration:
-      "The illustrative Atlas workspace changes its Region from Europe to North America. The delta view lists only the changed region, the status changing from Saved to Unsaved, and the save button becoming enabled.",
+      "One line is highlighted and pulled forward while the surrounding lines remain muted, illustrating a semantic delta that isolates changed state from the rest of the page.",
   },
 ] as const;

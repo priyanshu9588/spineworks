@@ -39,8 +39,21 @@ export function RuntimeShowcase() {
       const plate = figure.current;
       const plateHeight = plate?.getBoundingClientRect().height;
       const headerHeight = header?.getBoundingClientRect().height ?? 52;
-      const readingLine = headerHeight + Math.min(window.innerHeight * 0.27, 220);
+      const readingOffset = Math.min(window.innerHeight * 0.27, 220);
+      const readingLine = headerHeight + readingOffset;
       const studyHeight = study?.getBoundingClientRect().height;
+
+      if (story.current) {
+        for (const [property, value] of [
+          ["--runtime-reading-offset", readingOffset],
+          ["--runtime-reading-line", readingLine],
+        ] as const) {
+          const pixels = `${value}px`;
+          if (story.current.style.getPropertyValue(property) !== pixels) {
+            story.current.style.setProperty(property, pixels);
+          }
+        }
+      }
 
       if (desktop && studyHeight) {
         const stepsHeight = plate?.querySelector<HTMLElement>(".runtime-step-navigation")
@@ -91,14 +104,18 @@ export function RuntimeShowcase() {
 
   return (
     <div ref={story} className="runtime-story col-span-full -mx-4 md:-mx-5 lg:-mx-6" data-pinned={pinned}>
-      <div className="runtime-narrative">
-        <div className="runtime-story-intro">
+      <div className="runtime-story-intro">
+        <div className="runtime-intro-heading">
           <p className="runtime-eyebrow">The runtime</p>
           <h2 id="runtime-heading">Read the web.<br />Know what changed.</h2>
+        </div>
+        <div className="runtime-intro-summary">
           <p className="runtime-intro-copy">A shared language for page state, available actions, and their effects.</p>
           <p className="runtime-scroll-cue" aria-hidden="true">Scroll to explore <span>↓</span></p>
         </div>
+      </div>
 
+      <div className="runtime-narrative">
         <ol className="runtime-chapters" aria-label="Runtime primitives" role="list">
           {runtimeFeatures.map((feature, index) => (
             <li key={feature.id}>

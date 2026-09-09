@@ -6,13 +6,23 @@
 
 .runtime-narrative { min-width: 0; }
 
+/* Native step links stay deterministic when a previous scroll is interrupted. */
+html:has(.runtime-story:focus-within) { scroll-behavior: auto; }
+
 .runtime-story-intro {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 16px;
+  min-width: 0;
   padding: 24px 16px;
   border-bottom: 1px solid var(--color-line);
 }
 
+.runtime-intro-heading,
+.runtime-intro-summary { min-width: 0; }
+
 .runtime-eyebrow {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   color: var(--color-accent);
   font-size: 10px;
   letter-spacing: .1em;
@@ -20,26 +30,27 @@
 }
 
 .runtime-story-intro h2 {
-  font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+  color: var(--color-ink);
+  font-size: clamp(2rem, 3.5vw, 3rem);
   font-weight: 500;
   letter-spacing: -.06em;
-  line-height: 1.08;
+  line-height: 1.06;
   overflow-wrap: anywhere;
 }
 
 .runtime-intro-copy {
-  max-width: 30em;
-  margin-top: 20px;
+  max-width: 38ch;
   color: var(--color-muted);
-  font-size: 12px;
+  font-size: .8125rem;
   line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 
 .runtime-scroll-cue {
   display: none;
   align-items: center;
   gap: 16px;
-  margin-top: 30px;
+  margin-top: 20px;
   color: var(--color-accent-strong);
   font-size: 10px;
 }
@@ -73,16 +84,16 @@
 }
 
 .runtime-chapter-copy {
-  padding: 32px 16px;
+  padding: 28px 16px;
   overflow-wrap: anywhere;
 }
 
 .runtime-chapter-number {
   display: flex;
   align-items: baseline;
-  gap: 20px;
+  gap: 16px;
   color: var(--color-accent-strong);
-  font-size: 10px;
+  font-size: .6875rem;
   line-height: 1.7;
 }
 
@@ -90,26 +101,27 @@
 .runtime-chapter-number span:last-child { color: var(--color-muted); }
 
 .runtime-chapter h3 {
-  margin-top: 20px;
-  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  margin-top: 16px;
+  color: var(--color-ink);
+  font-size: clamp(1.5rem, 3.8vw, 2rem);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.12;
   letter-spacing: -.05em;
 }
 
 .runtime-chapter-description {
-  max-width: 34em;
-  margin-top: 16px;
+  max-width: 32ch;
+  margin-top: 14px;
   color: var(--color-muted);
-  font-size: 14px;
-  line-height: 1.8;
+  font-size: .9375rem;
+  line-height: 1.7;
 }
 
 .runtime-chapter .runtime-study { border-top: 1px solid var(--color-line); }
 
 .runtime-sticky-figure {
   position: sticky;
-  top: 3.25rem;
+  top: calc(var(--runtime-reading-line, 3.25rem) - var(--runtime-reading-offset, 0px));
   align-self: start;
   min-width: 0;
   border-bottom: 1px solid var(--color-line);
@@ -157,32 +169,51 @@
 }
 
 .runtime-story[data-pinned="true"] .runtime-narrative { border-right: 1px solid var(--color-line); }
-.runtime-story[data-pinned="true"] .runtime-story-intro { padding-block: 32px; }
 .runtime-story[data-pinned="true"] .runtime-scroll-cue { display: flex; }
 
 .runtime-story[data-pinned="true"] .runtime-chapter {
   display: flex;
-  min-height: clamp(18rem, 36svh, 22rem);
+  min-height: clamp(16rem, 31svh, 20rem);
   align-items: flex-start;
 }
 
 .runtime-story[data-pinned="true"] .runtime-chapters > li:last-child .runtime-chapter {
-  min-height: max(clamp(18rem, 36svh, 22rem), calc(var(--runtime-figure-height, 34rem) + 16px));
-}
-
-.runtime-story[data-pinned="true"] .runtime-chapter-description {
-  font-size: 1rem;
-  line-height: 1.75;
+  min-height: max(clamp(16rem, 31svh, 20rem), calc(var(--runtime-figure-height, 34rem) - var(--runtime-reading-offset, 220px) + 16px));
+  scroll-margin-top: calc(var(--runtime-reading-line, calc(3.25rem + min(27vh, 220px))) - 1px);
 }
 
 @media (min-width: 768px) {
   .runtime-story-intro { padding: 28px 20px; }
-  .runtime-chapter-copy { padding: 32px 20px; }
+  .runtime-chapter-copy { padding: 28px 20px; }
+  .runtime-chapter-description { font-size: 1rem; }
 }
 
 @media (min-width: 1024px) {
-  .runtime-story-intro,
+  .runtime-story-intro {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 0;
+    padding: 0;
+  }
+
+  .runtime-intro-heading,
+  .runtime-intro-summary { padding: 32px 24px; }
+
+  .runtime-intro-summary { align-self: end; }
+  .runtime-intro-copy { font-size: .875rem; }
+  .runtime-eyebrow { font-size: .6875rem; }
   .runtime-chapter-copy { padding-inline: 24px; }
+
+  .runtime-chapter h3 {
+    margin-top: 18px;
+    font-size: clamp(2.25rem, 2.8vw, 2.5rem);
+  }
+
+  .runtime-chapter-description {
+    max-width: 30ch;
+    margin-top: 18px;
+    font-size: clamp(1.0625rem, 1.3vw, 1.125rem);
+    line-height: 1.65;
+  }
 
   .runtime-story[data-pinned="false"] .runtime-chapter {
     display: grid;
@@ -192,11 +223,6 @@
 
   .runtime-story[data-pinned="false"] .runtime-chapter-copy {
     align-self: center;
-  }
-
-  .runtime-story[data-pinned="false"] .runtime-chapter-description {
-    font-size: 1rem;
-    line-height: 1.75;
   }
 
   .runtime-story[data-pinned="false"] .runtime-chapter .runtime-study {

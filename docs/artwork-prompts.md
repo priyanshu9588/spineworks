@@ -1,17 +1,17 @@
 # Spine artwork prompts
 
-These are prompts for you to run in ChatGPT. This deliverable contains prompts only; no new image has been generated for it. The plan is one static supporting image, with an optional refinement of that same image.
+These are prompts for you to run in ChatGPT. This deliverable contains prompts only; no raster image has been generated or delivered for it. The site currently uses a complete static SVG illustration. One generated image may optionally replace that primary SVG, with an optional refinement of the same image.
 
 ## Placement and delivery
 
-Use the selected image once in the Runtime introduction, beside the introduction on desktop and beneath it on mobile. Keep the readable product example and all explanations in HTML. The image should support that example without replacing it or appearing beside every primitive.
+The Runtime introduction spans the full section above the narrative and artwork. Place the selected image beside the first narrative on desktop and beneath that first narrative on mobile, replacing the primary SVG only. Keep the full illustration once; later steps use compact detail views of the same visual system. Keep the primitive names and all explanations in HTML.
 
 - Canvas: **1536 × 1024 px, landscape 3:2**. Request that size; preserve the composition if ChatGPT returns a different resolution.
-- Display: up to **560 px wide**, preserving the full image and its natural aspect ratio. Keep the composition legible around 320 px wide.
-- Palette: background **#f6f6f8**, deep green **#075e56**, active green **#0b7468**, pale mint **#d4ebe6**.
+- Display: up to **720 px wide**, preserving the complete silhouette and the natural aspect ratio. The object should still read around 320 px wide.
+- Art palette: dark-pine field **#104d3f**, deeper edges **#093d32**, warm ivory **#ffffed** and **#eeefda**, structural green **#1e6049**, pale mint **#d0eabb**.
 - Keep the downloaded original. Export the selected image to **public/illustrations/runtime-semantics.webp** in sRGB, preserving fine edges. Start around WebP quality 88 and inspect at the intended display size.
 - That path is a proposed destination. It is not an existing asset and should only be referenced in code after the real file has been delivered and inspected.
-- Keep headings, captions, control names, values, and semantic records in HTML. The bitmap contains no text. Use a short HTML caption such as “The page, understood as names, roles, and state.”
+- Keep headings, captions, control names, values, and semantic records in HTML. The bitmap contains no text. A possible HTML caption is “The structure beneath the page.”
 
 ## Prompt 1 — Generate the single supporting image
 
@@ -19,50 +19,52 @@ Paste this into ChatGPT's image generation conversation.
 
 ~~~text
 Use case: stylized-concept
-Asset type: one static supporting illustration for Spine, a browser runtime for AI agents.
+Asset type: one static editorial image for Spine, a browser runtime that exposes the meaningful structure beneath webpages.
 
-Create a carefully art-directed technical product illustration showing a browser interface being understood as structured semantic records. The image should feel precise, quiet, and made with the same care as a serious developer tool.
+Create a monumental architectural cutaway of a webpage. A dense ivory surface opens to reveal an elegant mint structural spine inside it. Make this a single memorable sculptural object with the clarity of a technical section drawing and the material presence of a photographed architectural model.
 
-Canvas and backdrop: landscape 3:2, target 1536 × 1024 pixels. Use a flat, uninterrupted #f6f6f8 background that reaches every edge. Leave approximately 10% clear space around the complete composition. Keep both main objects fully visible.
+Canvas and backdrop: landscape 3:2, target 1536 × 1024 pixels. Use an uninterrupted dark-pine field, #104d3f, with restrained #093d32 depth toward the outer edges. The entire object is visible, occupying about 70% of the canvas width and 80% of its height. Leave quiet margins around its silhouette.
 
-Subject and composition: one compact browser surface on the left, one structured record surface on the right, with a clear left-to-right reading order. Give the browser slightly more visual weight. Align both surfaces on the same horizontal axis. Use a front-facing, nearly orthographic view with crisp, straight geometry.
+Subject: one upright rectangular page mass made from a few thin, rigid laminated planes. Carve one broad branching document tree into its ivory face: an off-center vertical trunk with three major branch levels and a few shorter nested forks. Use thick recessed channels, deliberate right-angle turns, unequal branch lengths, and squared terminations. Give the cuts visible dark-green interiors, narrow shadow walls, and fine ivory edge highlights. Leave generous uninterrupted ivory between branches. The surface contains no letters, paragraph stripes, newspaper layout, controls, or enclosing panel frames.
 
-The browser has a restrained top chrome bar and exactly three recognizable interface regions: a compact heading region, a rectangular input field, and one solid green action button. Leave their text areas empty. The record surface has exactly three neatly aligned rows. Each row has a small geometric marker, an empty area reserved for its label, and a small state indicator. Avoid paragraph-like placeholder stripes.
+Cutaway: the three main channels continue toward the page's right edge and meet the three ordered branch levels of one slender exposed mint spine. Keep each connection visible and physically attached to the same object. The branching relief inside the page is more intricate; its continuation into the exposed spine is clear and simple. Preserve that continuity so the image reads as a webpage revealing its underlying structure. Use broad architectural cuts with tangible depth rather than thin circuit traces or a collection of separate shapes.
 
-Connect each of the three browser regions to its corresponding record row with one thin, carefully routed connector. Preserve the same top-to-bottom order. The three connections must be distinct and traceable, with no crossings or unexplained branches. Emphasize the input field and its matching record using #0b7468; keep the other relationships quieter. The visual should communicate one interface, three meaningful elements, and their structured counterparts.
+Composition: close, near-orthographic three-quarter view. The broad ivory page mass sits slightly left of center; its revealed mint spine occupies the right foreground. Use a deliberate asymmetry and a strong continuous silhouette. The small number of exposed layers creates depth while the overall form remains simple enough to recognize as a thumbnail.
 
-Style and materials: restrained editorial product rendering with smooth matte surfaces, narrow light-catching edges, and very shallow depth. Use subtle contact shadows only where they clarify separation. Refine spacing, edge consistency, proportions, and alignment. The quality should come from those details. Keep the silhouette and connections clear when the entire image is displayed at 320 pixels wide.
+Materials and rendering: finely finished matte ivory composite, narrow ink-dark cut edges, precise layered thickness, and a softly lit mint structural insert. Use restrained photographic light from the upper left to reveal the geometry. Add a subtle monochrome halftone in the recessed faces and contact shadow, like an exacting editorial print. Keep the broad surfaces calm and the edges sharp. Mint should feel luminous through contrast and material lightness, without glow or bloom.
 
-Color palette: #f6f6f8 for the background and light surfaces; #075e56 for structural edges and the darkest details; #0b7468 for the selected relationship and action button; #d4ebe6 for restrained surface tint and selected-state fill. Use small amounts of white for light-catching edges. Keep green accents selective.
+Palette: #104d3f dark pine with #093d32 at deeper edges, #ffffed and #eeefda warm ivory surfaces, #1e6049 structural green, and #d0eabb pale mint. The visual hierarchy is dark field, large warm ivory mass, selective mint structure.
 
-Text: none. Do not render words, letters, numbers, code, logos, watermarks, or imitation writing anywhere. The website will supply all textual meaning in HTML outside the image.
+Text: none. No words, letters, numbers, code, logos, watermarks, imitation writing, or numerical claims. All product language will appear in HTML outside the image.
 
-Exclude: warped or folded paper, botanical forms, sketch marks, engraving, decorative crosshatching, floating blobs, mascots, gears, brains, circuit-board decoration, glass orbs, oversized bevels, glossy plastic, neon, bloom, colored background gradients, particles, extra windows, unrelated objects, and performance or benchmark claims.
+Exclude: floating component cards, form fields, toolbars, admin dashboards, disconnected windows, diagrams made from rounded UI boxes, paper curls, warped sheets, botanical forms, brains, gears, circuit boards, generic abstract blobs, glass orbs, chrome, glossy plastic, neon, decorative multicolor gradients, particle clouds, decorative arrows, and unrelated props.
 
-Deliver one finished static image. The complete browser-to-record relationship must be understandable in a still frame.
+Deliver one finished still image with a forceful silhouette, tangible geometric depth, and restrained detail.
 ~~~
 
 ## Prompt 2 — Refine the chosen result
 
-Use this only if the first image has the right composition and needs a more cohesive finish. Attach that result as **Image 1: edit target**. You may also attach a current Spine screenshot as **Image 2: palette and finish reference**.
+Use this only if the first image has the right object and composition. Attach that result as **Image 1: edit target**. You may also attach a current Spine screenshot as **Image 2: palette and finish reference**.
 
 ~~~text
 Use case: precise-object-edit
-Asset type: final polish of the existing static Spine illustration.
+Asset type: final material and contrast refinement of the existing static Spine editorial image.
 
 Image 1 is the edit target. If Image 2 is present, use it only as a reference for Spine's palette, visual restraint, and contrast.
 
-Change only the color and surface finish of Image 1 so it sits naturally on Spine's landing page. Match the flat edge-to-edge background to #f6f6f8. Use #075e56 for dark structural details, #0b7468 for the existing selected relationship, and #d4ebe6 for pale surface tint. Make the surfaces matte and the existing edges crisp. Reduce any haze, decorative texture, excessive shine, or heavy shadow while preserving enough contrast to see the connections at a small display size.
+Change only the material finish and contrast of Image 1. Unify the uninterrupted dark-pine background at #104d3f, with restrained #093d32 depth toward its outer edges. Give the existing broad page surfaces a matte warm ivory finish using #ffffed and #eeefda, precise ink-dark cut edges, and restrained #1e6049 structural details. Make the existing internal spine a clear, softly lit #d0eabb pale mint. Preserve the established upper-left lighting direction. Keep halftone subtle and confined to the existing recesses and contact shadow.
 
-Preserve exactly: the landscape 3:2 composition, framing, clear outer margins, browser and record surface positions, their proportions, all three interface regions, all three record rows, the selected relationship, and the three one-to-one connectors in their current routes. Keep every object fully visible. Do not add, remove, rearrange, or redesign the interface elements.
+The result should retain a strong dark-field / ivory-mass / mint-spine hierarchy when reduced to 320 pixels wide. Remove any haze, bloom, excessive shine, gritty surface noise, or muddy contrast. Keep the object's material depth.
 
-Keep the image completely free of text, numbers, code, logos, watermarks, and imitation writing. Keep the flat background and shallow depth. Add no paper effects, botanical forms, gradients, glow, particles, decorative objects, or extra panels. Return one refined static image of the same composition.
+Preserve exactly: the landscape 3:2 framing, camera angle, outer silhouette, quiet margins, single joined object, cutaway position, number and arrangement of layers, three branch levels, physical connections, and relative proportions. Do not add, remove, separate, or rearrange structural elements.
+
+Keep the image completely free of text, numbers, code, logos, watermarks, and imitation writing. Add no UI cards, controls, windows, paper curls, botanical forms, decorative multicolor gradients, glowing effects, particles, or props. Return one refined still image of the same object.
 ~~~
 
 ## Reference rationale
 
-- [Supermemory](https://supermemory.ai/) pairs restrained page structure with a literal architecture diagram and one expressive image. Its [product page](https://supermemory.ai/product/) explains the system through concrete inputs and outputs.
-- [Parallel](https://parallel.ai/) uses consistent, readable interface scenes to explain product behavior. Borrow the discipline of a clear example and coherent surfaces.
-- [Browserbase](https://www.browserbase.com/) gives its brand imagery a distinct role while its product examples show browser operations. For Spine, keep the single supporting image subordinate to the product explanation.
+- [Supermemory](https://supermemory.ai/) gives one expressive monochrome image room to carry character within a restrained page. Its architecture diagram still makes the underlying system legible.
+- [Browserbase](https://www.browserbase.com/) uses a distinctive pixel treatment consistently enough to feel like a visual identity. For Spine, the restrained halftone and architectural material treatment should have that same consistency.
+- [Parallel](https://parallel.ai/) keeps product meaning concrete. Preserve a clear relationship between the outer page and its exposed structure while the surrounding HTML explains the primitives.
 
 These references inform hierarchy and clarity; their artwork, logos, and compositions should not be copied.
