@@ -122,16 +122,39 @@ html:has(.runtime-story:focus-within) { scroll-behavior: auto; }
 .runtime-sticky-figure {
   position: sticky;
   top: calc(var(--runtime-reading-line, 3.25rem) - var(--runtime-reading-offset, 0px));
+  display: flex;
+  flex-direction: column;
   align-self: start;
+  height: var(--runtime-available-height, calc(100svh - 3.25rem));
   min-width: 0;
   border-bottom: 1px solid var(--color-line);
   background: var(--color-canvas);
 }
 
+.runtime-sticky-figure .runtime-study {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.runtime-sticky-figure .runtime-art-header,
+.runtime-sticky-figure .runtime-art-caption { flex-shrink: 0; }
+
+.runtime-sticky-figure .runtime-art-object {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-height: 0;
+}
+
+.runtime-sticky-figure .runtime-cutaway { flex: none; }
+
 .runtime-step-navigation {
   display: flex;
+  flex-shrink: 0;
   border-top: 1px solid var(--color-line);
-  padding: 0 24px;
+  padding: 4px 24px;
   gap: 16px;
 }
 
@@ -175,6 +198,10 @@ html:has(.runtime-story:focus-within) { scroll-behavior: auto; }
   display: flex;
   min-height: clamp(16rem, 31svh, 20rem);
   align-items: flex-start;
+}
+
+.runtime-story[data-pinned="true"] .runtime-chapters > li:first-child .runtime-chapter {
+  scroll-margin-top: calc(var(--runtime-reading-line, 3.25rem) - var(--runtime-reading-offset, 0px));
 }
 
 .runtime-story[data-pinned="true"] .runtime-chapters > li:last-child .runtime-chapter {

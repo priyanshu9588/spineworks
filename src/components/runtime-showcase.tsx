@@ -6,7 +6,7 @@ import { RuntimeArtwork } from "./runtime-illustrations/runtime-artwork";
 import "./runtime-showcase.css";
 
 const stickyQuery = "(min-width: 1024px) and (min-height: 768px)";
-const navigationHeight = 54;
+const navigationHeight = 62;
 const figureClearance = 16;
 const pinReentryBuffer = 16;
 
@@ -33,6 +33,10 @@ export function RuntimeShowcase() {
     const header = document.querySelector<HTMLElement>("header");
     const study = figure.current?.querySelector<HTMLElement>(".runtime-study")
       ?? chapters.current[0]?.querySelector<HTMLElement>(".runtime-study");
+    const artHeader = study?.querySelector<HTMLElement>(".runtime-art-header");
+    const artwork = study?.querySelector<SVGSVGElement>(".runtime-cutaway");
+    const caption = study?.querySelector<HTMLElement>(".runtime-art-caption");
+    const steps = figure.current?.querySelector<HTMLElement>(".runtime-step-navigation");
 
     const update = () => {
       frame = 0;
@@ -41,12 +45,12 @@ export function RuntimeShowcase() {
       const headerHeight = header?.getBoundingClientRect().height ?? 52;
       const readingOffset = Math.min(window.innerHeight * 0.27, 220);
       const readingLine = headerHeight + readingOffset;
-      const studyHeight = study?.getBoundingClientRect().height;
 
       if (story.current) {
         for (const [property, value] of [
           ["--runtime-reading-offset", readingOffset],
           ["--runtime-reading-line", readingLine],
+          ["--runtime-available-height", Math.max(0, window.innerHeight - headerHeight)],
         ] as const) {
           const pixels = `${value}px`;
           if (story.current.style.getPropertyValue(property) !== pixels) {
@@ -55,9 +59,13 @@ export function RuntimeShowcase() {
         }
       }
 
-      if (desktop && studyHeight) {
-        const stepsHeight = plate?.querySelector<HTMLElement>(".runtime-step-navigation")
-          ?.getBoundingClientRect().height ?? navigationHeight;
+      if (desktop && artwork) {
+        // Fit the natural content, independently of the stage that fills the viewport.
+        const viewBox = artwork.viewBox.baseVal;
+        const artworkHeight = artwork.getBoundingClientRect().width * viewBox.height / viewBox.width;
+        const studyHeight = (artHeader?.getBoundingClientRect().height ?? 0)
+          + artworkHeight + (caption?.getBoundingClientRect().height ?? 0);
+        const stepsHeight = steps?.getBoundingClientRect().height ?? navigationHeight;
         const requiredHeight = studyHeight + Math.max(navigationHeight, stepsHeight)
           + headerHeight + figureClearance;
 
@@ -90,6 +98,10 @@ export function RuntimeShowcase() {
     if (figure.current) observer.observe(figure.current);
     if (study) observer.observe(study);
     if (header) observer.observe(header);
+    // These can resize inside the filled stage without changing its outer height.
+    for (const part of [artHeader, artwork, caption, steps]) {
+      if (part) observer.observe(part);
+    }
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     update();
