@@ -4,8 +4,8 @@
   min-width: 0;
   overflow: hidden;
   color: #e1ecd7;
-  background: #104d3f;
-  background-image: radial-gradient(ellipse at 55% 37%, #245e48 0%, #104d3f 55%, #093d32 100%);
+  background: #075044;
+  background-image: radial-gradient(ellipse at 25% 35%, #115c4b 0%, #075044 60%, #014438 100%);
 }
 
 .runtime-art-header {
@@ -24,11 +24,21 @@
 .runtime-art-object { width: 100%; min-width: 0; }
 .runtime-cutaway { display: block; width: 100%; height: auto; }
 .runtime-cutaway-detail { display: none; }
-.cutaway-fact-label { fill: #accbaa; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; }
-.cutaway-fact-value { fill: #eef2d6; font-size: 24px; letter-spacing: -.04em; }
-.cutaway-fact-value[data-long="true"] { font-size: 17px; }
+.cutaway-page-heading { fill: #174b37; font-size: 112px; letter-spacing: -.045em; }
+.cutaway-page-summary { fill: #597256; font-size: 31px; letter-spacing: -.025em; }
+.cutaway-field-label { fill: #426548; font-size: 38px; letter-spacing: -.025em; }
+.cutaway-field-value { fill: #28553a; font-size: 44px; letter-spacing: -.025em; }
+.cutaway-field-value[data-placeholder="true"] { fill: #70826a; }
+.cutaway-button-label { color: #eff3d9; fill: currentColor; font-size: 76px; letter-spacing: -.035em; }
+.cutaway-button-label[data-enabled="false"] { color: #34563d; }
+.cutaway-fact-label { fill: #b8d1ab; font-size: 28px; letter-spacing: .05em; text-transform: uppercase; }
+.cutaway-fact-value { fill: #eef2d6; font-size: 70px; letter-spacing: -.04em; }
+.cutaway-fact-value[data-long="true"] { font-size: 44px; }
 .detail-label { fill: #b7cfaf; font-size: 13px; letter-spacing: -.025em; }
-.detail-value { font-size: 22px; letter-spacing: -.055em; }
+.detail-value { fill: #eef2d6; font-size: 22px; letter-spacing: -.055em; }
+.detail-control-value { fill: #eff3d9; font-size: 20px; letter-spacing: -.035em; }
+.detail-value-on-ivory { fill: #28553a; }
+.detail-value-disabled { fill: #34563d; }
 .runtime-readable-facts {
   display: none;
   flex-wrap: wrap;

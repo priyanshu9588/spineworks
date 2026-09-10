@@ -229,7 +229,7 @@ export default function Home() {
       </section>
 
       <section id="runtime" aria-labelledby="runtime-heading" className={`${shell} ${fullWidthDivider} scroll-mt-13 border-line`}>
-        <RuntimeShowcase />
+        <RuntimeShowcase motionReady={loaderExited} />
       </section>
 
       <section id="benchmarks" aria-labelledby="benchmarks-heading" className={`${shell} ${fullWidthDivider} scroll-mt-13 border-line`}>

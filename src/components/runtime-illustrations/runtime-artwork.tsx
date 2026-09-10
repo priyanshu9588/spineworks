@@ -2,7 +2,10 @@
 
 import { useId } from "react";
 import { runtimeFeatures } from "@/content/runtime-features";
+import { RuntimeMotion } from "./runtime-motion";
 import "./runtime-artwork.css";
+
+const masterImage = "/illustrations/runtime-master-v3.webp";
 
 const captions = [
   ["What you see", "What Spine reads"],
@@ -20,186 +23,193 @@ const sceneFacts = [
   [["changed field", "Street address"], ["before", "Continue disabled"], ["after", "Continue enabled"]],
 ] as const;
 
-function StructuralLine({ d, width = 5 }: { d: string; width?: number }) {
+/** The raster supplies the material; the fallback keeps its exact control positions. */
+function MasterBase({ prefix }: { prefix: string }) {
   return (
-    <g strokeLinejoin="round">
-      <path d={d} transform="translate(4 6)" stroke="#2b765c" strokeWidth={width + 1} />
-      <path d={d} stroke="#d0eabb" strokeWidth={width} />
+    <g className="runtime-master-base">
+      <defs>
+        <linearGradient id={`${prefix}-ivory`} x1="173" y1="129" x2="973" y2="1114" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#fffbea" />
+          <stop offset="1" stopColor="#e6e4cd" />
+        </linearGradient>
+        <linearGradient id={`${prefix}-pine`} x1="247" y1="827" x2="889" y2="973" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#17614c" />
+          <stop offset="1" stopColor="#064131" />
+        </linearGradient>
+      </defs>
+      <rect width="1920" height="1280" fill="#075044" />
+      <g className="runtime-master-fallback">
+        <rect x="185" y="144" width="800" height="985" rx="12" fill="#022f26" opacity=".5" />
+        <rect x="173" y="129" width="800" height="985" rx="12" fill={`url(#${prefix}-ivory)`} stroke="#fffdec" strokeWidth="5" />
+        <rect x="250" y="569" width="643" height="164" rx="12" fill="#b3ae8c" />
+        <rect x="258" y="577" width="629" height="150" rx="7" fill="#f5f2de" />
+        <path d="M887 898H1277M1117 898V340M1117 412H1277M1117 655H1277" transform="translate(5 7)" fill="none" stroke="#023e2d" strokeWidth="31" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M887 898H1277M1117 898V340M1117 412H1277M1117 655H1277" fill="none" stroke="#cde6b3" strokeWidth="28" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="253" y="835" width="642" height="146" rx="12" fill="#092e23" />
+        <rect x="247" y="827" width="642" height="146" rx="12" fill={`url(#${prefix}-pine)`} stroke="#689575" strokeWidth="4" />
+      </g>
+      <image
+        href={masterImage}
+        width="1920"
+        height="1280"
+        preserveAspectRatio="xMidYMid meet"
+        onError={(event) => { event.currentTarget.style.display = "none"; }}
+      />
     </g>
   );
 }
 
-function StructuralNode({ x, y, radius = 14 }: { x: number; y: number; radius?: number }) {
+/** State tints stay inside the photographed bevel, retaining its light and shadow. */
+function ControlState({ active }: { active: number }) {
   return (
-    <g>
-      <circle cx={x + 4} cy={y + 6} r={radius} fill="#44896a" />
-      <circle cx={x} cy={y} r={radius} fill="#dbedc6" stroke="#eff7d9" strokeWidth="1" />
-    </g>
-  );
-}
-
-/** Inline chapters use a close detail instead of repeating the full page illustration. */
-function RuntimeDetail({ active }: { active: number }) {
-  return (
-    <svg className="runtime-cutaway-detail" viewBox="0 0 360 190" fill="none" aria-hidden="true" focusable="false">
-      {active === 1 && (
-        <g>
-          <text x="25" y="59" className="detail-label">Contact</text>
-          <path d="M29 82h143v57H29Z" fill="#508367" />
-          <path d="M24 76h143v57H24Z" fill="#eef2d6" stroke="#fbffe9" />
-          <text x="38" y="112" className="detail-value" fill="#225d42">Continue</text>
-          <StructuralLine d="M178 104h23" width={2} />
-          <path d="m195 98 6 6-6 6" stroke="#d0eabb" strokeWidth="2" />
-          <text x="217" y="84" className="detail-label">Observed page</text>
-          <text x="217" y="116" className="detail-value" fill="#eef2d6">Delivery</text>
-        </g>
-      )}
-      {active === 2 && (
-        <g>
-          <text x="28" y="59" className="detail-value" fill="#c5ddbd">Contact</text>
-          <text x="217" y="59" className="detail-value" fill="#eef2d6">Delivery</text>
-          <StructuralLine d="M34 79H323" width={3} />
-          <StructuralNode x={34} y={79} radius={5} />
-          <StructuralNode x={323} y={79} radius={5} />
-          <path d="m169 73 7 6-7 6" stroke="#eff7d9" strokeWidth="2" />
-          <text x="28" y="119" className="detail-label">Same session · contact retained</text>
-          <text x="28" y="151" className="detail-value" fill="#eef2d6">alex@example.com</text>
-        </g>
-      )}
-      {active === 3 && (
-        <g>
-          <path d="M24 30H330v52H24Z" fill="#e5edd2" />
-          <path d="M24 82H330v5H24Z" fill="#77a17d" />
-          <text x="38" y="65" className="detail-value" fill="#225d42">Street address</text>
-          <text x="26" y="110" className="detail-label">Fill available</text>
-          <path d="M24 129H330" stroke="#8eb391" strokeWidth="1" />
-          <text x="25" y="160" className="detail-value" fill="#b0c8ae">Continue</text>
-          <text x="180" y="155" className="detail-label">Click unavailable</text>
-          <text x="180" y="173" className="detail-label">Address required</text>
-        </g>
+    <g className="runtime-control-state">
+      {(active === 2 || active === 3) && (
+        <rect x="256" y="833" width="629" height="135" rx="8" fill="#d9e2c6" opacity=".69" />
       )}
       {active === 4 && (
-        <g>
-          <text x="27" y="48" className="detail-label">Street address filled</text>
-          <text x="27" y="81" className="detail-value" fill="#eef2d6">Continue</text>
-          <text x="27" y="133" className="detail-value" fill="#b0c8ae">disabled</text>
-          <StructuralLine d="M145 125h42" width={2} />
-          <path d="m181 119 6 6-6 6" stroke="#d0eabb" strokeWidth="2" />
-          <path d="M208 103h129v52H208Z" fill="#508367" />
-          <path d="M203 97h129v52H203Z" fill="#d0eabb" stroke="#e8f5d1" />
-          <text x="218" y="133" className="detail-value" fill="#225d42">enabled</text>
-        </g>
+        <>
+          <rect x="260" y="581" width="623" height="142" rx="5" fill="#bbd8a0" opacity=".2" />
+          <rect x="261" y="581" width="621" height="142" rx="5" fill="none" stroke="#89a66a" strokeWidth="3" opacity=".65" />
+          <rect x="255" y="834" width="630" height="132" rx="8" fill="none" stroke="#c9e3aa" strokeWidth="3" opacity=".7" />
+        </>
       )}
-    </svg>
+    </g>
   );
 }
 
-/** A single cutaway, seen through five lenses. All geometry is deliberately static. */
 function PageCutaway({ active, prefix }: { active: number; prefix: string }) {
-  const paint = (name: string) => `url(#${prefix}-${name})`;
   const delivery = active > 1;
   const enabled = active < 2 || active === 4;
   const inputValue = !delivery ? "alex@example.com" : active === 4 ? "12 Cedar Lane" : "Enter address";
 
   return (
-    <svg className="runtime-cutaway" viewBox="0 0 720 500" fill="none" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id={`${prefix}-paper`} x1="0" y1="0" x2="330" y2="370" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#ffffed" />
-          <stop offset=".48" stopColor="#eeefda" />
-          <stop offset="1" stopColor="#b8cabb" />
-        </linearGradient>
-        <linearGradient id={`${prefix}-edge`} x1="0" y1="0" x2="330" y2="370" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#d5e4c6" />
-          <stop offset="1" stopColor="#587c65" />
-        </linearGradient>
-        <radialGradient id={`${prefix}-shadow`}>
-          <stop stopColor="#001d18" stopOpacity=".85" />
-          <stop offset="1" stopColor="#001d18" stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id={`${prefix}-fade`} x2="0" y2="1">
-          <stop stopColor="white" stopOpacity="0" />
-          <stop offset="1" stopColor="white" />
-        </linearGradient>
-        <pattern id={`${prefix}-grain`} width="3" height="3" patternUnits="userSpaceOnUse">
-          <circle cx="1" cy="1" r=".5" fill="#062f26" opacity=".28" />
-        </pattern>
-        <pattern id={`${prefix}-hatch`} width="4" height="4" patternUnits="userSpaceOnUse">
-          <path d="M0 4 4 0" stroke="#062f26" strokeWidth=".7" opacity=".45" />
-        </pattern>
-        <mask id={`${prefix}-texture`}>
-          <rect width="340" height="370" fill={paint("fade")} />
-        </mask>
-      </defs>
-
-      <ellipse cx="353" cy="405" rx="284" ry="67" fill={paint("shadow")} transform="rotate(10 353 405)" />
-
-      {/* One exposed structural layer behind the page. */}
-      {[1].map((layer) => (
-        <g key={layer} transform={`matrix(.94 .22 -.38 .82 ${205 + layer * 24} ${37 + layer * 27})`}>
-          <path d="M0 0H340V370H0Z" fill="#4f8b70" stroke="#a8cba4" strokeWidth=".8" />
-          <path d="m0 370 8 8h340l-8-8Zm340-370 8 8v370l-8-8Z" fill={paint("edge")} />
-          <path d="m0 373 340 0m-337 3h340m0-371v369" stroke="#163f31" strokeWidth=".75" />
-          <path d="M25 30H314M25 53H225M25 310H310M25 333H310" stroke="#b1d3ab" strokeWidth="1" opacity=".5" />
+    <svg className="runtime-cutaway" viewBox="0 0 1920 1280" fill="none" aria-hidden="true" focusable="false">
+      <MasterBase prefix={`${prefix}-full`} />
+      <ControlState active={active} />
+      <g className="runtime-page-labels">
+        <text x="250" y="320" className="cutaway-page-heading">{delivery ? "Delivery" : "Contact"}</text>
+        <text x="252" y="384" className="cutaway-page-summary">
+          {delivery ? "Contact: alex@example.com" : active === 1 ? "Continue clicked. Next: Delivery." : "Your details, one step at a time."}
+        </text>
+        <text x="251" y="535" className="cutaway-field-label">{delivery ? "Street address" : "Email"}</text>
+        <text x="280" y="668" className="cutaway-field-value" data-placeholder={delivery && active !== 4}>{inputValue}</text>
+        <g className="cutaway-button-label" data-enabled={enabled}>
+          <text x="294" y="922">Continue</text>
+          <path d="M780 900h64m-22-22 22 22-22 22" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
         </g>
-      ))}
-
-      {/* One recognizable web control gives the cutaway a concrete subject. */}
-      <g transform="matrix(.94 .22 -.38 .82 205 37)">
-        <path d="m0 370 8 8h340l-8-8Zm340-370 8 8v370l-8-8Z" fill={paint("edge")} stroke="#4b7059" strokeWidth=".6" />
-        <path d="M0 0H340V370H0Z" fill={paint("paper")} stroke="#eef5d8" strokeWidth="1.2" />
-        <path d="M0 0H340V370H0Z" fill={paint("grain")} mask={paint("texture")} />
-        <text x="28" y="85" fill="#164d3a" fontSize="40" letterSpacing="-2">{delivery ? "Delivery" : "Contact"}</text>
-        <text x="28" y="114" fill="#5a785e" fontSize="12">{delivery ? "Contact: alex@example.com" : active === 1 ? "Continue clicked. Next: Delivery." : "Your details, one step at a time."}</text>
-        <text x="28" y="158" fill="#3f694e" fontSize="14">{delivery ? "Street address" : "Email"}</text>
-        <path d="M28 176H312V227H28Z" fill="#799b7c" />
-        <path d="M32 181H312V227H32Z" fill={active === 4 ? "#d9edc4" : "#e4e9d2"} />
-        <path d="M28 228H313" stroke="#faffed" strokeWidth="1.5" />
-        <text x="44" y="208" fill={delivery && active !== 4 ? "#708569" : "#23563f"} fontSize="17" letterSpacing="-.5">{inputValue}</text>
-        <path d="M29 274H318V344H29Z" fill={enabled ? "#113f2d" : "#849a79"} />
-        <path d="M24 266H313V336H24Z" fill={enabled ? "#1e6049" : "#bbccb0"} stroke={enabled ? "#6ba884" : "#cfe0c1"} strokeWidth="1" />
-        <path d="M24 267H313" stroke={enabled ? "#90c79e" : "#edf6dc"} strokeWidth="1" />
-        <text x="44" y="312" fill={enabled ? "#f0f5d9" : "#56764f"} fontSize="31" fontWeight="500" letterSpacing="-1.5">Continue</text>
-        <path d="M260 301h27m-10-10 10 10-10 10" stroke={enabled ? "#d0eabb" : "#7a9670"} strokeWidth="2" />
-        {active === 4 && <path d="M28 172H312V231H28Z" stroke="#7eb48a" strokeWidth="2" />}
       </g>
-
-      {/* The exposed spine connects the subject of each reading to its observed facts. */}
-      <g className="cutaway-connection">
-        {active === 2 ? (
-          <>
-            <path d="M453 204 475 209 487 192" stroke="#174c38" strokeWidth="10" />
-            <path d="M453 198 475 203 487 186" stroke="#d0eabb" strokeWidth="5" />
-          </>
-        ) : active === 4 ? (
-          <>
-            <path d="M420 277 443 283 455 267" stroke="#174c38" strokeWidth="10" />
-            <path d="M420 271 443 277 455 261" stroke="#d0eabb" strokeWidth="5" />
-          </>
-        ) : <>
-        <path d="M385 356 407 362 425 336" stroke="#174c38" strokeWidth="10" />
-        <path d="M385 350 407 356 425 330" stroke="#d0eabb" strokeWidth="5" />
-        </>}
-      </g>
-
-      <g transform="matrix(.94 .22 -.38 .82 467 149)">
-        <StructuralLine d="M40 30V235" width={13} />
-        <StructuralLine d="M40 55H87M40 132H87M40 210H87" width={7} />
-        {[55, 132, 210].map((y) => <StructuralNode key={y} x={87} y={y} radius={13} />)}
-      </g>
-      {/* Upright values stay readable and can be matched directly to the page. */}
       {sceneFacts[active].map(([label, value], index) => (
-        <g className="cutaway-fact" key={label} transform={`translate(${551 - index * 29} ${203 + index * 64})`}>
-          <text className="cutaway-fact-label">{label}</text>
-          <text y="26" className="cutaway-fact-value" data-long={value.length > 12}>{value}</text>
+        <g className="cutaway-fact" key={label} transform={`translate(1340 ${412 + index * 243})`}>
+          <text y="-36" className="cutaway-fact-label">{label}</text>
+          <text y="36" className="cutaway-fact-value" data-long={value.length > 12}>{value}</text>
         </g>
       ))}
-
     </svg>
   );
 }
 
-export function RuntimeArtwork({ active }: { active: number }) {
+/** A nested viewport crops the same material without stretching its geometry. */
+function MasterCrop({
+  prefix,
+  subject,
+  active,
+  x,
+  y,
+  width,
+}: {
+  prefix: string;
+  subject: "field" | "button";
+  active: number;
+  x: number;
+  y: number;
+  width: number;
+}) {
+  const field = subject === "field";
+  const cropWidth = field ? 650 : 651;
+  const cropHeight = field ? 170 : 158;
+
+  return (
+    <svg
+      x={x}
+      y={y}
+      width={width}
+      height={width * cropHeight / cropWidth}
+      viewBox={field ? "247 566 650 170" : "245 822 651 158"}
+      preserveAspectRatio="xMidYMid meet"
+      overflow="hidden"
+    >
+      {!field && (
+        <defs>
+          <clipPath id={`${prefix}-button-crop`}>
+            <rect x="247" y="825" width="647" height="151" rx="12" />
+          </clipPath>
+        </defs>
+      )}
+      <g clipPath={field ? undefined : `url(#${prefix}-button-crop)`}>
+        <MasterBase prefix={prefix} />
+        <ControlState active={active} />
+      </g>
+    </svg>
+  );
+}
+
+function DetailArrow({ d }: { d: string }) {
+  return <path d={d} stroke="#cce5b5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />;
+}
+
+/** Compact scenes show the same carved controls, with labels sized for a phone. */
+function RuntimeDetail({ active, prefix }: { active: number; prefix: string }) {
+  return (
+    <svg className="runtime-cutaway-detail" viewBox="0 0 360 190" fill="none" aria-hidden="true" focusable="false">
+      {active === 1 && (
+        <g>
+          <text x="24" y="57" className="detail-label">Contact</text>
+          <MasterCrop prefix={`${prefix}-action`} subject="button" active={1} x={22} y={83} width={164} />
+          <text x="36" y="111" className="detail-control-value">Continue</text>
+          <DetailArrow d="M195 104h19m-6-6 6 6-6 6" />
+          <text x="228" y="78" className="detail-label">Observed page</text>
+          <text x="228" y="115" className="detail-value">Delivery</text>
+          <text x="24" y="150" className="detail-label">clicked</text>
+        </g>
+      )}
+      {active === 2 && (
+        <g>
+          <text x="28" y="37" className="detail-value">Contact</text>
+          <text x="226" y="37" className="detail-value">Delivery</text>
+          <path d="M31 56H331" stroke="#173e2d" strokeWidth="5" />
+          <DetailArrow d="M29 53H329m-153-5 6 5-6 5" />
+          <text x="28" y="85" className="detail-label">Same session · contact retained</text>
+          <MasterCrop prefix={`${prefix}-session`} subject="field" active={0} x={26} y={103} width={308} />
+          <text x="42" y="153" className="detail-value detail-value-on-ivory">alex@example.com</text>
+        </g>
+      )}
+      {active === 3 && (
+        <g>
+          <MasterCrop prefix={`${prefix}-capability-field`} subject="field" active={3} x={24} y={24} width={310} />
+          <text x="40" y="74" className="detail-value detail-value-on-ivory">Street address</text>
+          <text x="26" y="125" className="detail-label">Fill available</text>
+          <MasterCrop prefix={`${prefix}-capability-button`} subject="button" active={3} x={25} y={147} width={145} />
+          <text x="37" y="173" className="detail-control-value detail-value-disabled">Continue</text>
+          <text x="190" y="157" className="detail-label">Click unavailable</text>
+          <text x="190" y="176" className="detail-label">Address required</text>
+        </g>
+      )}
+      {active === 4 && (
+        <g>
+          <text x="27" y="42" className="detail-label">Street address filled</text>
+          <text x="27" y="75" className="detail-value">Continue</text>
+          <MasterCrop prefix={`${prefix}-delta-before`} subject="button" active={3} x={25} y={103} width={132} />
+          <text x="39" y="127" className="detail-control-value detail-value-disabled">disabled</text>
+          <DetailArrow d="M174 119h17m-6-6 6 6-6 6" />
+          <MasterCrop prefix={`${prefix}-delta-after`} subject="button" active={4} x={207} y={103} width={132} />
+          <text x="224" y="127" className="detail-control-value">enabled</text>
+        </g>
+      )}
+    </svg>
+  );
+}
+
+export function RuntimeArtwork({ active, motionReady = false }: { active: number; motionReady?: boolean }) {
   const prefix = `cutaway-${useId().replace(/:/g, "")}`;
   const index = active >= 0 && active < runtimeFeatures.length ? active : 0;
   const feature = runtimeFeatures[index];
@@ -212,8 +222,10 @@ export function RuntimeArtwork({ active }: { active: number }) {
         <span>{feature.number} / 05</span>
       </div>
       <div className="runtime-art-object" role="img" aria-label={feature.illustration}>
-        <PageCutaway active={index} prefix={prefix} />
-        {index > 0 && <RuntimeDetail active={index} />}
+        <RuntimeMotion enabled={motionReady && index === 0}>
+          <PageCutaway active={index} prefix={prefix} />
+        </RuntimeMotion>
+        {index > 0 && <RuntimeDetail active={index} prefix={prefix} />}
         <dl className="runtime-readable-facts" aria-hidden="true">
           {sceneFacts[0].map(([label, value]) => (
             <div key={label}><dt>{label}</dt><dd>{value}</dd></div>

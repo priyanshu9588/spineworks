@@ -1,8 +1,10 @@
 # Spine artwork prompts
 
-These are prompts for you to run in ChatGPT. This deliverable contains prompts only; no raster image has been generated or delivered for it. The site currently uses a complete static SVG illustration. One generated image may optionally replace that primary SVG, with an optional refinement of the same image.
+The current artwork uses a generated GPT Image 2.5 material master and a Seedance 2.5 reading sequence. See [the generation record](artwork-generation.md) for delivered assets, exact production prompts, and model details.
 
-## Placement and delivery
+The prompts below are historical ChatGPT concepts from before the generated assets. They document the Contact/Continue subject and palette; their proposed filenames and placement are not the current implementation.
+
+## Earlier placement and delivery
 
 The Runtime introduction spans the full section above the narrative and artwork. Place the selected image beside the first narrative on desktop and beneath that first narrative on mobile, replacing the primary SVG only. Keep the full Contact illustration once; later steps use compact detail views of the same example. Keep the primitive names and all explanations in HTML.
 

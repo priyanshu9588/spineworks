@@ -2,6 +2,18 @@
 
 Production: https://spineworks.vercel.app
 
+## Generated material artwork and reading sequence
+
+GPT Image 2.5 supplies one pine/ivory/mint material master. The full five-scene story keeps exact text and states in SVG; compact layouts use focused crops of the same controls. The phone object is centered after its semantic facts move into readable HTML. Feathered asset edges blend into the stage. A four-second silent Seedance 2.5 sequence emphasizes the button-to-spine relationship after the loader clears, then restores the still. Reduced motion, buffering, blocked autoplay, and asset failures retain a complete illustration. The completed clip does not replay when the user revisits a chapter. Labeled MP4 and GIF previews are available separately; the landing page does not load the GIF.
+
+Production build, TypeScript, ESLint, and whitespace checks pass. Chromium at 375×667 verifies actual H.264 playback after loader unlock, buffering fallback, completion at 4.04 seconds, and eight actual touch swipes through every scene forward and backward. Stage height stays at 323.109px and the finished video remains paused on returning to the first scene. At 320px, initial reduced motion sends no video requests and forced autoplay denial preserves the still. A separate forced image/video failure case retains the vector base and exact labels without page errors or overflow. Normal checks have no failed assets, errors, overflow, or GitHub links. The phone film capture and labeled standalone preview were visually reviewed.
+
+WebKit at 1440×1000 and 390×844 also decodes the H.264 clip: 96 presented frames at 1110×740, followed by still restoration and no replay when returning to the semantic chapter. Video requests and playback begin after the loader clears. All five normal chapter anchors preserve the labels and stage dimensions. Cold reduced motion and JavaScript disabled send no MP4 requests. At 320×667 with 200% text, all five native hash navigations retain the 32px root font and inline layout without clipping, overflow, or errors. Failed SVG images are explicitly hidden so the browser's missing-image icon cannot obscure the vector fallback; Chromium and WebKit failure captures were visually verified after this fix. The WebKit phone fallback retains the same 323.109px stage height.
+
+The current loader/hero also passes the focused live/local audit at 1440×1000, 2048×1152, 390×844, and 320×667. Letter positions remain stationary during dissolution; the backdrop ends at the header; scrolling recovers. Live reduced motion and 200% text reflow pass. The supplied screenshot depicts the historical GitHub/botanical-art release, so those earlier visual defects were not reintroduced.
+
+See [the generation record](artwork-generation.md) for the exact prompts, delivered assets, competitor references, model/task IDs, and generation cost. Credentials and expiring provider URLs are excluded from the repository.
+
 ## Hero background motion restoration
 
 The hero flower field again blooms after the loader and slowly rotates at up to 12 rendered frames per second. It pauses offscreen and in hidden tabs, resumes from its elapsed position, and shows a fully grown static frame for reduced motion. Resize redraws retain the animation position. Runtime artwork keeps its static scenes and scroll-driven selection.

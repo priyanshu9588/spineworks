@@ -24,7 +24,7 @@ const readLayout = (): RuntimeLayout => window.matchMedia(wideQuery).matches
   : window.matchMedia(compactQuery).matches ? "compact" : "inline";
 const serverLayout = (): RuntimeLayout => "inline";
 
-export function RuntimeShowcase() {
+export function RuntimeShowcase({ motionReady = false }: { motionReady?: boolean }) {
   const [active, setActive] = useState(0);
   const layout = useSyncExternalStore(subscribeLayout, readLayout, serverLayout);
   const [fits, setFits] = useState(true);
@@ -154,7 +154,7 @@ export function RuntimeShowcase() {
 
       {pinned && (
         <aside ref={figure} className="runtime-sticky-figure" aria-label="Runtime illustrations">
-          <RuntimeArtwork active={active} />
+          <RuntimeArtwork active={active} motionReady={motionReady} />
           <nav className="runtime-step-navigation" aria-label="Runtime steps">
             {runtimeFeatures.map((feature, index) => (
               <a
@@ -188,7 +188,7 @@ export function RuntimeShowcase() {
                   <h3 id={`runtime-title-${feature.id}`}>{feature.title}</h3>
                   <p className="runtime-chapter-description">{feature.description}</p>
                 </div>
-                {!pinned && <RuntimeArtwork active={index} />}
+                {!pinned && <RuntimeArtwork active={index} motionReady={motionReady} />}
               </article>
             </li>
           ))}
