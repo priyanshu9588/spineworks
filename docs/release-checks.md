@@ -2,6 +2,22 @@
 
 Production: https://spineworks.vercel.app
 
+## Biological blueprints and one checkout story
+
+Five original SVG studies give each runtime ability a distinct persona: observer/eye, operator/hand with feedback, keeper/spinal tract, guide/joint with an action map, and messenger/neuron with a discrete state graph. The chapters follow Contact → Delivery → retained email → required address → Continue enabled. HTML evidence makes each operation explicit. Capability statuses appear in parallel; the delta graph shows an actual example state change. The shared paper/pine linework, persona marks, and mint paths give the drawings one visual identity.
+
+Each drawing has a 7.2-second mechanism sequence: pupil focus and iris illumination, finger articulation and returned observation, spinal signal and nerve-root cascade, joint reach within its range, and neuron transmission into the state-change graph. Explanatory labels and the complete anatomy stay visible. Motion waits for the loader and drawing visibility; a shared pause control retains the reader's preference across chapters and layouts. Offscreen and hidden documents pause; reduced motion and JavaScript disabled preserve the static composition. The hero's ASCII motion and dissolving intro remain. Native step links now carry short names. A stable SVG and HTML evidence wrapper keep the stage height constant; enlarged text and short windows fall back to five inline studies. Compact reentry hysteresis was adjusted so 375×667 restores pinning after text or viewport changes without oscillation.
+
+Before motion integration, the production build, TypeScript, ESLint, and whitespace checks pass. Chromium production at 375×667 and 1440×1000 passes all five native anchors, correct persona/evidence pairs, SVG text containment, and unique/resolved SVG IDs. Eight real mobile touch gestures traverse every scene backward and forward. Stage height remains 378.15625px on phone and 947px on desktop. At 1360×545 all five inline studies stay contained and the anchors work. These cases retain the animated hero and have no page errors, failed assets, media requests, horizontal overflow, or GitHub links.
+
+The independent development-layout audit also covers 320×667, 390×844, and 1024×768, 200% text and restoration, short-screen restoration, no JavaScript, and the compact threshold at 650–667px. Pinning changes at the intended hysteresis boundaries without oscillation; all five chapters, SVGs, and evidence panels render without JavaScript. Desktop and phone visual reviews caught and corrected a misleading capability arrow, hand/callout collisions, and a detached axon segment.
+
+A WebKit touch-anchor check exposed a 79px rebound during the last two chapter selections at 320×667. Disabling smooth scrolling while the native step links are hovered or active closes the interval before focus reaches the chapter. Cold narrow-phone taps and 200% text/restoration then visit all five chapters without rebound. Desktop keyboard navigation also passes.
+
+Development motion checks verify advancing CSS timelines in all five scenes, a frozen frame after manual pause, persistent pause after chapter and layout changes, successful resume, and offscreen pausing. Simulated document-visibility events pause and resume playback. Live reduced-motion changes remove all SVG animations and the control, restoring motion when the preference changes back. No page or console errors occurred; the desktop stage stays 947px throughout.
+
+See [the current art direction](biology-art-direction.md) for the persona mapping, source files, and Modal/Supermemory/Linear reference study. The generated raster/video release below is historical; those sharing URLs remain available.
+
 ## Generated material artwork and reading sequence
 
 GPT Image 2.5 supplies one pine/ivory/mint material master. The full five-scene story keeps exact text and states in SVG; compact layouts use focused crops of the same controls. The phone object is centered after its semantic facts move into readable HTML. Feathered asset edges blend into the stage. A four-second silent Seedance 2.5 sequence emphasizes the button-to-spine relationship after the loader clears, then restores the still. Reduced motion, buffering, blocked autoplay, and asset failures retain a complete illustration. The completed clip does not replay when the user revisits a chapter. Labeled MP4 and GIF previews are available separately; the landing page does not load the GIF.

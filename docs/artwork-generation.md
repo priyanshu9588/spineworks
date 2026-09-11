@@ -1,6 +1,6 @@
 # Generated Spine artwork
 
-The current material master was generated with **GPT Image 2.5 Sunburst** through Runway, at 1920 × 1280 with `xhigh` quality. **Seedance 2.5** uses a hosted 4:3 reference to animate a four-second reading sequence. Exact labels, form values, and button states are drawn by the site; the generation contains no text.
+This historical material master was generated with **GPT Image 2.5 Sunburst** through Runway, at 1920 × 1280 with `xhigh` quality. **Seedance 2.5** uses a hosted 4:3 reference to animate a four-second reading sequence. These assets remain available for reference and sharing. The landing page now uses [biological SVG studies](biology-art-direction.md).
 
 ## Assets
 

@@ -6,8 +6,9 @@
 
 .runtime-narrative { min-width: 0; }
 
-/* Native step links stay deterministic when a previous scroll is interrupted. */
-html:has(.runtime-story:focus-within) { scroll-behavior: auto; }
+/* Touch browsers focus the chapter after starting its native anchor scroll. */
+html:has(.runtime-story:focus-within),
+html:has(.runtime-step-navigation:is(:hover, :active)) { scroll-behavior: auto; }
 
 .runtime-story-intro {
   display: grid;
@@ -97,7 +98,7 @@ html:has(.runtime-story:focus-within) { scroll-behavior: auto; }
   line-height: 1.7;
 }
 
-.runtime-chapter-number span:first-child { font-variant-numeric: tabular-nums; }
+.runtime-chapter-number span:first-child { flex-shrink: 0; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .runtime-chapter-number span:last-child { color: var(--color-muted); }
 
 .runtime-chapter h3 {
@@ -118,6 +119,16 @@ html:has(.runtime-story:focus-within) { scroll-behavior: auto; }
 }
 
 .runtime-chapter .runtime-study { border-top: 1px solid var(--color-line); }
+
+.runtime-study .runtime-art-object {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.runtime-study .runtime-cutaway { flex: none; }
+.runtime-study .runtime-readable-facts { flex: none; align-self: stretch; }
 
 .runtime-sticky-figure {
   position: sticky;
@@ -142,13 +153,9 @@ html:has(.runtime-story:focus-within) { scroll-behavior: auto; }
 .runtime-sticky-figure .runtime-art-caption { flex-shrink: 0; }
 
 .runtime-sticky-figure .runtime-art-object {
-  display: flex;
   flex: 1;
-  align-items: center;
   min-height: 0;
 }
-
-.runtime-sticky-figure .runtime-cutaway { flex: none; }
 
 .runtime-step-navigation {
   display: flex;
@@ -221,41 +228,24 @@ html:has(.runtime-story:focus-within) { scroll-behavior: auto; }
   border-top: 1px solid var(--color-line);
 }
 
-.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-art-header,
-.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-art-caption { display: none; }
-
-.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-art-object {
-  position: relative;
-  flex-direction: column;
-  align-items: stretch;
-}
+/* Match the prospective compact stage while probing its inline fallback. */
+.runtime-story[data-layout="compact"] .runtime-art-caption { display: none; }
 
 .runtime-story[data-pinned="true"][data-layout="compact"] .runtime-cutaway {
   width: min(100%, 320px);
   margin-inline: auto;
 }
 
-/* Retaining the first scene's footprint keeps scroll thresholds stable. */
-.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-study:not([data-scene="semantic"]) .runtime-cutaway {
-  visibility: hidden;
-}
-
-.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-readable-facts { display: flex; }
-
-.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-cutaway-detail {
-  position: absolute;
-  display: block;
-  top: 50%;
-  left: 50%;
-  width: min(100%, 360px);
-  height: auto;
-  transform: translate(-50%, -50%);
-}
-
-.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-step-navigation { padding-inline: 12px; gap: 8px; }
-.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-step-navigation a { min-height: 44px; }
+.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-step-navigation { padding-inline: 12px; gap: 6px; }
+.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-step-navigation a { min-width: 44px; min-height: 44px; gap: 4px; }
+.runtime-story[data-pinned="true"][data-layout="compact"] .runtime-step-line { display: none; }
 .runtime-story[data-pinned="true"][data-layout="compact"] .runtime-chapter {
   scroll-margin-top: calc(var(--runtime-reading-line, 24rem) - 1px);
+}
+
+@media (max-width: 359px) {
+  .runtime-story[data-layout="compact"] .runtime-step-name { display: none; }
+  .runtime-story[data-pinned="true"][data-layout="compact"] .runtime-step-line { display: block; }
 }
 
 @media (min-width: 768px) {

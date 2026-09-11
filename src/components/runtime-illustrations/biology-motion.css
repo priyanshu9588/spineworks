@@ -1,0 +1,120 @@
+.runtime-study { --bio-play-state: paused; --bio-cycle: 7.2s; }
+.runtime-art-header { position: relative; }
+.bio-system { padding-right: 42px; }
+.bio-motion-toggle {
+  position: absolute;
+  top: 9px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--bio-muted);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.bio-motion-toggle svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.bio-motion-toggle:hover { color: var(--bio-mint); background: #a8ebbc0b; }
+.bio-motion-toggle:focus-visible { outline: 1px solid var(--bio-mint); outline-offset: -5px; }
+
+.bio-flow-tail, .bio-flow-head {
+  fill: none;
+  stroke-linecap: round;
+  opacity: 0;
+  animation: bio-tail var(--bio-cycle) linear infinite both;
+  animation-play-state: var(--bio-play-state);
+}
+.bio-flow-tail { stroke: #a8efbd; stroke-width: 3; stroke-dasharray: .14 1; filter: drop-shadow(0 0 4px #a8ebbc99); }
+.bio-flow-head { stroke: #f2ffdf; stroke-width: 2.5; stroke-dasharray: .026 1; animation-name: bio-head; filter: drop-shadow(0 0 2px #efffe5); }
+.bio-pulse { fill: none; stroke: #d7ffd1; stroke-width: 1.5; opacity: 0; transform-box: view-box; animation: bio-pulse var(--bio-cycle) ease-out infinite both; animation-play-state: var(--bio-play-state); }
+.bio-pulse-muted { stroke: var(--bio-paper); }
+.bio-iris-band { stroke: #dbffcd; stroke-width: 1.2; opacity: 0; filter: drop-shadow(0 0 2px #a8ebbc88); animation: bio-charge var(--bio-cycle) ease-out infinite both; animation-play-state: var(--bio-play-state); }
+.bio-pupil { transform-origin: 353px 211px; transform-box: view-box; animation: bio-focus var(--bio-cycle) cubic-bezier(.4,0,.2,1) infinite; animation-play-state: var(--bio-play-state); }
+.bio-acting-finger { transform-origin: 326px 278px; transform-box: view-box; animation: bio-touch var(--bio-cycle) cubic-bezier(.4,0,.2,1) infinite; animation-play-state: var(--bio-play-state); }
+.bio-root-charge { stroke: #d9ffd1; stroke-width: 1.4; fill: none; opacity: 0; filter: drop-shadow(0 0 3px #a8ebbc99); animation: bio-charge var(--bio-cycle) ease-out infinite both; animation-play-state: var(--bio-play-state); }
+.bio-joint-movement { transform-origin: 329px 249px; transform-box: view-box; animation: bio-reach var(--bio-cycle) cubic-bezier(.4,0,.2,1) infinite; animation-play-state: var(--bio-play-state); }
+.bio-range-scan { stroke: #d9ffd1; stroke-width: 1.4; transform-origin: 329px 249px; transform-box: view-box; opacity: 0; filter: drop-shadow(0 0 3px #a8ebbc77); animation: bio-range var(--bio-cycle) cubic-bezier(.4,0,.2,1) infinite; animation-play-state: var(--bio-play-state); }
+.bio-myelin-charge { fill: #c8ffbf22; stroke: #e0ffd5; stroke-width: 1.5; opacity: 0; filter: drop-shadow(0 0 2px #a8ebbc88); animation: bio-charge var(--bio-cycle) ease-out infinite both; animation-play-state: var(--bio-play-state); }
+.bio-neurotransmitter { animation: bio-release var(--bio-cycle) ease-out infinite both; animation-play-state: var(--bio-play-state); }
+.bio-result-state { animation: bio-result var(--bio-cycle) ease-out infinite both; animation-play-state: var(--bio-play-state); }
+.bio-result-fact { animation: bio-result-fact var(--bio-cycle) ease-out infinite both; animation-play-state: var(--bio-play-state); }
+
+@keyframes bio-tail {
+  0% { stroke-dashoffset: .14; opacity: 0; }
+  2% { opacity: .8; }
+  16% { stroke-dashoffset: -1; opacity: .8; }
+  18%, 100% { stroke-dashoffset: -1; opacity: 0; }
+}
+@keyframes bio-head {
+  0% { stroke-dashoffset: .03; opacity: 0; }
+  2% { opacity: 1; }
+  16% { stroke-dashoffset: -1.11; opacity: 1; }
+  18%, 100% { stroke-dashoffset: -1.11; opacity: 0; }
+}
+@keyframes bio-pulse {
+  0% { opacity: 0; transform: scale(.5); }
+  2% { opacity: .9; }
+  13% { opacity: 0; transform: scale(2.5); }
+  100% { opacity: 0; transform: scale(2.5); }
+}
+@keyframes bio-charge {
+  0% { opacity: 0; }
+  3% { opacity: 1; }
+  13%, 100% { opacity: 0; }
+}
+@keyframes bio-focus {
+  0%, 7%, 60%, 100% { transform: scale(1); }
+  19% { transform: scale(.78); }
+  35% { transform: scale(1.04); }
+}
+@keyframes bio-touch {
+  0%, 10%, 55%, 100% { transform: rotate(0); }
+  23%, 32% { transform: rotate(-7deg); }
+}
+@keyframes bio-reach {
+  0%, 8%, 77%, 100% { transform: rotate(0); }
+  36%, 48% { transform: rotate(-53deg); }
+}
+@keyframes bio-range {
+  0% { opacity: 0; transform: rotate(0); }
+  10% { opacity: .85; }
+  36%, 48% { opacity: .85; transform: rotate(-60deg); }
+  57%, 100% { opacity: 0; transform: rotate(-60deg); }
+}
+@keyframes bio-release {
+  0% { opacity: .2; transform: translateX(-7px); }
+  2% { opacity: 1; }
+  12% { opacity: 0; transform: translateX(14px); }
+  15%, 100% { opacity: .2; transform: translateX(0); }
+}
+@keyframes bio-result {
+  0%, 35% { opacity: .16; }
+  51%, 84% { opacity: 1; }
+  100% { opacity: .16; }
+}
+@keyframes bio-result-fact {
+  0%, 35%, 100% { color: var(--bio-paper); text-shadow: none; }
+  51%, 72% { color: #d7ffd1; text-shadow: 0 0 12px #a8ebbc88; }
+  84% { color: var(--bio-paper); text-shadow: none; }
+}
+
+/* The complete drawing is present before motion starts and without JavaScript. */
+.runtime-study[data-bio-motion="still"] .bio-motion-layer { visibility: hidden; }
+.runtime-study[data-bio-motion="still"] :is(.bio-flow-tail, .bio-flow-head, .bio-pulse, .bio-iris-band, .bio-pupil, .bio-acting-finger, .bio-root-charge, .bio-joint-movement, .bio-range-scan, .bio-myelin-charge, .bio-neurotransmitter, .bio-result-state, .bio-result-fact) { animation: none; }
+
+@media (max-width: 767px) {
+  .runtime-art-header { padding-right: 57px; }
+  .bio-system { display: none; }
+  .bio-motion-toggle { top: 0; right: 7px; }
+  .bio-flow-tail { stroke-width: 3.5; }
+  .bio-flow-head { stroke-width: 3; }
+  .bio-root-charge { stroke-width: 1.8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bio-motion-layer { display: none; }
+  .bio-motion-toggle { display: none; }
+  .runtime-study :is(.bio-flow-tail, .bio-flow-head, .bio-pulse, .bio-iris-band, .bio-pupil, .bio-acting-finger, .bio-root-charge, .bio-joint-movement, .bio-range-scan, .bio-myelin-charge, .bio-neurotransmitter, .bio-result-state, .bio-result-fact) { animation: none; }
+}

@@ -1,6 +1,6 @@
 # Spine artwork prompts
 
-The current artwork uses a generated GPT Image 2.5 material master and a Seedance 2.5 reading sequence. See [the generation record](artwork-generation.md) for delivered assets, exact production prompts, and model details.
+The current artwork uses original biological SVG studies. See [the current art direction](biology-art-direction.md) for the five personas and their product story. The [generation record](artwork-generation.md) preserves the earlier GPT Image 2.5 and Seedance 2.5 assets and prompts.
 
 The prompts below are historical ChatGPT concepts from before the generated assets. They document the Contact/Continue subject and palette; their proposed filenames and placement are not the current implementation.
 

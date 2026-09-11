@@ -10,6 +10,7 @@ const compactQuery = "(max-width: 767px) and (min-height: 600px)";
 type RuntimeLayout = "wide" | "compact" | "inline";
 const figureClearance = 16;
 const pinReentryBuffer = 16;
+const compactPinReentryBuffer = 8;
 
 function subscribeLayout(update: () => void) {
   const queries = [wideQuery, compactQuery].map((query) => window.matchMedia(query));
@@ -44,6 +45,14 @@ export function RuntimeShowcase({ motionReady = false }: { motionReady?: boolean
     const facts = study?.querySelector<HTMLElement>(".runtime-readable-facts");
     const steps = figure.current?.querySelector<HTMLElement>(".runtime-step-navigation");
 
+    const outerHeight = (element: HTMLElement | null | undefined) => {
+      if (!element) return 0;
+      const style = window.getComputedStyle(element);
+      if (style.display === "none") return 0;
+      return element.getBoundingClientRect().height
+        + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0);
+    };
+
     const update = () => {
       frame = 0;
       const plate = figure.current;
@@ -58,14 +67,8 @@ export function RuntimeShowcase({ motionReady = false }: { motionReady?: boolean
       const artworkHeight = viewBox?.width
         ? (compact ? Math.min(artworkWidth, 320) : artworkWidth) * viewBox.height / viewBox.width
         : 0;
-      const factsStyle = compact && facts ? window.getComputedStyle(facts) : null;
-      const factsHeight = compact && facts && factsStyle
-        ? facts.getBoundingClientRect().height + parseFloat(factsStyle.marginTop) + parseFloat(factsStyle.marginBottom)
-        : 0;
-      const studyHeight = compact
-        ? artworkHeight + factsHeight
-        : (artHeader?.getBoundingClientRect().height ?? 0) + artworkHeight
-          + (caption?.getBoundingClientRect().height ?? 0);
+      const studyHeight = outerHeight(artHeader) + artworkHeight
+        + outerHeight(facts) + outerHeight(caption);
       const minimumStageHeight = studyHeight + Math.max(navigationHeight, stepsHeight);
       const readingOffset = compact
         ? (plateHeight ?? minimumStageHeight) + 1
@@ -91,9 +94,10 @@ export function RuntimeShowcase({ motionReady = false }: { motionReady?: boolean
           ? Math.max(200, parseFloat(window.getComputedStyle(document.documentElement).fontSize) * 13)
           : 0;
         const requiredHeight = minimumStageHeight + headerHeight + figureClearance + textWindow;
+        const reentryBuffer = compact ? compactPinReentryBuffer : pinReentryBuffer;
 
         // Extra room on reentry prevents small layout differences from toggling modes.
-        setFits((previous) => requiredHeight + (previous ? 0 : pinReentryBuffer) <= viewportHeight);
+        setFits((previous) => requiredHeight + (previous ? 0 : reentryBuffer) <= viewportHeight);
       }
 
       if (plateHeight && story.current) {
@@ -143,11 +147,11 @@ export function RuntimeShowcase({ motionReady = false }: { motionReady?: boolean
     <div ref={story} className="runtime-story col-span-full -mx-4 md:-mx-5 lg:-mx-6" data-pinned={pinned} data-layout={layout}>
       <div className="runtime-story-intro">
         <div className="runtime-intro-heading">
-          <p className="runtime-eyebrow">The runtime</p>
-          <h2 id="runtime-heading">Read the web.<br />Know what changed.</h2>
+          <p className="runtime-eyebrow">Five abilities. One runtime.</p>
+          <h2 id="runtime-heading">A nervous system for the web.</h2>
         </div>
         <div className="runtime-intro-summary">
-          <p className="runtime-intro-copy">A shared language for page state, available actions, and their effects.</p>
+          <p className="runtime-intro-copy">Follow one checkout: recognize a button, verify the next page, carry context forward, and respond to what changes.</p>
           <p className="runtime-scroll-cue" aria-hidden="true">Scroll to explore <span>↓</span></p>
         </div>
       </div>
@@ -160,10 +164,11 @@ export function RuntimeShowcase({ motionReady = false }: { motionReady?: boolean
               <a
                 key={feature.id}
                 href={`#runtime-step-${feature.id}`}
-                aria-label={feature.title}
+                aria-label={`${feature.step}: ${feature.capability}`}
                 aria-current={active === index ? "step" : undefined}
               >
                 <span aria-hidden="true">{feature.number}</span>
+                <span className="runtime-step-name" aria-hidden="true">{feature.step}</span>
                 <span className="runtime-step-line" aria-hidden="true" />
               </a>
             ))}
