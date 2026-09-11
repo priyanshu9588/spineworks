@@ -29,7 +29,6 @@ export default function Home() {
   const [introRevealed, setIntroRevealed] = useState(false);
   const reduceMotion = useReducedMotion();
   const showIntro = hydrated && isLoading;
-  const introActive = hydrated && !loaderExited;
   const pageReady = !hydrated || loaderExited;
 
   useEffect(() => {
@@ -83,17 +82,6 @@ export default function Home() {
       window.clearTimeout(fontTimer);
     };
   }, [hydrated, reduceMotion]);
-
-  useEffect(() => {
-    if (!introActive) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [introActive]);
 
   return (
     <>
