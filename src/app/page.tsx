@@ -16,7 +16,7 @@ const shell =
   "site-frame mx-auto grid w-[calc(100%-2rem)] max-w-[1280px] grid-cols-4 gap-x-4 border-x px-4 md:w-[calc(100%-3rem)] md:grid-cols-8 md:gap-x-5 md:px-5 lg:w-[calc(100%-5rem)] lg:grid-cols-12 lg:gap-x-6 lg:px-6";
 
 const topbarLink =
-  "inline-flex min-h-11 items-center rounded-md px-3 text-xs text-muted hover:bg-accent-soft hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "inline-flex h-fit items-center rounded-md px-3 py-1.5 text-xs text-muted hover:bg-accent-soft hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 const fullWidthDivider =
   "relative after:pointer-events-none after:absolute after:bottom-0 after:left-1/2 after:w-screen after:-translate-x-1/2 after:border-b after:border-line";
@@ -59,17 +59,17 @@ export default function Home() {
         return;
       }
 
-      await wait(80);
+      await wait(200);
 
       for (let index = 0; index < introWord.length + 2; index += 1) {
         if (cancelled) return;
         setIntroBlockIndex(index);
-        await wait(55);
+        await wait(80);
       }
 
       setIntroRevealed(true);
       setIntroBlockIndex(null);
-      await wait(250);
+      await wait(800);
 
       if (!cancelled) setIsLoading(false);
     };
@@ -92,19 +92,22 @@ export default function Home() {
         {showIntro && (
           <motion.div
             key="loader"
-            className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-dvh overflow-hidden border-b border-line bg-canvas text-copy"
+            className="fixed inset-x-0 top-0 z-[100] h-dvh overflow-hidden border-b border-line bg-canvas text-copy"
             exit={{ height: "3.25rem" }}
-            transition={{ duration: reduceMotion ? 0 : 0.45, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.76, 0, 0.24, 1] }}
           />
         )}
         {showIntro && (
           <motion.div
             key="loader-rails"
             className="pointer-events-none fixed inset-y-0 inset-x-0 z-[105] border-x border-line [--loader-rail-inset:1rem] md:[--loader-rail-inset:1.5rem] lg:[--loader-rail-inset:max(2.5rem,calc((100vw-1280px)/2))]"
-            exit={{ opacity: 0 }}
+            exit={{
+              left: "var(--loader-rail-inset)",
+              right: "var(--loader-rail-inset)",
+            }}
             transition={{
-              duration: reduceMotion ? 0 : 0.2,
-              ease: "easeOut",
+              duration: reduceMotion ? 0 : 0.7,
+              ease: [0.76, 0, 0.24, 1],
             }}
           />
         )}
@@ -134,10 +137,11 @@ export default function Home() {
                   <motion.span
                     className="relative inline-grid w-[1ch] place-items-center"
                     key={`${character}-${index}`}
-                    initial={{ opacity: 1 }}
+                    initial={{ opacity: 1, filter: "blur(0px)" }}
                     variants={{
                       dissolved: {
                         opacity: 0,
+                        filter: reduceMotion ? "blur(0px)" : "blur(3px)",
                         transition: {
                           duration: reduceMotion ? 0 : 0.36,
                           delay: reduceMotion ? 0 : index * 0.025,
@@ -161,11 +165,11 @@ export default function Home() {
       )}
       </AnimatePresence>
 
-        <a href="#content" className="fixed top-2 left-2 z-[130] inline-flex min-h-11 -translate-y-16 items-center bg-ink px-4 text-xs text-inverse focus:translate-y-0">Skip to content</a>
+        <a href="#content" className="fixed top-2 left-2 z-[130] -translate-y-16 bg-ink px-4 py-2 text-xs text-inverse focus:translate-y-0">Skip to content</a>
 
         <header className={`sticky top-0 z-[120] border-b text-copy ${pageReady ? "border-line bg-canvas/95 backdrop-blur-sm" : "border-transparent bg-transparent"}`}>
           <div className={`${shell} site-topbar min-h-[3.25rem] items-center ${pageReady ? "border-line" : "border-transparent"}`}>
-            <a className="col-span-2 inline-flex min-h-11 w-fit items-center font-mono text-base font-semibold tracking-[-.06em] md:col-span-2 lg:col-span-3" href="#top" aria-label="Spine home">
+            <a className="col-span-2 inline-flex w-fit items-center font-mono text-base font-semibold tracking-[-.06em] md:col-span-2 lg:col-span-3" href="#top" aria-label="Spine home">
               {!hydrated && <span>Spine</span>}
               {hydrated && !isLoading && (
                 <motion.span
