@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: "https://spineworks.vercel.app/" }];
+  return [{ url: "https://spinenew.vercel.app/" }];
 }

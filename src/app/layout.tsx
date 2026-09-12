@@ -36,7 +36,7 @@ const title = "Spine — The web made legible";
 const description = "A semantic web runtime for agents: compact page state, verified actions, and explicit outcomes.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://spineworks.vercel.app"),
+  metadataBase: new URL("https://spinenew.vercel.app"),
   title,
   description,
   alternates: { canonical: "/" },

@@ -64,7 +64,7 @@ export default async function OpenGraphImage() {
           <path d="M17 20H29M23 14V26M318 343H330M324 337V349" stroke="#b7bdbb" strokeWidth="1" />
         </svg>
 
-        <div style={{ position: "absolute", bottom: 34, left: 82, fontSize: 17, color: "#0b7468" }}>spineworks.vercel.app</div>
+        <div style={{ position: "absolute", bottom: 34, left: 82, fontSize: 17, color: "#0b7468" }}>spinenew.vercel.app</div>
         <div style={{ position: "absolute", bottom: 35, right: 82, fontSize: 15, color: "#656b69" }}>Built around intent.</div>
       </div>
     ),
